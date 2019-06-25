@@ -1,6 +1,9 @@
-import React from "react";
-import Link from "next/link";
+import * as React from "react";
 
-const Home = () => <div>index</div>;
+import { Layout } from "~/components/Layout";
+
+const Home: React.FC = (): JSX.Element => {
+  return <div>index</div>;
+};
 
 export default Home;
