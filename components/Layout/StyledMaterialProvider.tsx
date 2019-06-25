@@ -17,7 +17,7 @@ export default class StyledMaterialProvider extends React.Component<
   Props,
   State
 > {
-  pageContext: PageContext;
+  private pageContext: PageContext;
 
   constructor(props: Props, context: PageContext) {
     super(props, context);
@@ -25,17 +25,14 @@ export default class StyledMaterialProvider extends React.Component<
     this.pageContext = this.props.pageContext || getPageContext();
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <JssProvider
         jss={this.pageContext.jss}
         registry={this.pageContext.sheetsRegistry}
         generateClassName={this.pageContext.generateClassName}
       >
-        <MuiThemeProvider
-          theme={this.pageContext.muiTheme}
-          sheetsManager={this.pageContext.sheetsManager}
-        >
+        <MuiThemeProvider theme={this.pageContext.muiTheme}>
           <CssBaseline />
           <ThemeProvider theme={this.pageContext.theme}>
             {this.props.children}

@@ -11,6 +11,10 @@
 /dist
 /.next
 
+# IDE
+.idea
+.vscode
+
 # misc
 .DS_Store
 .env

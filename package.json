@@ -2,7 +2,7 @@
   "name": "mthash-frontend",
   "scripts": {
     "dev": "cross-env node --max-old-space-size=16384 server/server.js",
-    "start": "cross-env NODE_ENV=production PORT=8080 node --max-old-space-size=16384 server/server.js",
+    "start": "cross-env NODE_ENV=production PORT=8080 node --max-old-space-size=1024 server/server.js",
     "build": "next build"
   },
   "dependencies": {
@@ -31,19 +31,21 @@
     "@types/react-dom": "^16.8.4",
     "@types/react-jss": "^8.6.3",
     "@types/styled-components": "^4.1.16",
-    "@typescript-eslint/eslint-plugin": "^1.10.2",
-    "@typescript-eslint/parser": "^1.10.2",
+    "@typescript-eslint/eslint-plugin": "^1.11.0",
+    "@typescript-eslint/parser": "^1.11.0",
     "babel-plugin-inline-react-svg": "^1.1.0",
-    "babel-plugin-styled-components": "^1.10.1",
+    "babel-plugin-styled-components": "^1.10.2",
     "compression": "^1.7.4",
     "dotenv": "^8.0.0",
     "eslint": "5.16.0",
     "eslint-config-prettier": "^5.1.0",
+    "eslint-import-resolver-alias": "^1.1.2",
     "eslint-plugin-eslint-plugin": "^2.1.0",
+    "eslint-plugin-import": "^2.18.0",
     "eslint-plugin-jest": "^22.7.1",
     "eslint-plugin-prettier": "^3.1.0",
-    "eslint-plugin-react": "^7.13.0",
-    "eslint-plugin-react-hooks": "^1.6.0",
+    "eslint-plugin-react": "^7.14.2",
+    "eslint-plugin-react-hooks": "^1.6.1",
     "prettier": "^1.18.2",
     "typescript": "^3.5.2"
   }
