@@ -1,5 +1,4 @@
-import { createMuiTheme } from '@material-ui/core'
-
+import { createMuiTheme } from "@material-ui/core";
 
 const muiTheme = createMuiTheme({
   palette: {
@@ -7,15 +6,18 @@ const muiTheme = createMuiTheme({
       black: "#000",
       white: "#fff"
     },
+    action: {
+      disabledBackground: "#676f91"
+    },
     background: {
-      paper: "rgba(16, 20, 37, 1)",
-      default: "rgba(19, 24, 40, 1)"
+      paper: "#101425",
+      default: "#131828"
     },
     primary: {
-      light: "#7986cb",
-      main: "#3f51b5",
-      dark: "#303f9f",
-      contrastText: "#fff"
+      light: "#75feb0",
+      main: "#61e786",
+      dark: "#44a05e",
+      contrastText: "#000"
     },
     secondary: {
       light: "#ff4081",
@@ -30,8 +32,8 @@ const muiTheme = createMuiTheme({
       contrastText: "#fff"
     },
     text: {
-      primary: "rgba(255, 255, 255, 1)",
-      secondary: "rgba(103, 111, 145, 1)",
+      primary: "#fff",
+      secondary: "#676f91",
       disabled: "rgba(0, 0, 0, 0.38)",
       hint: "rgba(0, 0, 0, 0.38)"
     }

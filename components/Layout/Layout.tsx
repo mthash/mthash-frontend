@@ -11,19 +11,11 @@ export interface State {}
 
 const Layout: React.SFC<Props> = ({ children }) => {
   return (
-    <Wrapper>
+    <>
       <GlobalStyle />
-      <Content>{children}</Content>
-    </Wrapper>
+      {children}
+    </>
   );
 };
 
 export default Layout;
-
-const Wrapper = styled.div`
-  background-color: yellow;
-`;
-
-const Content = styled.main`
-  background-color: green;
-`;
