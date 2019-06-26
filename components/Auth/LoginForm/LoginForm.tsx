@@ -1,99 +1,86 @@
 import * as React from "react";
 import styled from "styled-components";
 import axios from "axios";
-import {
-  Formik,
-  FormikActions,
-  FormikProps,
-  Form,
-  Field,
-  FieldProps
-} from "formik";
+import { withFormik, InjectedFormikProps } from "formik";
+import * as Yup from "yup";
 import Button from "@material-ui/core/Button";
+import { isEmpty } from "ramda";
 
 import { TextField } from "~/components/Common/TextField";
+
+const CAPTION = "LOG IN";
 
 export interface Props {
   children?: React.ReactNode;
 }
 
-interface LoginFormValues {
+interface FormValues {
   login: string;
   password: string;
 }
 
-const CAPTION = "LOG IN";
+interface FormProps {
+  handleSubmit: () => void;
+  values: FormValues;
+}
 
-const LoginForm: React.FC<Props> = (): JSX.Element => {
-  const handleSubmit = async (
-    values: LoginFormValues,
-    actions: FormikActions<LoginFormValues>
-  ): void => {
-    const res = await axios.post(`${window.env.API}/login`, values);
-  };
+const LoginForm: React.SFC<InjectedFormikProps<FormProps, FormValues>> = (
+  props
+): JSX.Element => (
+  <WrapperForm onSubmit={props.handleSubmit}>
+    <TextField
+      id="login"
+      label="login"
+      margin="normal"
+      variant="filled"
+      type="text"
+      onChange={props.handleChange}
+      value={props.values.login}
+      fullWidth
+    />
+    <TextField
+      id="password"
+      label="password"
+      margin="normal"
+      variant="filled"
+      inputProps={{ type: "password" }}
+      fullWidth
+      value={props.values.password}
+      onChange={props.handleChange}
+    />
+    {props.touched.login && props.errors.login && (
+      <div>{props.errors.login}</div>
+    )}
+    <SubmitButton
+      type="submit"
+      size="large"
+      variant="contained"
+      color="primary"
+      disabled={!props.touched || !isEmpty(props.errors)}
+    >
+      Log in
+    </SubmitButton>
+  </WrapperForm>
+);
 
-  return (
-    <Wrapper>
-      <h1>{CAPTION}</h1>
-      <Formik
-        initialValues={{ login: "", password: "" }}
-        onSubmit={handleSubmit}
-      >
-        {(formikBag: FormikProps<LoginFormValues>): JSX.Element => {
-          return (
-            <Form>
-              <Field name="login">
-                {({
-                  field,
-                  form
-                }: FieldProps<LoginFormValues>): JSX.Element => (
-                  <TextField
-                    label="login"
-                    margin="normal"
-                    variant="filled"
-                    fullWidth
-                    {...field}
-                  />
-                )}
-              </Field>
+export default withFormik<FormProps, FormValues>({
+  mapPropsToValues: () => ({ login: "", password: "" }),
+  validationSchema: Yup.object().shape({
+    login: Yup.string().required("Please input login name"),
+    password: Yup.string().required("Please input password")
+  }),
+  handleSubmit: (values, { setSubmitting }) => {
+    const handleSubmit = async (values: FormValues): void => {
+      const res = await axios.post(`${window.env.API}/login`, values);
 
-              <Field name="password">
-                {({
-                  field,
-                  form
-                }: FieldProps<LoginFormValues>): JSX.Element => (
-                  <TextField
-                    label="password"
-                    margin="normal"
-                    variant="filled"
-                    inputProps={{ type: "password" }}
-                    fullWidth
-                    password
-                    {...field}
-                  />
-                )}
-              </Field>
+      setSubmitting(false);
+    };
+  }
+})(LoginForm);
 
-              <SubmitButton
-                type="submit"
-                size="large"
-                variant="contained"
-                color="primary"
-              >
-                Log in
-              </SubmitButton>
-            </Form>
-          );
-        }}
-      </Formik>
-    </Wrapper>
-  );
-};
-
-export default LoginForm;
-
-const Wrapper = styled.div`
+const WrapperForm = styled.form`
   max-width: 500px;
+  padding: 0 30px;
   margin: auto;
 `;
 

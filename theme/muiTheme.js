@@ -1,11 +1,13 @@
-import { createMuiTheme } from '@material-ui/core'
-
+import { createMuiTheme } from "@material-ui/core";
 
 const muiTheme = createMuiTheme({
   palette: {
     common: {
       black: "#000",
       white: "#fff"
+    },
+    action: {
+      disabledBackground: "#676f91"
     },
     background: {
       paper: "#101425",

@@ -1,6 +1,7 @@
 import * as React from "react";
 import styled from "styled-components";
 import Grid from "@material-ui/core/Grid";
+import Hidden from "@material-ui/core/Hidden";
 
 import LoginForm from "~/components/Auth/LoginForm";
 
@@ -11,7 +12,7 @@ const PROMO = "Hash the peaks and beyond";
 const Login: React.FC = (): JSX.Element => {
   return (
     <WrapperGrid container spacing={0} alignItems="stretch">
-      <FormGridCell item xs={5}>
+      <FormGridCell item sm={12} md={6} lg={5}>
         <CompanyName>
           <img src="static/logo.png" />
           <div>{COMPANY_NAME}</div>
@@ -20,12 +21,14 @@ const Login: React.FC = (): JSX.Element => {
           <LoginForm />
         </FormWrapper>
       </FormGridCell>
-      <PromoGridCell item xs={7}>
-        <div>
-          <Slogan>{SLOGAN}</Slogan>
-          <div>{PROMO}</div>
-        </div>
-      </PromoGridCell>
+      <Hidden smDown>
+        <PromoGridCell item md={6} lg={7} zeroMinWidth>
+          <div>
+            <Slogan>{SLOGAN}</Slogan>
+            <div>{PROMO}</div>
+          </div>
+        </PromoGridCell>
+      </Hidden>
     </WrapperGrid>
   );
 };
@@ -72,4 +75,7 @@ const CompanyName = styled.div`
 
 const Slogan = styled.div`
   font-size: 40px;
+  @media (max-width: ${p => p.theme.breakpoints.values.md}px) {
+    font-size: 30px;
+  }
 `;

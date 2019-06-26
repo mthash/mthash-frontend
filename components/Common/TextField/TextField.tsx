@@ -12,10 +12,11 @@ const TextField: React.FC<FilledTextFieldProps> = (props): JSX.Element => {
 export default TextField;
 
 const StyledTextField = styled(MuiTextField)`
-  border-radius: 4px !important;
+  border-radius: 5px;
 
   input {
-    background-color: ${p => p.theme.background.control} !important;
+    background-color: ${p => p.theme.background.control};
+    border-radius: 5px;
   }
 
   input:-webkit-autofill,

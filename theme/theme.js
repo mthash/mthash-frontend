@@ -1,7 +1,7 @@
 const theme = {
   palette: {
     mainColor: "#222",
-    primaryColor: "#333",
+    primaryColor: "#333"
     // secondColor: "#666",
     // thirdColor: "#f8f8f8",
     // notAvailable: "#e3e8ed",
@@ -28,7 +28,7 @@ const theme = {
   background: {
     paper: "#101425",
     default: "#131828",
-    control: "#161a30"
+    control: "#373e65"
   },
   statuses: {
     success: "#17B630",
@@ -37,7 +37,16 @@ const theme = {
     processing: "#0077C6",
     disabled: "#BEC7CD",
     primary: "#0074C6"
+  },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 1024,
+      md: 1280,
+      lg: 1400,
+      xl: 1700
+    }
   }
-}
+};
 
 export default theme;
