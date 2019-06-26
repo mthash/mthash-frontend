@@ -8,6 +8,8 @@ import { isEmpty } from "ramda";
 
 import { TextField } from "~/components/Common/TextField";
 
+import RedirectButtons from "./RedirectButtons";
+
 const CAPTION = "LOG IN";
 
 export interface Props {
@@ -60,6 +62,7 @@ const LoginForm: React.SFC<InjectedFormikProps<FormProps, FormValues>> = (
     >
       Log in
     </SubmitButton>
+    <RedirectButtons />
   </WrapperForm>
 );
 

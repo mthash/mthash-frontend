@@ -7,7 +7,9 @@ const Home: React.FC = (): JSX.Element => {
   return (
     <div>
       <div>MtHash Dashboard</div>
-      <Link href="/login">Sign in</Link>
+      <Link href="/login">
+        <a>Sign in</a>
+      </Link>
     </div>
   );
 };
