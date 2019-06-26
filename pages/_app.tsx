@@ -4,6 +4,7 @@ import Head from "next/head";
 
 import { StyledMaterialProvider, Layout } from "~/components/Layout";
 import getPageContext from "~/utils/getPageContext";
+import getEnv from "~/utils/getEnviroment";
 import PageContext from "~/models/common/PageContext";
 
 export interface Props {
@@ -21,6 +22,8 @@ export default class MtHashApp extends App<Props, State> {
       pageProps = await Component.getInitialProps(ctx);
     }
 
+    pageProps.env = getEnv;
+
     return { pageProps };
   }
 
@@ -28,6 +31,12 @@ export default class MtHashApp extends App<Props, State> {
 
   constructor(props: Props, ctx: any) {
     super(props, ctx);
+
+    // TODO: Probably it should be reimplemented
+    if (process.browser) {
+      window.env = props.pageProps.env;
+    }
+
     this.pageContext = getPageContext();
   }
 

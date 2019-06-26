@@ -42,7 +42,7 @@ const FormWrapper = styled.div`
   display: flex;
   flex-grow: 1;
   align-items: center;
-  padding: 20px 50px 200px;
+  padding-bottom: 200px;
 `;
 
 const FormGridCell = styled(Grid)`

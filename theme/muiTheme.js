@@ -12,10 +12,10 @@ const muiTheme = createMuiTheme({
       default: "#131828"
     },
     primary: {
-      light: "#7986cb",
-      main: "#3f51b5",
-      dark: "#303f9f",
-      contrastText: "#fff"
+      light: "#75feb0",
+      main: "#61e786",
+      dark: "#44a05e",
+      contrastText: "#000"
     },
     secondary: {
       light: "#ff4081",

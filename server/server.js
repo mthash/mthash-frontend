@@ -1,3 +1,7 @@
+const setEnv = require("./setEnv");
+setEnv();
+
+
 // import path from "path";
 const express = require("express");
 const next = require("next");
@@ -5,6 +9,7 @@ const compression = require("compression");
 const bodyParser = require("body-parser");
 
 const dev = process.env.NODE_ENV !== "production";
+
 
 const app = next({ dir: ".", dev });
 const handle = app.getRequestHandler();
