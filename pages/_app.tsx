@@ -2,7 +2,8 @@ import * as React from "react";
 import App, { Container } from "next/app";
 import Head from "next/head";
 
-import { StyledMaterialProvider, Layout } from "~/components/Layout";
+import { AppLayout } from "~/components/layouts";
+import { StyledMaterialProvider } from "~/components/providers";
 import getPageContext from "~/utils/getPageContext";
 import getEnv from "~/utils/getEnviroment";
 import PageContext from "~/models/common/PageContext";
@@ -27,6 +28,14 @@ export default class MtHashApp extends App<Props, State> {
     return { pageProps };
   }
 
+  componentDidMount() {
+    // Remove the server-side injected CSS.
+    const jssStyles = document.querySelector("#jss-server-side");
+    if (jssStyles) {
+      jssStyles.parentNode.removeChild(jssStyles);
+    }
+  }
+
   pageContext: PageContext;
 
   constructor(props: Props, ctx: any) {
@@ -45,14 +54,11 @@ export default class MtHashApp extends App<Props, State> {
 
     return (
       <StyledMaterialProvider pageContext={this.pageContext}>
-        <Layout>
+        <AppLayout>
           <Container>
-            <Head>
-              <title>MtHash</title>
-            </Head>
+            <Component {...pageProps} pageContext={this.pageContext} />
           </Container>
-          <Component {...pageProps} pageContext={this.pageContext} />
-        </Layout>
+        </AppLayout>
       </StyledMaterialProvider>
     );
   }
