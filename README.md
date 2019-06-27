@@ -19,5 +19,5 @@ $ npm start
 ## Docker bundling
 
 $ docker build --tag=mthash-front .
-$ docker run -p 8080:8080 mthash-front
+$ docker run -p 80:80 mthash-front
 ```

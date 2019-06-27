@@ -23,7 +23,7 @@ const AuthLayout: React.FC<Props> = ({ children, title }): JSX.Element => (
 
     <FormGridCell item sm={12} md={6} lg={5}>
       <CompanyName>
-        <img src="static/logo.png" />
+        <Logo src="static/logo.png" />
         <div>{COMPANY_NAME}</div>
       </CompanyName>
       <FormWrapper>{children}</FormWrapper>
@@ -52,6 +52,11 @@ const FormWrapper = styled.div`
   flex-grow: 1;
   align-items: center;
   padding-bottom: 200px;
+`;
+
+const Logo = styled.img`
+  height: 47px;
+  width: 48px;
 `;
 
 const FormGridCell = styled(Grid)`
