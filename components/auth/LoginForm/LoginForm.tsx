@@ -1,13 +1,17 @@
 import * as React from "react";
 import styled from "styled-components";
-import axios from "axios";
 import { withFormik, InjectedFormikProps } from "formik";
 import * as Yup from "yup";
 import Button from "@material-ui/core/Button";
 import { isEmpty } from "ramda";
 
 import { TextField } from "~/components/common/TextField";
+import { PasswordField } from "~/components/common/PasswordField"
+import { RESPONSE_ERROR_NAME } from "~/constants/request";
+import { login } from "~/utils/auth";
+import { AsyncService } from "~/services";
 
+import FormErrors from "../FormErrors";
 import RedirectButtons from "./RedirectButtons";
 
 const CAPTION = "LOG IN";
@@ -27,7 +31,7 @@ interface FormProps {
   values: FormValues;
 }
 
-const LoginForm: React.SFC<InjectedFormikProps<FormProps, FormValues>> = (
+const LoginForm: React.FC<InjectedFormikProps<FormProps, FormValues>> = (
   props
 ): JSX.Element => (
   <WrapperForm onSubmit={props.handleSubmit}>
@@ -42,25 +46,22 @@ const LoginForm: React.SFC<InjectedFormikProps<FormProps, FormValues>> = (
       value={props.values.login}
       fullWidth
     />
-    <TextField
+    <PasswordField
       id="password"
       label="password"
       margin="normal"
       variant="filled"
-      inputProps={{ type: "password" }}
       fullWidth
       value={props.values.password}
       onChange={props.handleChange}
     />
-    {props.touched.login && props.errors.login && (
-      <div>{props.errors.login}</div>
-    )}
+    <FormErrors errors={props.errors} touched={props.touched} />
     <SubmitButton
       type="submit"
       size="large"
       variant="contained"
       color="primary"
-      disabled={!props.touched || !isEmpty(props.errors)}
+      // disabled={!isEmpty(props.errors)}
     >
       {SUBMIT_TEXT}
     </SubmitButton>
@@ -69,17 +70,23 @@ const LoginForm: React.SFC<InjectedFormikProps<FormProps, FormValues>> = (
 );
 
 export default withFormik<FormProps, FormValues>({
-  mapPropsToValues: () => ({ login: "", password: "" }),
+  mapPropsToValues: () => ({ login: "", password: "", password2: "" }),
   validationSchema: Yup.object().shape({
-    login: Yup.string().required("Please input login name"),
+    login: Yup.string().required("Please input login"),
     password: Yup.string().required("Please input password")
   }),
-  handleSubmit: (values, { setSubmitting }) => {
-    const handleSubmit = async (values: FormValues): void => {
-      const res = await axios.post(`${window.env.API}/login`, values);
+  handleSubmit: async (values, { setSubmitting, setErrors }) => {
+    try {
+      const result = await AsyncService.post(`${window.env.API}/user/login`, values);
+      const token = result?.data?.body;
+      login({ token });
+    } catch (error) {
+      setErrors({ 
+        [RESPONSE_ERROR_NAME]: error.response?.message || "login or password is incorrect" 
+      });
+    }
 
-      setSubmitting(false);
-    };
+    setSubmitting(false);
   }
 })(LoginForm);
 
