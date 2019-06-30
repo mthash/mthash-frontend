@@ -7,9 +7,7 @@ export interface Props {
   children?: React.ReactNode;
 }
 
-export interface State {}
-
-const Layout: React.SFC<Props> = ({ children }) => {
+const AppLayout: React.FC<Props> = ({ children }): JSX.Element => {
   return (
     <>
       <GlobalStyle />
@@ -18,4 +16,4 @@ const Layout: React.SFC<Props> = ({ children }) => {
   );
 };
 
-export default Layout;
+export default AppLayout;

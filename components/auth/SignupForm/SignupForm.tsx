@@ -6,19 +6,21 @@ import * as Yup from "yup";
 import Button from "@material-ui/core/Button";
 import { isEmpty } from "ramda";
 
-import { TextField } from "~/components/Common/TextField";
+import { TextField } from "~/components/common/TextField";
 
 import RedirectButtons from "./RedirectButtons";
 
-const CAPTION = "LOG IN";
+const CAPTION = "SIGN UP";
+const SUBMIT_TEXT = "Sign up";
 
-export interface Props {
+interface Props {
   children?: React.ReactNode;
 }
 
 interface FormValues {
   login: string;
   password: string;
+  passwordConfirmation: string;
 }
 
 interface FormProps {
@@ -26,10 +28,11 @@ interface FormProps {
   values: FormValues;
 }
 
-const LoginForm: React.SFC<InjectedFormikProps<FormProps, FormValues>> = (
-  props
-): JSX.Element => (
+const RegistrationForm: React.SFC<
+  InjectedFormikProps<FormProps, FormValues>
+> = (props): JSX.Element => (
   <WrapperForm onSubmit={props.handleSubmit}>
+    <h1>{CAPTION}</h1>
     <TextField
       id="login"
       label="login"
@@ -50,6 +53,16 @@ const LoginForm: React.SFC<InjectedFormikProps<FormProps, FormValues>> = (
       value={props.values.password}
       onChange={props.handleChange}
     />
+    <TextField
+      id="passwordConfirmation"
+      label="passwordConfirmation"
+      margin="normal"
+      variant="filled"
+      inputProps={{ type: "password" }}
+      fullWidth
+      value={props.values.passwordConfirmation}
+      onChange={props.handleChange}
+    />
     {props.touched.login && props.errors.login && (
       <div>{props.errors.login}</div>
     )}
@@ -60,26 +73,30 @@ const LoginForm: React.SFC<InjectedFormikProps<FormProps, FormValues>> = (
       color="primary"
       disabled={!props.touched || !isEmpty(props.errors)}
     >
-      Log in
+      {SUBMIT_TEXT}
     </SubmitButton>
     <RedirectButtons />
   </WrapperForm>
 );
 
 export default withFormik<FormProps, FormValues>({
-  mapPropsToValues: () => ({ login: "", password: "" }),
+  mapPropsToValues: () => ({
+    login: "",
+    password: "",
+    passwordConfirmation: ""
+  }),
   validationSchema: Yup.object().shape({
     login: Yup.string().required("Please input login name"),
     password: Yup.string().required("Please input password")
   }),
   handleSubmit: (values, { setSubmitting }) => {
     const handleSubmit = async (values: FormValues): void => {
-      const res = await axios.post(`${window.env.API}/login`, values);
+      const res = await axios.post(`${window.env.API}/user`, values);
 
       setSubmitting(false);
     };
   }
-})(LoginForm);
+})(RegistrationForm);
 
 const WrapperForm = styled.form`
   max-width: 500px;

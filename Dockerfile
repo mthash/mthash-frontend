@@ -21,5 +21,5 @@ COPY --from=BUILD package*.json ./
 COPY --from=BUILD ./node_modules ./node_modules
 COPY --from=BUILD ./ ./
 
-EXPOSE 8080
+EXPOSE 80
 CMD ["npm", "run", "start"]

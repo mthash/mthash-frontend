@@ -20,7 +20,7 @@ const port = parseInt(PORT) || 3000;
 app.prepare().then(() => {
   const server = express();
   server.disable("x-powered-by");
-  server.use(bodyParser.json({ limit: "100kb" }));
+  server.use(bodyParser.json({ limit: "10kb" }));
 
   dev || server.use(compression());
   // server.use(nextApp(app));
