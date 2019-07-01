@@ -5,6 +5,8 @@ import { withFormik, InjectedFormikProps } from "formik";
 import * as Yup from "yup";
 import Button from "@material-ui/core/Button";
 import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 import { isEmpty } from "ramda";
 
 import { RESPONSE_ERROR_NAME } from "~/constants/request";
@@ -95,6 +97,16 @@ const RegistrationForm: React.SFC<
         message={REGISTRATION_SUCCESSFUL}
         autoHideDuration={SNACKBAR_AUTOCLOSE_DURATION}
         onClose={handleSnackbarClose}
+        action={[
+          <IconButton 
+            key="close" 
+            aria-label="Close"
+            color="inherit" 
+            onClick={handleSnackbarClose}
+          >
+            <CloseIcon />
+          </IconButton>,
+        ]}
       />
       <RedirectButtons />
     </WrapperForm>

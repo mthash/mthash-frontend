@@ -2,44 +2,59 @@ import React from "react";
 import Document, { Head, Main, NextScript } from "next/document";
 import { ServerStyleSheet } from "styled-components";
 import { ServerStyleSheets } from "@material-ui/styles";
+import flush from "styled-jsx/server";
 
 import getEnv from "~/utils/getEnviroment";
 
 export default class MyDocument extends Document {
-  static getInitialProps = async ctx => {
-    const muiSheets = new ServerStyleSheets();
+  static async getInitialProps(ctx) {
     const sheet = new ServerStyleSheet();
+    const sheets = new ServerStyleSheets();
     const originalRenderPage = ctx.renderPage;
 
-    ctx.renderPage = () =>
-      originalRenderPage({
-        enhanceApp: App => props => muiSheets.collect(<App {...props} />)
-      });
-
-    const initialProps = await Document.getInitialProps(ctx);
-
-    return {
-      ...initialProps,
-      styles: (
-        <>
-          {initialProps.styles}
-          {muiSheets.getStyleElement()}
-          {sheet.getStyleElement()}
-        </>
-      )
-    };
-  };
+    try {
+      ctx.renderPage = () =>
+        originalRenderPage({
+          enhanceApp: App => props => ({
+            ...sheet.collectStyles(<App {...props} />),
+            ...sheets.collect(<App {...props} />)
+          })
+        });
+      const initialProps = await Document.getInitialProps(ctx);
+      return {
+        ...initialProps,
+        styles: (
+          <>
+            {sheets.getStyleElement()}
+            {sheet.getStyleElement()}
+            {flush() || null}
+          </>
+        )
+      };
+    } finally {
+      sheet.seal();
+    }
+  }
 
   render() {
-    // const { initStyles, muiStyles, styledComponentsStyles } = this.props;
-
     return (
       <html lang="en" dir="ltr">
         <Head>
-          <style id="jss-server-side" />
-          {/* <meta name="theme-color" content="#0074c6" /> */}
-          {/* <link rel="shortcut icon" href="/static/images/favicon.ico" /> */}
           <meta charSet="utf-8" />
+          {/* Use minimum-scale=1 to enable GPU rasterization */}
+          <meta
+            name="viewport"
+            content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no"
+          />
+          {/* PWA primary color */}
+          {/* <meta
+            name="theme-color"
+            content={theme.palette.primary.main}
+          /> */}
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+          />
         </Head>
         <body>
           <Main />
