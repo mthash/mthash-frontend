@@ -53,13 +53,13 @@ export default class MtHashApp extends App<Props, State> {
     const { Component, pageProps } = this.props;
 
     return (
-      <StyledMaterialProvider pageContext={this.pageContext}>
-        <AppLayout>
-          <Container>
+      <Container>
+        <StyledMaterialProvider pageContext={this.pageContext}>
+          <AppLayout>
             <Component {...pageProps} pageContext={this.pageContext} />
-          </Container>
-        </AppLayout>
-      </StyledMaterialProvider>
+          </AppLayout>
+        </StyledMaterialProvider>
+      </Container>
     );
   }
 }

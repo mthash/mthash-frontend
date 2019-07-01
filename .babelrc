@@ -2,9 +2,11 @@
   "presets": ["next/babel", "@zeit/next-typescript/babel"],
   "plugins": [
     "inline-react-svg",
+    "styled-jsx/babel",
     [
       "styled-components",
       { "ssr": true, "displayName": true, "preprocess": false }
-    ]
+    ],
+    "@babel/plugin-proposal-optional-chaining"
   ]
 }
