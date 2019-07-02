@@ -46,14 +46,14 @@ const DashboardLayout: React.FC<> = (): JSX.Element => {
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar}>
+      <StyledAppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <Logo src="static/logo.png" />
           <Typography variant="h6" noWrap>
             Clipped drawer
           </Typography>
         </Toolbar>
-      </AppBar>
+      </StyledAppBar>
       <Drawer
         className={classes.drawer}
         variant="permanent"
@@ -122,6 +122,12 @@ const DashboardLayout: React.FC<> = (): JSX.Element => {
 };
 
 export default DashboardLayout;
+
+const StyledAppBar = styled(AppBar)`
+  z-index: ${p => p.theme.zIndex.drawer + 1};
+  background-color: ${p => p.theme.palette.background.paper};
+  box-shadow: none;
+`;
 
 const Logo = styled.img`
   height: 47px;

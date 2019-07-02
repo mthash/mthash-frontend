@@ -1,1 +1,1 @@
-export { default as StyledMaterialProvider } from "./StyledMaterialProvider";
+export { default as AppStylesProvider } from "./AppStylesProvider";

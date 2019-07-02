@@ -62,7 +62,7 @@ const FormGridCell = styled(Grid)`
 `;
 
 const PromoGridCell = styled(Grid)`
-  background-color: ${p => p.theme.background.paper};
+  background-color: ${p => p.theme.palette.background.paper};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -78,7 +78,7 @@ const CompanyName = styled.div`
   display: flex;
   margin: 25px;
   align-items: center;
-  color: ${p => p.theme.text.main};
+  color: ${p => p.theme.palette.text.main};
 
   > img {
     margin: 10px;
