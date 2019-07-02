@@ -1,7 +1,11 @@
 import * as React from "react";
 import { ThemeProvider } from "styled-components";
 import { MuiThemeProvider, CssBaseline } from "@material-ui/core";
+import { StylesProvider } from "@material-ui/styles";
 import JssProvider from "react-jss/lib/JssProvider";
+
+import theme from "~/theme/theme";
+import muiTheme from "~/theme/muiTheme";
 
 import getPageContext from "~/utils/getPageContext";
 import PageContext from "~/models/common/PageContext";
@@ -19,34 +23,34 @@ export default class StyledMaterialProvider extends React.Component<
 > {
   private pageContext: PageContext;
 
-  constructor(props: Props, context: PageContext) {
-    super(props, context);
+  // constructor(props: Props, context: PageContext) {
+  //   super(props, context);
 
-    this.pageContext = this.props.pageContext || getPageContext();
-  }
+  //   this.pageContext = this.props.pageContext || getPageContext();
+  // }
 
   render(): JSX.Element {
-    const {
-      jss,
-      sheetsRegistry,
-      muiTheme,
-      theme,
-      generateClassName
-    } = this.pageContext;
+    // const {
+    //   jss,
+    //   sheetsRegistry,
+    //   muiTheme,
+    //   theme,
+    //   generateClassName
+    // } = this.pageContext;
 
     return (
-      <JssProvider
-        jss={jss}
-        registry={sheetsRegistry}
-        generateClassName={generateClassName}
-      >
+      // <JssProvider
+      //   jss={jss}
+      //   registry={sheetsRegistry}
+      //   generateClassName={generateClassName}
+      // >
+      <StylesProvider injectFirst>
         <MuiThemeProvider theme={muiTheme}>
           <CssBaseline />
-          <ThemeProvider theme={theme} muiTheme={muiTheme}>
-            {this.props.children}
-          </ThemeProvider>
+          <ThemeProvider theme={theme}>{this.props.children}</ThemeProvider>
         </MuiThemeProvider>
-      </JssProvider>
+      </StylesProvider>
+      // </JssProvider>
     );
   }
 }

@@ -16,17 +16,17 @@ export interface Props {
 export interface State {}
 
 export default class MtHashApp extends App<Props, State> {
-  static async getInitialProps({ Component, router, ctx }) {
-    let pageProps = {};
+  // static async getInitialProps({ Component, router, ctx }) {
+  //   let pageProps = {};
 
-    if (Component.getInitialProps) {
-      pageProps = await Component.getInitialProps(ctx);
-    }
+  //   if (Component.getInitialProps) {
+  //     pageProps = await Component.getInitialProps(ctx);
+  //   }
 
-    pageProps.env = getEnv;
+  //   pageProps.env = getEnv;
 
-    return { pageProps };
-  }
+  //   return { pageProps };
+  // }
 
   componentDidMount() {
     // Remove the server-side injected CSS.
@@ -46,7 +46,7 @@ export default class MtHashApp extends App<Props, State> {
       window.env = props.pageProps.env;
     }
 
-    this.pageContext = getPageContext();
+    // this.pageContext = getPageContext();
   }
 
   render(): JSX.Element {
@@ -54,9 +54,9 @@ export default class MtHashApp extends App<Props, State> {
 
     return (
       <Container>
-        <StyledMaterialProvider pageContext={this.pageContext}>
+        <StyledMaterialProvider>
           <AppLayout>
-            <Component {...pageProps} pageContext={this.pageContext} />
+            <Component />
           </AppLayout>
         </StyledMaterialProvider>
       </Container>

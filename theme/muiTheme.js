@@ -37,6 +37,20 @@ const muiTheme = createMuiTheme({
       disabled: "rgba(0, 0, 0, 0.38)",
       hint: "rgba(0, 0, 0, 0.38)"
     }
+  },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 1024,
+      md: 1280,
+      lg: 1400,
+      xl: 1700
+    }
+  },
+  layouts: {
+    dashboard: {
+      headerHeight: "75px"
+    }
   }
 });
 
