@@ -26,15 +26,23 @@ export default class StyledMaterialProvider extends React.Component<
   }
 
   render(): JSX.Element {
+    const {
+      jss,
+      sheetsRegistry,
+      muiTheme,
+      theme,
+      generateClassName
+    } = this.pageContext;
+
     return (
       <JssProvider
-        jss={this.pageContext.jss}
-        registry={this.pageContext.sheetsRegistry}
-        generateClassName={this.pageContext.generateClassName}
+        jss={jss}
+        registry={sheetsRegistry}
+        generateClassName={generateClassName}
       >
-        <MuiThemeProvider theme={this.pageContext.muiTheme}>
+        <MuiThemeProvider theme={muiTheme}>
           <CssBaseline />
-          <ThemeProvider theme={this.pageContext.theme}>
+          <ThemeProvider theme={theme} muiTheme={muiTheme}>
             {this.props.children}
           </ThemeProvider>
         </MuiThemeProvider>

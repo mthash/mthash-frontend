@@ -26,8 +26,8 @@ const theme = {
     secondary: "#d4d3e5"
   },
   background: {
-    paper: "#101425",
-    default: "#131828",
+    paper: "#131828",
+    default: "#101425",
     control: "#373e65"
   },
   statuses: {
@@ -45,6 +45,11 @@ const theme = {
       md: 1280,
       lg: 1400,
       xl: 1700
+    }
+  },
+  layouts: {
+    dashboard: {
+      headerHeight: "75px"
     }
   }
 };

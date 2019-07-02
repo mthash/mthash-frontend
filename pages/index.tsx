@@ -3,16 +3,17 @@ import Link from "next/link";
 import MuiLink from "@material-ui/core/Link";
 
 import { withAuthSync, logout } from "~/utils/auth";
+import DashboardLayout from "~/components/layouts/DashboardLayout";
 
 const Home: React.FC = (): JSX.Element => {
   return (
-    <div>
+    <DashboardLayout>
       <div>MtHash Dashboard</div>
       <Link href="/login">
         <a>Sign in</a>
       </Link>
       <MuiLink onClick={() => logout()}>Logout</MuiLink>
-    </div>
+    </DashboardLayout>
   );
 };
 

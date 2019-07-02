@@ -10,8 +10,8 @@ const muiTheme = createMuiTheme({
       disabledBackground: "#676f91"
     },
     background: {
-      paper: "#101425",
-      default: "#131828"
+      paper: "#131828",
+      default: "#101425"
     },
     primary: {
       light: "#75feb0",

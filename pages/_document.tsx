@@ -1,13 +1,11 @@
-import React from "react";
+import * as React from "react";
 import Document, { Head, Main, NextScript } from "next/document";
 import { ServerStyleSheet } from "styled-components";
 import { ServerStyleSheets } from "@material-ui/styles";
 import flush from "styled-jsx/server";
 
-import getEnv from "~/utils/getEnviroment";
-
 export default class MyDocument extends Document {
-  static async getInitialProps(ctx) {
+  static async getInitialProps(ctx): Promise<any> {
     const sheet = new ServerStyleSheet();
     const sheets = new ServerStyleSheets();
     const originalRenderPage = ctx.renderPage;
@@ -36,7 +34,7 @@ export default class MyDocument extends Document {
     }
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <html lang="en" dir="ltr">
         <Head>
