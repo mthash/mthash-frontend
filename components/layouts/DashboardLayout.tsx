@@ -14,6 +14,9 @@ import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
 
+import Logo from "../../static/Logo.svg";
+// import Logo from "@/static/Logo.svg";
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme): any => ({
@@ -48,7 +51,8 @@ const DashboardLayout: React.FC<> = (): JSX.Element => {
       <CssBaseline />
       <StyledAppBar position="fixed" className={classes.appBar}>
         <Toolbar>
-          <Logo src="static/logo.png" />
+          <Logo />
+          {/* <Logo /> */}
           <Typography variant="h6" noWrap>
             Clipped drawer
           </Typography>
@@ -129,7 +133,8 @@ const StyledAppBar = styled(AppBar)`
   box-shadow: none;
 `;
 
-const Logo = styled.img`
-  height: 47px;
-  width: 48px;
-`;
+// const Logo = styled.img`
+//   color: ${p => p.theme.palette.common.white};
+//   height: 47px;
+//   width: 48px;
+// `;
