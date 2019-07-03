@@ -36,5 +36,5 @@ const FormErrors: React.FC<Props> = ({
 export default FormErrors;
 
 const Error = styled.div`
-  color: ${p => p.theme.statuses.error};
+  color: ${p => p.theme.palette.error.primary};
 `;

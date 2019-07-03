@@ -3,7 +3,7 @@ import Link from "next/link";
 import MuiLink from "@material-ui/core/Link";
 
 import { withAuthSync, logout } from "~/utils/auth";
-import DashboardLayout from "~/components/layouts/DashboardLayout";
+import { DashboardLayout } from "~/components/layouts";
 
 const Home: React.FC = (): JSX.Element => {
   return (

@@ -1,94 +1,41 @@
 import * as React from "react";
 import styled from "styled-components";
 import { makeStyles } from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
+
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Toolbar from "@material-ui/core/Toolbar";
-import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
 
-import Logo from "../../static/Logo.svg";
-// import Logo from "@/static/Logo.svg";
-
-const drawerWidth = 240;
+import Logo from "../../../static/Logo.svg";
+import Sidebar from "./Sidebar";
 
 const useStyles = makeStyles((theme): any => ({
-  root: {
-    display: "flex"
-  },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
     backgroundColor: theme.palette.background.paper,
     boxShadow: "none"
   },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0
-  },
-  drawerPaper: {
-    width: drawerWidth,
-    backgroundColor: theme.palette.background.paper
-  },
   content: {
     flexGrow: 1,
     padding: theme.spacing(3)
-  },
-  toolbar: theme.mixins.toolbar
+  }
 }));
 
 const DashboardLayout: React.FC<> = (): JSX.Element => {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
+    <Wrapper>
       <CssBaseline />
-      <StyledAppBar position="fixed" className={classes.appBar}>
+
+      <StyledAppBar position="fixed">
         <Toolbar>
-          <Logo />
-          {/* <Logo /> */}
-          <Typography variant="h6" noWrap>
-            Clipped drawer
-          </Typography>
+          <StyledLogo />
         </Toolbar>
       </StyledAppBar>
-      <Drawer
-        className={classes.drawer}
-        variant="permanent"
-        elevation={16}
-        classes={{
-          paper: classes.drawerPaper
-        }}
-      >
-        <div className={classes.toolbar} />
-        <List>
-          {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {["All mail", "Trash", "Spam"].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-      </Drawer>
+      <Sidebar />
+
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <Typography paragraph>
@@ -121,20 +68,26 @@ const DashboardLayout: React.FC<> = (): JSX.Element => {
           posuere sollicitudin aliquam ultrices sagittis orci a.
         </Typography>
       </main>
-    </div>
+    </Wrapper>
   );
 };
 
 export default DashboardLayout;
 
+const Wrapper = styled.div`
+  display: flex;
+`;
+
 const StyledAppBar = styled(AppBar)`
   z-index: ${p => p.theme.zIndex.drawer + 1};
   background-color: ${p => p.theme.palette.background.paper};
   box-shadow: none;
+  color: ${p => p.theme.palette.text.primary};
+  height: ${p => p.theme.layouts.dashboard.headerHeight}px;
 `;
 
-// const Logo = styled.img`
-//   color: ${p => p.theme.palette.common.white};
-//   height: 47px;
-//   width: 48px;
-// `;
+const StyledLogo = styled(Logo)`
+  height: 47px;
+  width: 48px;
+  margin: 15px 0;
+`;

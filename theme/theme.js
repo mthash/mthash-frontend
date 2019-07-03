@@ -12,6 +12,7 @@ const muiTheme = createMuiTheme({
     background: {
       paper: "#131828",
       default: "#101425",
+      highlight: "#181D30",
       control: "#373e65"
     },
     primary: {
@@ -48,9 +49,16 @@ const muiTheme = createMuiTheme({
       xl: 1700
     }
   },
+  rounding: {
+    md: 5,
+    lg: 8
+  },
   layouts: {
     dashboard: {
-      headerHeight: "75px"
+      headerHeight: 75,
+      sidebar: {
+        minWidth: 90
+      }
     }
   }
 });
