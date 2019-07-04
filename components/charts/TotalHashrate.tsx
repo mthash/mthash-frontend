@@ -104,7 +104,7 @@ const Wrapper = styled(Paper)`
 
 const ChartWrapper = styled.div`
   width: calc(100% - 20px);
-  height: 400px;
+  height: 450px;
 `;
 
 const ChartCanvas = styled.canvas`
