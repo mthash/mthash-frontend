@@ -9,6 +9,8 @@ import Typography from "@material-ui/core/Typography";
 
 import Logo from "../../../static/Logo.svg";
 import Sidebar from "./Sidebar";
+import SectionTabs from "./SectionTabs";
+import User from "./User";
 
 const useStyles = makeStyles((theme): any => ({
   appBar: {
@@ -30,9 +32,11 @@ const DashboardLayout: React.FC<> = (): JSX.Element => {
       <CssBaseline />
 
       <StyledAppBar position="fixed">
-        <Toolbar>
+        <StyledToolbar>
           <StyledLogo />
-        </Toolbar>
+          <SectionTabs />
+          <User name="Henri Miel" />
+        </StyledToolbar>
       </StyledAppBar>
       <Sidebar />
 
@@ -82,11 +86,18 @@ const StyledAppBar = styled(AppBar)`
   z-index: ${p => p.theme.zIndex.drawer + 1};
   background-color: ${p => p.theme.palette.background.paper};
   box-shadow: none;
-  color: ${p => p.theme.palette.text.primary};
+  color: ${p => p.theme.palette.text.secondary};
   height: ${p => p.theme.layouts.dashboard.headerHeight}px;
 `;
 
+const StyledToolbar = styled(Toolbar)`
+  display: fixed;
+  justify-content: space-between;
+  align-items: center;
+`;
+
 const StyledLogo = styled(Logo)`
+  color: ${p => p.theme.palette.text.primary};
   height: 47px;
   width: 48px;
   margin: 15px 0;
