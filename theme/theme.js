@@ -56,6 +56,7 @@ const muiTheme = createMuiTheme({
   layouts: {
     dashboard: {
       headerHeight: 75,
+      contentMaxWidth: 1560,
       sidebar: {
         minWidth: 90
       }
