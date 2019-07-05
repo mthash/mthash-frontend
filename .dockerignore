@@ -3,8 +3,6 @@
 **/.vscode
 **/.history
 **/.idea
-**/package-lock.json
 **/pkg
 **/coverage
 node_modules
-packages/**/node_modules

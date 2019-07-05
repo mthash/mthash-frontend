@@ -36,8 +36,6 @@ export default class MtHashApp extends App<Props, State> {
     if (process.browser) {
       window.env = props.pageProps.env;
     }
-
-    // this.pageContext = getPageContext();
   }
 
   render(): JSX.Element {
