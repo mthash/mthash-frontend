@@ -13,13 +13,14 @@ export default TextField;
 
 const StyledTextField = styled(MuiTextField)`
   border-radius: 5px;
-  background-color: ${p => p.theme.background.control};
+  background-color: ${p => p.theme.palette.background.control};
   overflow: hidden;
 
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
   input:-webkit-autofill:focus {
-    -webkit-text-fill-color: ${p => p.theme.text.secondary};
-    -webkit-box-shadow: inset 0 0 0px 9999px ${p => p.theme.background.control};
+    -webkit-text-fill-color: ${p => p.theme.palette.text.secondary};
+    -webkit-box-shadow: inset 0 0 0px 9999px
+      ${p => p.theme.palette.background.control};
   }
 `;

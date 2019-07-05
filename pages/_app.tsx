@@ -3,8 +3,7 @@ import App, { Container } from "next/app";
 import Head from "next/head";
 
 import { AppLayout } from "~/components/layouts";
-import { StyledMaterialProvider } from "~/components/providers";
-import getPageContext from "~/utils/getPageContext";
+import { AppStylesProvider } from "~/components/providers";
 import getEnv from "~/utils/getEnviroment";
 import PageContext from "~/models/common/PageContext";
 
@@ -16,7 +15,7 @@ export interface Props {
 export interface State {}
 
 export default class MtHashApp extends App<Props, State> {
-  static async getInitialProps({ Component, router, ctx }) {
+  static async getInitialProps({ Component, router, ctx }): any {
     let pageProps = {};
 
     if (Component.getInitialProps) {
@@ -28,14 +27,6 @@ export default class MtHashApp extends App<Props, State> {
     return { pageProps };
   }
 
-  componentDidMount() {
-    // Remove the server-side injected CSS.
-    const jssStyles = document.querySelector("#jss-server-side");
-    if (jssStyles) {
-      jssStyles.parentNode.removeChild(jssStyles);
-    }
-  }
-
   pageContext: PageContext;
 
   constructor(props: Props, ctx: any) {
@@ -45,8 +36,6 @@ export default class MtHashApp extends App<Props, State> {
     if (process.browser) {
       window.env = props.pageProps.env;
     }
-
-    this.pageContext = getPageContext();
   }
 
   render(): JSX.Element {
@@ -54,11 +43,14 @@ export default class MtHashApp extends App<Props, State> {
 
     return (
       <Container>
-        <StyledMaterialProvider pageContext={this.pageContext}>
+        <Head>
+          <title>MtHash</title>
+        </Head>
+        <AppStylesProvider>
           <AppLayout>
-            <Component {...pageProps} pageContext={this.pageContext} />
+            <Component />
           </AppLayout>
-        </StyledMaterialProvider>
+        </AppStylesProvider>
       </Container>
     );
   }

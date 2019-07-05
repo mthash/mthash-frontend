@@ -38,6 +38,10 @@ const GlobalStyle = createGlobalStyle`
     font-size: 10px;
   }
   
+  svg {
+    fill: currentColor;
+  }
+
   #progressInput {
     margin: 20px auto;
     width: 30%;

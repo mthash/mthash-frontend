@@ -1,7 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
 import Grid from "@material-ui/core/Grid";
-import Hidden from "@material-ui/core/Hidden";
 import Head from "next/head";
 
 const COMPANY_NAME = "mthash";
@@ -28,14 +27,12 @@ const AuthLayout: React.FC<Props> = ({ children, title }): JSX.Element => (
       </CompanyName>
       <FormWrapper>{children}</FormWrapper>
     </FormGridCell>
-    <Hidden smDown>
-      <PromoGridCell item md={6} lg={7} zeroMinWidth>
-        <div>
-          <Slogan>{SLOGAN}</Slogan>
-          <div>{PROMO}</div>
-        </div>
-      </PromoGridCell>
-    </Hidden>
+    <PromoGridCell item md={6} lg={7} zeroMinWidth>
+      <div>
+        <Slogan>{SLOGAN}</Slogan>
+        <div>{PROMO}</div>
+      </div>
+    </PromoGridCell>
   </WrapperGrid>
 );
 
@@ -65,11 +62,15 @@ const FormGridCell = styled(Grid)`
 `;
 
 const PromoGridCell = styled(Grid)`
-  background-color: ${p => p.theme.background.paper};
+  background-color: ${p => p.theme.palette.background.paper};
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: ${p => p.theme.breakpoints.values.sm}px) {
+    display: none;
+  }
 `;
 
 const CompanyName = styled.div`
@@ -77,7 +78,7 @@ const CompanyName = styled.div`
   display: flex;
   margin: 25px;
   align-items: center;
-  color: ${p => p.theme.text.main};
+  color: ${p => p.theme.palette.text.main};
 
   > img {
     margin: 10px;
