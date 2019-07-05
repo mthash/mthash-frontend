@@ -1,14 +1,24 @@
 import * as React from "react";
+import styled from "styled-components";
 import Paper from "@material-ui/core/Paper";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
+import Divider from "@material-ui/core/Divider";
+import Button from "@material-ui/core/Button";
 
 // import { TOKENS } from "~/constants/token";
 
+import WidgetHeader from "~/components/dashboard/common/WidgetHeader";
+
 import Bitcoin from "../../../static/tokens/Bitcoin.svg";
 import Litecoin from "../../../static/tokens/Litecoin.svg";
+import BitcoinCash from "../../../static/tokens/BitcoinCash.svg";
+import Ethereum from "../../../static/tokens/Ethereum.svg";
+import Monero from "../../../static/tokens/Monero.svg";
+
+import { Wallet } from "~/pages/index";
 
 export const TOKENS = {
   bitcoin: {
@@ -20,14 +30,25 @@ export const TOKENS = {
     name: "Litecoin",
     alias: "LTC",
     Icon: Litecoin
+  },
+  bitcoinCash: {
+    name: "Bitcoin Cash",
+    alias: "BCH",
+    Icon: BitcoinCash
+  },
+  ethereum: {
+    name: "Enthereum",
+    alias: "ETC",
+    Icon: Ethereum
+  },
+  monero: {
+    name: "Monero",
+    alias: "XMR",
+    Icon: Monero
   }
 };
-
-interface BalanceItemProps {
-  Icon: React.FC;
-  name: string;
-  alias: string;
-}
+const BALANCE_CAPTION = "Balance";
+const WALLET_ACTION = "Wallet";
 
 const BalanceItem: React.FC<BalanceItemProps> = ({
   Icon,
@@ -35,26 +56,47 @@ const BalanceItem: React.FC<BalanceItemProps> = ({
   name
 }): JSX.Element => {
   return (
-    <ListItem>
+    <TokenListItem>
       <ListItemIcon>{Icon && <Icon />}</ListItemIcon>
       <ListItemText>
         {name} ({alias})
       </ListItemText>
-    </ListItem>
+    </TokenListItem>
   );
 };
 
 const Balance: React.FC = (): JSX.Element => {
+  const tokens = Object.values(TOKENS);
+  const wallet = Wallet.useContainer();
+
+  React.useEffect(() => {
+    wallet.getData();
+  }, []);
+
   return (
     <Paper>
-      <h3>Balance</h3>
-      <List>
-        {Object.values(TOKENS).map(token => (
-          <BalanceItem key={token.alias} {...token} />
+      <WidgetHeader
+        caption={BALANCE_CAPTION}
+        actions={<Button>{WALLET_ACTION}</Button>}
+      />
+      <TokensList>
+        {tokens.map((token, index) => (
+          <React.Fragment key={token.alias}>
+            <BalanceItem {...token} />
+            {index !== tokens.length - 1 && <Divider light />}
+          </React.Fragment>
         ))}
-      </List>
+      </TokensList>
     </Paper>
   );
 };
 
 export default Balance;
+
+const TokensList = styled(List)`
+  padding: 15px;
+`;
+
+const TokenListItem = styled(ListItem)`
+  padding: 10px 0;
+`;

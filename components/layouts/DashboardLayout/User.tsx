@@ -2,17 +2,55 @@ import * as React from "react";
 import styled from "styled-components";
 import Button from "@material-ui/core/Button";
 import AccountCircle from "@material-ui/icons/AccountCircle";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+
+import { logout } from "~/utils/auth";
 
 interface Props {
   name: string;
 }
 
 const User: React.FC<Props> = ({ name }): JSX.Element => {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const handleLogout = () => {
+    handleClose();
+    logout();
+  };
+
   return (
-    <UserButton>
-      <UserName>{name}</UserName>
-      <AccountCircle />
-    </UserButton>
+    <>
+      <UserButton onClick={handleClick} aria-haspopup="true">
+        <UserName>{name}</UserName>
+        <AccountCircle />
+      </UserButton>
+
+      <UserMenu
+        anchorEl={anchorEl}
+        getContentAnchorEl={null}
+        onClose={handleClose}
+        open={Boolean(anchorEl)}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "right"
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right"
+        }}
+        elevation={0}
+      >
+        <MenuItem onClick={handleLogout}>Logout</MenuItem>
+      </UserMenu>
+    </>
   );
 };
 
@@ -28,6 +66,13 @@ const UserButton = styled(Button)`
 
 const UserName = styled.span`
   margin: 0 10px;
+`;
+
+const UserMenu = styled(Menu)`
+  .MuiMenu-list {
+    padding: 20px;
+    min-width: 160px;
+  }
 `;
 
 export default User;
