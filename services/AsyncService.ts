@@ -1,5 +1,11 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import cookie from "js-cookie";
+
+import EnviromentService from "./EnviromentService";
+
+const { API } = EnviromentService;
+
+type RequestMethod = "get" | "post" | "put";
 
 class AsyncService {
   constructor() {
@@ -10,10 +16,32 @@ class AsyncService {
       }
     });
 
-    this.post = this.axios.post;
-    this.get = this.axios.get;
     this.setInterceptors();
   }
+
+  requestURl(endpoint: string): string {
+    return `${API}/${endpoint}`;
+  }
+
+  get = async (endpoint: string, data: any): Promise<any> => {
+    return await this.axiosRequst(endpoint, "get", data);
+  };
+
+  post = async (endpoint: string, data: any): Promise<any> => {
+    return await this.axiosRequst(endpoint, "post", data);
+  };
+
+  axiosRequst = (
+    endpoint: string,
+    method: RequestMethod,
+    data: any
+  ): Promise<any> => {
+    return this.axios({
+      method,
+      url: this.requestURl(endpoint),
+      data
+    });
+  };
 
   setInterceptors() {
     const { request, response } = this.axios.interceptors;
@@ -26,7 +54,7 @@ class AsyncService {
     const token = cookie.get("token");
 
     if (token) {
-      config.headers.Authorization = `${token}`;
+      config.headers.Authorization = token;
     }
 
     return config;

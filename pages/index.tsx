@@ -1,31 +1,30 @@
 import * as React from "react";
 import Grid from "@material-ui/core/Grid";
-import { createContainer } from "unstated-next";
 
 import { withAuthSync, logout } from "~/utils/auth";
 import { DashboardLayout } from "~/components/layouts";
 import TotalHashrate from "~/components/dashboard/TotalHashrate";
 import Balance from "~/components/dashboard/Balance";
-import AsyncService from "~/services/AsyncService";
+import DashboardContainer from "~/containers/DashboardContainer";
 
-function useWallet(initialState = {}) {
-  let [wallet, setWallet] = React.useState(initialState);
+// function useWallet(initialState = {}) {
+//   let [wallet, setWallet] = React.useState(initialState);
 
-  const getData = async () => {
-    const result = await AsyncService.get(`${window.env.API}/user/wallet`);
+//   const getData = async () => {
+//     const result = await AsyncService.get(`user/wallet`);
 
-    setWallet(result);
-  };
+//     setWallet(result);
+//   };
 
-  return { wallet, getData };
-}
+//   return { wallet, getData };
+// }
 
-export const Wallet = createContainer(useWallet);
+// export const Wallet = createContainer(useWallet);
 
 const Home: React.FC = (): JSX.Element => {
   return (
     <DashboardLayout>
-      <Wallet.Provider>
+      <DashboardContainer.Provider>
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <TotalHashrate />
@@ -34,7 +33,7 @@ const Home: React.FC = (): JSX.Element => {
             <Balance />
           </Grid>
         </Grid>
-      </Wallet.Provider>
+      </DashboardContainer.Provider>
     </DashboardLayout>
   );
 };

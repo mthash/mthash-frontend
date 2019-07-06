@@ -10,6 +10,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import { isEmpty } from "ramda";
 
 import { RESPONSE_ERROR_NAME } from "~/constants/request";
+import ENDPOINTS from "~/constants/endpoints";
 import { TextField } from "~/components/common/TextField";
 import { PasswordField } from "~/components/common/PasswordField"
 import { AsyncService } from "~/services";
@@ -129,7 +130,7 @@ export default withFormik<FormProps, FormValues>({
   }),
   handleSubmit: async (values, { setSubmitting, setErrors, setStatus }) => {
     try {
-      const result = await AsyncService.post(`${window.env.API}/user`, values);
+      const result = await AsyncService.post(ENDPOINTS.auth.signup, values);
       const token = result?.data?.body;
       setStatus('done')
     } catch (error) {

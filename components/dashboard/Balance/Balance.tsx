@@ -7,18 +7,19 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
 import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
 
 // import { TOKENS } from "~/constants/token";
 
 import WidgetHeader from "~/components/dashboard/common/WidgetHeader";
 
-import Bitcoin from "../../../static/tokens/Bitcoin.svg";
-import Litecoin from "../../../static/tokens/Litecoin.svg";
-import BitcoinCash from "../../../static/tokens/BitcoinCash.svg";
-import Ethereum from "../../../static/tokens/Ethereum.svg";
-import Monero from "../../../static/tokens/Monero.svg";
+import Bitcoin from "../../../static/currencies/Bitcoin.svg";
+import Litecoin from "../../../static/currencies/Litecoin.svg";
+import BitcoinCash from "../../../static/currencies/BitcoinCash.svg";
+import Ethereum from "../../../static/currencies/Ethereum.svg";
+import Monero from "../../../static/currencies/Monero.svg";
 
-import { Wallet } from "~/pages/index";
+import DashboardContainer from "~/containers/DashboardContainer";
 
 export const TOKENS = {
   bitcoin: {
@@ -59,7 +60,20 @@ const BalanceItem: React.FC<BalanceItemProps> = ({
     <TokenListItem>
       <ListItemIcon>{Icon && <Icon />}</ListItemIcon>
       <ListItemText>
-        {name} ({alias})
+        <Grid container>
+          <Grid item xs={3}>
+            {name} ({alias})
+          </Grid>
+          <Grid item xs={3}>
+            123456
+          </Grid>
+          <Grid item xs={3}>
+            123456
+          </Grid>
+          <Grid item xs={3}>
+            123456
+          </Grid>
+        </Grid>
       </ListItemText>
     </TokenListItem>
   );
@@ -67,11 +81,13 @@ const BalanceItem: React.FC<BalanceItemProps> = ({
 
 const Balance: React.FC = (): JSX.Element => {
   const tokens = Object.values(TOKENS);
-  const wallet = Wallet.useContainer();
+  const dashboard = DashboardContainer.useContainer();
 
   React.useEffect(() => {
-    wallet.getData();
+    dashboard.balance.fetch();
   }, []);
+
+  console.log(dashboard.balance.wallets);
 
   return (
     <Paper>
