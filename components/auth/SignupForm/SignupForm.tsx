@@ -134,7 +134,7 @@ export default withFormik<FormProps, FormValues>({
       setStatus('done')
     } catch (error) {
       setErrors({ 
-        [RESPONSE_ERROR_NAME]: error.response?.message || "Something happened during registration" 
+        [RESPONSE_ERROR_NAME]: error.response?.data?.message || "Something happened during registration" 
       });
     }
 

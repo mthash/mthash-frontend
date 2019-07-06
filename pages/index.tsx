@@ -12,7 +12,7 @@ function useWallet(initialState = {}) {
   let [wallet, setWallet] = React.useState(initialState);
 
   const getData = async () => {
-    const result = await AsyncService.get(`${window.env.API}/wallet/user`);
+    const result = await AsyncService.get(`${window.env.API}/user/wallet`);
 
     setWallet(result);
   };
@@ -23,8 +23,6 @@ function useWallet(initialState = {}) {
 export const Wallet = createContainer(useWallet);
 
 const Home: React.FC = (): JSX.Element => {
-  // const wallet = Wallet.useContainer();
-
   return (
     <DashboardLayout>
       <Wallet.Provider>
