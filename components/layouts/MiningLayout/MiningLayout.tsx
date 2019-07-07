@@ -2,7 +2,6 @@ import * as React from "react";
 import styled from "styled-components";
 import CssBaseline from "@material-ui/core/CssBaseline";
 
-import Sidebar from "./Sidebar";
 import Header from "~/components/layouts/common/Header";
 
 import { APP_SECTION_IDS } from "~/constants/appSections";
@@ -11,18 +10,17 @@ interface Props {
   children: React.ReactNode;
 }
 
-const DashboardLayout: React.FC<Props> = ({ children }): JSX.Element => {
+const MiningLayout: React.FC<Props> = ({ children }): JSX.Element => {
   return (
     <Wrapper>
       <CssBaseline />
-      <Header user="Henri Miel" activatedSection={APP_SECTION_IDS.dashboard} />
-      <Sidebar />
+      <Header user="Henri Miel" activatedSection={APP_SECTION_IDS.mining} />
       <Content>{children}</Content>
     </Wrapper>
   );
 };
 
-export default DashboardLayout;
+export default MiningLayout;
 
 const Wrapper = styled.div`
   display: flex;
