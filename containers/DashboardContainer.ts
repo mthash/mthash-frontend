@@ -5,7 +5,7 @@ import ENDPOINTS from "~/constants/endpoints";
 import AsyncService from "~/services/AsyncService";
 
 function useDashboard() {
-  let [wallets, setWallets] = React.useState({});
+  let [wallets, setWallets] = React.useState([]);
 
   return {
     balance: {

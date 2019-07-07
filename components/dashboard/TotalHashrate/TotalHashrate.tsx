@@ -1,7 +1,8 @@
 import * as React from "react";
 import styled from "styled-components";
-import Paper from "@material-ui/core/Paper";
 import Chart from "chart.js";
+
+import Paper from "~/components/common/Paper";
 
 export default class TotalHashrate extends React.Component {
   constructor(props) {
@@ -99,7 +100,6 @@ export default class TotalHashrate extends React.Component {
 
 const Wrapper = styled(Paper)`
   padding: 20px;
-  border-radius: 10px;
 `;
 
 const ChartWrapper = styled.div`
