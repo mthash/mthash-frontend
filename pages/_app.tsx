@@ -4,8 +4,6 @@ import Head from "next/head";
 
 import { AppLayout } from "~/components/layouts";
 import { AppStylesProvider } from "~/components/providers";
-import getEnv from "~/utils/getEnviroment";
-import PageContext from "~/models/common/PageContext";
 
 export interface Props {
   children?: React.ReactNode;
@@ -22,20 +20,7 @@ export default class MtHashApp extends App<Props, State> {
       pageProps = await Component.getInitialProps(ctx);
     }
 
-    pageProps.env = getEnv;
-
     return { pageProps };
-  }
-
-  pageContext: PageContext;
-
-  constructor(props: Props, ctx: any) {
-    super(props, ctx);
-
-    // TODO: Probably it should be reimplemented
-    if (process.browser) {
-      window.env = props.pageProps.env;
-    }
   }
 
   render(): JSX.Element {

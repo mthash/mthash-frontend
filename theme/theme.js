@@ -13,7 +13,8 @@ const muiTheme = createMuiTheme({
       paper: "#131828",
       default: "#101425",
       highlight: "#181D30",
-      control: "#373e65"
+      control: "#373e65",
+      divider: "#1B223C"
     },
     primary: {
       light: "#75feb0",

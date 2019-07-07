@@ -5,9 +5,10 @@ import * as Yup from "yup";
 import Button from "@material-ui/core/Button";
 import { isEmpty } from "ramda";
 
+import { RESPONSE_ERROR_NAME } from "~/constants/request";
+import ENDPOINTS from "~/constants/endpoints";
 import { TextField } from "~/components/common/TextField";
 import { PasswordField } from "~/components/common/PasswordField"
-import { RESPONSE_ERROR_NAME } from "~/constants/request";
 import { login } from "~/utils/auth";
 import { AsyncService } from "~/services";
 
@@ -70,14 +71,14 @@ const LoginForm: React.FC<InjectedFormikProps<FormProps, FormValues>> = (
 );
 
 export default withFormik<FormProps, FormValues>({
-  mapPropsToValues: () => ({ login: "", password: "", password2: "" }),
+  mapPropsToValues: () => ({ login: "", password: "" }),
   validationSchema: Yup.object().shape({
     login: Yup.string().required("Please input login"),
     password: Yup.string().required("Please input password")
   }),
   handleSubmit: async (values, { setSubmitting, setErrors }) => {
     try {
-      const result = await AsyncService.post(`${window.env.API}/user/login`, values);
+      const result = await AsyncService.post(ENDPOINTS.auth.login, values);
       const token = result?.data?.body;
       login({ token });
     } catch (error) {

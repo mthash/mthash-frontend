@@ -4,6 +4,8 @@ import { ServerStyleSheet } from "styled-components";
 import { ServerStyleSheets } from "@material-ui/styles";
 import flush from "styled-jsx/server";
 
+import getEnv from "~/utils/getEnviroment";
+
 export default class MyDocument extends Document {
   static async getInitialProps(ctx): Promise<any> {
     const sheet = new ServerStyleSheet();
@@ -49,6 +51,11 @@ export default class MyDocument extends Document {
             name="theme-color"
             content={theme.palette.primary.main}
           /> */}
+          <script
+            dangerouslySetInnerHTML={{
+              __html: "env = " + JSON.stringify(getEnv)
+            }}
+          />
         </Head>
         <body>
           <Main />
