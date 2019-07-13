@@ -3,6 +3,8 @@ import styled from "styled-components";
 import Grid from "@material-ui/core/Grid";
 import Head from "next/head";
 
+import Logo from "../../../static/Logo.svg";
+
 const COMPANY_NAME = "mthash";
 const SLOGAN = "Token Distributed Hash Power";
 const PROMO = "Hash the peaks and beyond";
@@ -22,7 +24,7 @@ const AuthLayout: React.FC<Props> = ({ children, title }): JSX.Element => (
 
     <FormGridCell item sm={12} md={6} lg={5}>
       <CompanyName>
-        <Logo src="static/logo.png" />
+        <StyledLogo />
         <div>{COMPANY_NAME}</div>
       </CompanyName>
       <FormWrapper>{children}</FormWrapper>
@@ -51,7 +53,7 @@ const FormWrapper = styled.div`
   padding-bottom: 200px;
 `;
 
-const Logo = styled.img`
+const StyledLogo = styled(Logo)`
   height: 47px;
   width: 48px;
 `;

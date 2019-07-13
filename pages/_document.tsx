@@ -40,6 +40,7 @@ export default class MyDocument extends Document {
     return (
       <html lang="en" dir="ltr">
         <Head>
+          <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
           <meta charSet="utf-8" />
           {/* Use minimum-scale=1 to enable GPU rasterization */}
           <meta

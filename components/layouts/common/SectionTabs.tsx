@@ -1,26 +1,30 @@
 import * as React from "react";
 import styled from "styled-components";
 import Button from "@material-ui/core/Button";
+import Router from "next/router";
 
-const SECTIONS = [
-  { name: "Dashboard", id: 1 },
-  { name: "Mining", id: 2 },
-  { name: "Exchange", id: 3 }
-];
+import APP_SECTIONS from "~/constants/appSections";
 
-const SectionTabs: React.FC = (): JSX.Element => {
-  const [activated, setActivated] = React.useState(1);
+// const sectionIds = Object.values(APP_SECTION_IDS);
+// type sectionID = typeof sectionIds;
 
-  const handleClick = (id: number) => () => setActivated(id);
+interface Props {
+  activatedSection: number;
+}
+
+const SectionTabs: React.FC<Props> = ({ activatedSection }): JSX.Element => {
+  const handleClick = (route: string) => () => {
+    Router.push(route);
+  };
 
   return (
     <nav>
-      {SECTIONS.map(
-        ({ id, name }): JSX.Element => (
+      {APP_SECTIONS.map(
+        ({ id, name, route }): JSX.Element => (
           <SectionButton
             key={id}
-            onClick={handleClick(id)}
-            activated={activated === id}
+            onClick={handleClick(route)}
+            activated={activatedSection === id}
           >
             {name}
           </SectionButton>

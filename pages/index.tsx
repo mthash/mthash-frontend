@@ -3,11 +3,10 @@ import Grid from "@material-ui/core/Grid";
 
 import { withAuthSync } from "~/utils/auth";
 import { DashboardLayout } from "~/components/layouts";
-import TotalHashrate from "~/components/dashboard/TotalHashrate";
-import Balance from "~/components/dashboard/Balance";
+import { TotalHashrate, Balance } from "~/components/dashboard";
 import DashboardContainer from "~/containers/DashboardContainer";
 
-const Home: React.FC = (): JSX.Element => {
+const Dashboard: React.FC = (): JSX.Element => {
   return (
     <DashboardLayout>
       <DashboardContainer.Provider>
@@ -24,4 +23,4 @@ const Home: React.FC = (): JSX.Element => {
   );
 };
 
-export default withAuthSync(Home);
+export default withAuthSync(Dashboard);

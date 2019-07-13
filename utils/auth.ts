@@ -3,16 +3,18 @@ import Router from "next/router";
 import nextCookie from "next-cookies";
 import cookie from "js-cookie";
 
+import ROUTES from "~/constants/routes";
+
 export const login = async ({ token }) => {
   cookie.set("token", token, { expires: 1 });
-  Router.push("/");
+  Router.push(ROUTES.dashboard);
 };
 
 export const logout = () => {
   cookie.remove("token");
   // to support logging out from all windows
   window.localStorage.setItem("logout", Date.now());
-  Router.push("/login");
+  Router.push(ROUTES.auth.login);
 };
 
 // Gets the display name of a JSX component for dev tools
@@ -51,7 +53,7 @@ export const withAuthSync = WrappedComponent =>
     syncLogout(event) {
       if (event.key === "logout") {
         console.log("logged out from storage!");
-        Router.push("/login");
+        Router.push(ROUTES.auth.login);
       }
     }
 
@@ -76,7 +78,7 @@ export const auth = ctx => {
 
   // We already checked for server. This should only happen on client.
   if (!token) {
-    Router.push("/login");
+    Router.push(ROUTES.auth.login);
   }
 
   return token;
