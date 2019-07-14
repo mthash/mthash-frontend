@@ -9,7 +9,7 @@ import { CURRENCIES, REAL_CURRENCIES } from "~/constants/currencies";
 import Currency from "~/models/types/Currency";
 import Wallet from "~/models/Wallet";
 
-import Bitcoin from "../../../static/currencies/Bitcoin.svg";
+import Bitcoin from "../../../static/currencies/Bitcoin.svg"; // "~/static/currencies/Bitcoin.svg";
 import Litecoin from "../../../static/currencies/Litecoin.svg";
 import BitcoinCash from "../../../static/currencies/BitcoinCash.svg";
 import Ethereum from "../../../static/currencies/Ethereum.svg";

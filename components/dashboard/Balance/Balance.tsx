@@ -13,9 +13,10 @@ import DashboardContainer from "~/containers/DashboardContainer";
 import BalanceItem from "./BalanceItem";
 
 import balanceMock from "~/_mocks_/balance.json";
+import Wallet from "~/models/Wallet";
 
-const BALANCE_CAPTION = "Balance";
-const WALLET_ACTION = "Wallet";
+const BALANCE_CAPTION: string = "Balance";
+const WALLET_ACTION: string = "Wallet";
 
 const Balance: React.FC = (): JSX.Element => {
   const dashboard = DashboardContainer.useContainer();
@@ -33,7 +34,7 @@ const Balance: React.FC = (): JSX.Element => {
         actions={<Button>{WALLET_ACTION}</Button>}
       />
       <TokensList>
-        {wallets.map((wallet, index) => (
+        {wallets.map((wallet: Wallet, index: number) => (
           <React.Fragment key={wallet.id}>
             <BalanceItem {...wallet} />
             {index !== wallets.length - 1 && <StyledDivider />}

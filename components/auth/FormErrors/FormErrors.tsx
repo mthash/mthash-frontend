@@ -20,7 +20,7 @@ const FormErrors: React.FC<Props> = ({
   return (
     <>
       {Object.entries(errors).map(
-        (errorPair): JSX.element => {
+        (errorPair): JSX.Element => {
           const [name, error] = errorPair;
           const isTouched = touched[name];
 

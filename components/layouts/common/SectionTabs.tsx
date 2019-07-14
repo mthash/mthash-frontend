@@ -1,5 +1,5 @@
 import * as React from "react";
-import styled from "styled-components";
+import styled, { DefaultTheme } from "styled-components";
 import Button from "@material-ui/core/Button";
 import Router from "next/router";
 
@@ -36,9 +36,14 @@ const SectionTabs: React.FC<Props> = ({ activatedSection }): JSX.Element => {
 
 export default SectionTabs;
 
+interface SectionButtonProps {
+  activated: boolean;
+  theme: DefaultTheme;
+}
+
 const SectionButton = styled(Button)`
   text-transform: capitalize;
-  color: ${p =>
+  color: ${(p: SectionButtonProps) =>
     p.activated
       ? p.theme.palette.text.primary
       : p.theme.palette.text.secondary}};

@@ -7,12 +7,17 @@ import MiningStatistic from "../../../static/MiningStatistic.svg";
 
 import miningStatistic from "~/_mocks_/miningStatistic.json";
 
-interface StatisticItemProps {
+interface StatItem {
   id: number;
   caption: string;
   value: string;
+}
+
+interface StatisticItemProps {
+  caption: string;
+  value: string;
   selected: boolean;
-  onClick: () => {};
+  onClick: () => void;
 }
 
 const StatisticItem: React.FC<StatisticItemProps> = ({
@@ -41,7 +46,7 @@ const OverviewStatistic: React.FC = (): JSX.Element => {
       <MiningStatistic />
       <StatisticList>
         {miningStatistic.map(
-          ({ id, caption, value }): JSX.Element => (
+          ({ id, caption, value }: StatItem): JSX.Element => (
             <StatisticItem
               key={id}
               caption={caption}

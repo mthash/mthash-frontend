@@ -12,7 +12,7 @@ function useDashboard() {
       wallets,
       fetch: async () => {
         const result = await AsyncService.get(ENDPOINTS.wallets);
-        setWallets(result?.data?.body);
+        setWallets(result.data.body);
       }
     }
   };

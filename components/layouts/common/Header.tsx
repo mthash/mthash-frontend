@@ -10,12 +10,9 @@ import SectionTabs from "./SectionTabs";
 
 import { APP_SECTION_IDS } from "~/constants/appSections";
 
-const sectionIds = Object.values(APP_SECTION_IDS);
-type sectionID = typeof sectionIds;
-
 interface Props {
   user: string;
-  activatedSection: sectionID;
+  activatedSection: number;
 }
 
 const Header: React.FC<Props> = ({ user, activatedSection }): JSX.Element => {

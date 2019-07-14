@@ -4,15 +4,15 @@ import Router from "next/router";
 import { withFormik, InjectedFormikProps } from "formik";
 import * as Yup from "yup";
 import Button from "@material-ui/core/Button";
-import Snackbar from '@material-ui/core/Snackbar';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
+import Snackbar from "@material-ui/core/Snackbar";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
 import { isEmpty } from "ramda";
 
 import { RESPONSE_ERROR_NAME } from "~/constants/request";
 import ENDPOINTS from "~/constants/endpoints";
 import { TextField } from "~/components/common/TextField";
-import { PasswordField } from "~/components/common/PasswordField"
+import { PasswordField } from "~/components/common/PasswordField";
 import { AsyncService } from "~/services";
 import { login } from "~/utils/auth";
 
@@ -38,9 +38,9 @@ interface FormProps {
 
 const RegistrationForm: React.SFC<
   InjectedFormikProps<FormProps, FormValues>
-> = ({ 
+> = ({
   values,
-  errors, 
+  errors,
   touched,
   handleChange,
   handleSubmit,
@@ -48,7 +48,7 @@ const RegistrationForm: React.SFC<
 }): JSX.Element => {
   const handleSnackbarClose = () => {
     Router.push("/login");
-  }
+  };
 
   return (
     <WrapperForm onSubmit={handleSubmit}>
@@ -93,29 +93,28 @@ const RegistrationForm: React.SFC<
       >
         {SUBMIT_TEXT}
       </SubmitButton>
-      <Snackbar 
-        open={status===DONE_STATUS} 
+      <Snackbar
+        open={status === DONE_STATUS}
         message={REGISTRATION_SUCCESSFUL}
         autoHideDuration={SNACKBAR_AUTOCLOSE_DURATION}
         onClose={handleSnackbarClose}
         action={[
-          <IconButton 
-            key="close" 
+          <IconButton
+            key="close"
             aria-label="Close"
-            color="inherit" 
+            color="inherit"
             onClick={handleSnackbarClose}
           >
             <CloseIcon />
-          </IconButton>,
+          </IconButton>
         ]}
       />
       <RedirectButtons />
     </WrapperForm>
-  )
+  );
 };
 
-
-export default withFormik<FormProps, FormValues>({
+export default withFormik({
   mapPropsToValues: () => ({
     login: "",
     name: "",
@@ -126,16 +125,18 @@ export default withFormik<FormProps, FormValues>({
     name: Yup.string().required("Please input name"),
     password: Yup.string()
       .min(8)
-      .required("Please input password"),
+      .required("Please input password")
   }),
   handleSubmit: async (values, { setSubmitting, setErrors, setStatus }) => {
     try {
       const result = await AsyncService.post(ENDPOINTS.auth.signup, values);
-      const token = result?.data?.body;
-      setStatus('done')
+      const token = result.data.body;
+      setStatus("done");
     } catch (error) {
-      setErrors({ 
-        [RESPONSE_ERROR_NAME]: error.response?.data?.message || "Something happened during registration" 
+      setErrors({
+        [RESPONSE_ERROR_NAME]:
+          error.response.data.message ||
+          "Something happened during registration"
       });
     }
 

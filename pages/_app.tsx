@@ -13,7 +13,7 @@ export interface Props {
 export interface State {}
 
 export default class MtHashApp extends App<Props, State> {
-  static async getInitialProps({ Component, router, ctx }): any {
+  static async getInitialProps({ Component, router, ctx }): Promise<any> {
     let pageProps = {};
 
     if (Component.getInitialProps) {

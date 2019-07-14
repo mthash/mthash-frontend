@@ -5,11 +5,7 @@ import Chart from "chart.js";
 import Paper from "~/components/common/Paper";
 
 export default class TotalHashrate extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.chartBitcoin = React.createRef();
-  }
+  private chartBitcoin: any = React.createRef<HTMLCanvasElement>();
 
   componentDidMount() {
     const chartContext = this.chartBitcoin.current.getContext("2d");

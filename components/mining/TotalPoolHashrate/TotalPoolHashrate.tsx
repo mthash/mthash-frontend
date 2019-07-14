@@ -5,11 +5,7 @@ import Chart from "chart.js";
 import Paper from "~/components/common/Paper";
 
 export default class TotalPoolHashrate extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.chart = React.createRef();
-  }
+  private chart: any = React.createRef();
 
   componentDidMount() {
     const chartContext = this.chart.current.getContext("2d");

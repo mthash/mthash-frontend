@@ -1,21 +1,26 @@
 import * as React from "react";
 import styled from "styled-components";
-import LineadProgress from "@material-ui/core/LinearProgress";
+import LineadProgress, {
+  LinearProgressProps
+} from "@material-ui/core/LinearProgress";
 
 interface Props {
   share: number;
   color: string;
 }
 
-const PERCENTAGE_SIGN = "%";
+const PERCENTAGE_SIGN: string = "%";
 
-const SharePercentage: React.FC<Props> = ({ share, color }): JSX.Element => {
+const SharePercentage: React.FC<Props> = ({
+  share,
+  color
+}: Props): JSX.Element => {
   return (
     <Wrapper>
       <PercentageScale
         value={share}
         variant="buffer"
-        color={color}
+        color="secondary"
         customColor={color}
       />
       <Share>
@@ -37,6 +42,10 @@ const Share = styled.span`
   margin: 0 10px;
 `;
 
+interface ScaleProps {
+  customColor: string;
+}
+
 const PercentageScale = styled(LineadProgress)`
   border-radius: 5px;
   width: 50%;
@@ -45,7 +54,7 @@ const PercentageScale = styled(LineadProgress)`
     background-color: ${p => p.theme.palette.background.default};
 
     &.MuiLinearProgress-barColorSecondary {
-      background-color: ${p => p.customColor};
+      background-color: ${(p: ScaleProps) => p.customColor};
     }
   }
 `;
