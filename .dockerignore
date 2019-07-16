@@ -6,3 +6,5 @@
 **/pkg
 **/coverage
 node_modules
+
+./deploy.sh
