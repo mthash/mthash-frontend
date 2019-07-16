@@ -15,7 +15,7 @@ const DashboardLayout: React.FC<Props> = ({ children }): JSX.Element => {
   return (
     <Wrapper>
       <CssBaseline />
-      <Header user="Henri Miel" activatedSection={APP_SECTION_IDS.dashboard} />
+      <Header activatedSection={APP_SECTION_IDS.dashboard} />
       <Sidebar />
       <Content>{children}</Content>
     </Wrapper>

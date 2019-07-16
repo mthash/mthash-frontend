@@ -14,7 +14,7 @@ const MiningLayout: React.FC<Props> = ({ children }): JSX.Element => {
   return (
     <Wrapper>
       <CssBaseline />
-      <Header user="Henri Miel" activatedSection={APP_SECTION_IDS.mining} />
+      <Header activatedSection={APP_SECTION_IDS.mining} />
       <Content>{children}</Content>
     </Wrapper>
   );

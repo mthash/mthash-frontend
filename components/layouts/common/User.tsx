@@ -6,12 +6,13 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 
 import { logout } from "~/utils/auth";
+import IUser from "~/models/User";
 
 interface Props {
-  name: string;
+  user?: IUser;
 }
 
-const User: React.FC<Props> = ({ name }): JSX.Element => {
+const User: React.FC<Props> = ({ user }): JSX.Element => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -29,7 +30,7 @@ const User: React.FC<Props> = ({ name }): JSX.Element => {
   return (
     <>
       <UserButton onClick={handleClick} aria-haspopup="true">
-        <UserName>{name}</UserName>
+        <UserName>{user.name}</UserName>
         <AccountCircle />
       </UserButton>
 

@@ -8,20 +8,23 @@ import Logo from "../../../static/Logo.svg";
 import User from "./User";
 import SectionTabs from "./SectionTabs";
 
+import AppContainer from "~/containers/AppContainer";
+
 import { APP_SECTION_IDS } from "~/constants/appSections";
 
 interface Props {
-  user: string;
   activatedSection: number;
 }
 
-const Header: React.FC<Props> = ({ user, activatedSection }): JSX.Element => {
+const Header: React.FC<Props> = ({ activatedSection }): JSX.Element => {
+  const { user } = AppContainer.useContainer();
+
   return (
     <StyledAppBar position="fixed">
       <StyledToolbar>
         <StyledLogo />
         <SectionTabs activatedSection={activatedSection} />
-        <User name={user} />
+        <User user={user} />
       </StyledToolbar>
     </StyledAppBar>
   );
