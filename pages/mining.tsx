@@ -8,7 +8,7 @@ import { OverviewStatistic, TotalPoolHashrate } from "~/components/mining";
 const Mining: React.FC = (): JSX.Element => {
   return (
     <MiningLayout>
-      <Grid container spacing={5}>
+      <Grid container spacing={0}>
         <Grid item xs={12}>
           <OverviewStatistic />
         </Grid>

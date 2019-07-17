@@ -41,6 +41,10 @@ export default class MyDocument extends Document {
       <html lang="en" dir="ltr">
         <Head>
           <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
+          <link
+            href="https://fonts.googleapis.com/css?family=Montserrat:400,600&display=swap"
+            rel="stylesheet"
+          ></link>
           <meta charSet="utf-8" />
           {/* Use minimum-scale=1 to enable GPU rasterization */}
           <meta

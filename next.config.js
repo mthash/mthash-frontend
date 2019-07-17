@@ -9,7 +9,7 @@ module.exports = {
     };
 
     config.resolve = {
-      extensions: [".js", ".json", ".jsx", ".ts", ".tsx", ".svg"],
+      extensions: [".js", ".json", ".jsx", ".ts", ".tsx", ".svg", ".png"],
       alias: {
         ...config.resolve.alias,
         "~": path.resolve(__dirname, ".")
