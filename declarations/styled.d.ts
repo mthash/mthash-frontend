@@ -22,6 +22,7 @@ declare module "styled-components" {
         paper: string;
         default: string;
         highlight: string;
+        highlightLight: string;
         control: string;
         divider: string;
       };

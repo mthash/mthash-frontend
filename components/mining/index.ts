@@ -4,3 +4,4 @@ export {
 export {
   default as TotalPoolHashrate
 } from "./TotalPoolHashrate/TotalPoolHashrate";
+export { default as RewardsTable } from "./RewardsTable/RewardsTable";

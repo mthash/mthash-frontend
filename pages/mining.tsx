@@ -3,7 +3,11 @@ import Grid from "@material-ui/core/Grid";
 
 import { withAuthSync } from "~/utils/auth";
 import { MiningLayout } from "~/components/layouts";
-import { OverviewStatistic, TotalPoolHashrate } from "~/components/mining";
+import {
+  OverviewStatistic,
+  TotalPoolHashrate,
+  RewardsTable
+} from "~/components/mining";
 
 const Mining: React.FC = (): JSX.Element => {
   return (
@@ -14,6 +18,31 @@ const Mining: React.FC = (): JSX.Element => {
         </Grid>
         <Grid item xs={12}>
           <TotalPoolHashrate />
+        </Grid>
+      </Grid>
+      <Grid container spacing={5}>
+        <Grid
+          xs={7}
+          direction="column"
+          justify="flex-start"
+          alignItems="flex-start"
+          container
+          item
+        >
+          <img src="static/ArcadeMining.svg" />
+          <img src="static/MiningPortal.svg" />
+          <img src="static/LogoGradient.svg" />
+        </Grid>
+        <Grid
+          xs={5}
+          direction="column"
+          justify="flex-start"
+          alignItems="flex-start"
+          container
+          item
+        >
+          <RewardsTable picture="static/BlockRewards.svg" />
+          <RewardsTable picture="static/MyRewards.svg" />
         </Grid>
       </Grid>
     </MiningLayout>
