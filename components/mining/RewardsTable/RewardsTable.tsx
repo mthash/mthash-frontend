@@ -5,6 +5,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import Link from "@material-ui/core/Link";
 
 function createData(
   name: number,
@@ -26,12 +27,16 @@ const rows = [
 
 interface Props {
   picture: string;
+  onShowAll?: () => {};
 }
 
-const RewardsTable: React.FC<Props> = ({ picture }) => {
+const RewardsTable: React.FC<Props> = ({ picture, onShowAll }) => {
   return (
     <section>
-      <img src={picture} />
+      <Header>
+        <img src={picture} />
+        <ShowAllLink>Show all</ShowAllLink>
+      </Header>
       <Table>
         <TableHead>
           <TableRow>
@@ -45,7 +50,7 @@ const RewardsTable: React.FC<Props> = ({ picture }) => {
         </TableHead>
         <TableBody>
           {rows.map(row => (
-            <RewardsRow key={row.name}>
+            <RewardsRow key={row.name} hover>
               <RewardCell component="th" scope="row">
                 {row.name}
               </RewardCell>
@@ -72,4 +77,15 @@ const RewardsRow = styled(TableRow)`
 
 const RewardCell = styled(TableCell)`
   border-width: 0;
+`;
+
+const Header = styled.head`
+  display: flex;
+  align-items: flex-end;
+`;
+
+const ShowAllLink = styled(Link)`
+  color: ${p => p.theme.palette.text.secondary};
+  cursor: pointer;
+  margin: 0 0 14px 10px;
 `;
