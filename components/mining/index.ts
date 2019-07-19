@@ -2,6 +2,9 @@ export {
   default as OverviewStatistic
 } from "./OverviewStatistic/OverviewStatistic";
 export {
-  default as TotalPoolHashrate
-} from "./TotalPoolHashrate/TotalPoolHashrate";
+  default as TotalPoolHashrateChart
+} from "./TotalPoolHashrateChart/TotalPoolHashrateChart";
 export { default as RewardsTable } from "./RewardsTable/RewardsTable";
+export {
+  default as ArcadeMiningTable
+} from "./ArcadeMiningTable/ArcadeMiningTable";

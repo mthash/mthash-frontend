@@ -105,7 +105,7 @@ const StyledListItem = styled(ListItem)`
 
   &&:hover {
     color: ${p => p.theme.palette.text.primary};
-    background-color: ${p => p.theme.palette.background.highlight};
+    background-color: ${p => p.theme.palette.hightlight.dark};
   }
 
   svg {

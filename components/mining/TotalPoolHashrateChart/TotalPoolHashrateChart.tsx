@@ -123,7 +123,7 @@ const theme = {
 // no chart will be rendered.
 // website examples showcase many properties,
 // you'll often use just a few of them.
-const TotalPoolHashrate = props => (
+const TotalPoolHashrateChart = props => (
   <Wrapper>
     <SvgDefs style={{ visibility: "hidden" }}>
       <defs>
@@ -312,7 +312,7 @@ const TotalPoolHashrate = props => (
   </Wrapper>
 );
 
-export default TotalPoolHashrate;
+export default TotalPoolHashrateChart;
 
 const Wrapper = styled.div`
   width: 100%;

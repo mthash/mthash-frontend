@@ -5,7 +5,8 @@ import { withAuthSync } from "~/utils/auth";
 import { MiningLayout } from "~/components/layouts";
 import {
   OverviewStatistic,
-  TotalPoolHashrate,
+  TotalPoolHashrateChart,
+  ArcadeMiningTable,
   RewardsTable
 } from "~/components/mining";
 
@@ -17,7 +18,7 @@ const Mining: React.FC = (): JSX.Element => {
           <OverviewStatistic />
         </Grid>
         <Grid item xs={12}>
-          <TotalPoolHashrate />
+          <TotalPoolHashrateChart />
         </Grid>
       </Grid>
       <Grid container spacing={5}>
@@ -29,8 +30,8 @@ const Mining: React.FC = (): JSX.Element => {
           container
           item
         >
-          <img src="static/ArcadeMining.svg" />
-          <img src="static/MiningPortal.svg" />
+          <ArcadeMiningTable />
+          <img src="static/mining/MiningPortal.svg" />
           <img src="static/LogoGradient.svg" />
         </Grid>
         <Grid
@@ -41,8 +42,8 @@ const Mining: React.FC = (): JSX.Element => {
           container
           item
         >
-          <RewardsTable picture="static/BlockRewards.svg" />
-          <RewardsTable picture="static/MyRewards.svg" />
+          <RewardsTable picture="static/mining/BlockRewards.svg" />
+          <RewardsTable picture="static/mining/MyRewards.svg" />
         </Grid>
       </Grid>
     </MiningLayout>

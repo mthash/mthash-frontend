@@ -37,7 +37,6 @@ const Wrapper = styled.div`
 `;
 
 const StatisticListItem = styled(ListItem)`
-  // margin: 10px;
   padding: 40px;
   display: flex;
   flex-direction: column;

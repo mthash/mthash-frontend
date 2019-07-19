@@ -2,7 +2,7 @@ import * as React from "react";
 import styled, { css } from "styled-components";
 import List from "@material-ui/core/List";
 
-import MiningStatistic from "../../../static/MiningStatistic.svg";
+import MiningStatistic from "../../../static/mining/MiningStatistic.svg";
 import StatisticItem from "./OverviewStatisticItem";
 
 import miningStatistic from "~/_mocks_/miningStatistic.json";

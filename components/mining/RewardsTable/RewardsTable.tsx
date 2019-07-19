@@ -30,7 +30,7 @@ interface Props {
   onShowAll?: () => {};
 }
 
-const RewardsTable: React.FC<Props> = ({ picture, onShowAll }) => {
+const RewardsTable: React.FC<Props> = ({ picture, onShowAll }): JSX.Element => {
   return (
     <section>
       <Header>
@@ -71,7 +71,7 @@ export default RewardsTable;
 
 const RewardsRow = styled(TableRow)`
   &:nth-of-type(2n + 1) {
-    background-color: ${p => p.theme.palette.background.highlightLight};
+    background-color: ${p => p.theme.palette.background.darkBlue};
   }
 `;
 

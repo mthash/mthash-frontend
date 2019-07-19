@@ -18,12 +18,15 @@ declare module "styled-components" {
       action: {
         disabledBackground: string;
       };
+      hightlight: {
+        dark: string;
+        blue: string;
+      };
       background: {
         paper: string;
         default: string;
-        highlight: string;
-        highlightLight: string;
         control: string;
+        darkBlue: string;
         divider: string;
       };
       primary: {
@@ -44,12 +47,21 @@ declare module "styled-components" {
         dark: string;
         contrastText: string;
       };
+      success: {
+        light: string;
+        main: string;
+        dark: string;
+        contrastText: string;
+      };
       text: {
         primary: string;
         secondary: string;
         disabled: string;
         hint: string;
       };
+    };
+    typography: {
+      fontFamily: string;
     };
     breakpoints: {
       values: {
