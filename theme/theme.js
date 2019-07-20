@@ -6,9 +6,6 @@ const muiTheme = createMuiTheme({
       black: "#000",
       white: "#fff"
     },
-    action: {
-      disabledBackground: "#676f91"
-    },
     hightlight: {
       dark: "#181D30",
       blue: "#14BAE3"
@@ -18,7 +15,8 @@ const muiTheme = createMuiTheme({
       default: "#101425",
       control: "#373e65",
       darkBlue: "#14182c",
-      divider: "#1B223C"
+      divider: "#1B223C",
+      button: "#342a59"
     },
     primary: {
       light: "#75feb0",

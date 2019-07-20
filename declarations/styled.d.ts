@@ -15,9 +15,6 @@ declare module "styled-components" {
         black: string;
         white: string;
       };
-      action: {
-        disabledBackground: string;
-      };
       hightlight: {
         dark: string;
         blue: string;
@@ -28,6 +25,7 @@ declare module "styled-components" {
         control: string;
         darkBlue: string;
         divider: string;
+        button: string;
       };
       primary: {
         light: string;
