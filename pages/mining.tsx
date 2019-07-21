@@ -7,8 +7,12 @@ import {
   OverviewStatistic,
   TotalPoolHashrateChart,
   ArcadeMiningTable,
-  RewardsTable
+  RewardsTable,
+  MiningPortal
 } from "~/components/mining";
+
+import blockRewards from "~/_mocks_/blockRewars.json";
+import myRewards from "~/_mocks_/myRewards.json";
 
 const Mining: React.FC = (): JSX.Element => {
   return (
@@ -31,7 +35,7 @@ const Mining: React.FC = (): JSX.Element => {
           item
         >
           <ArcadeMiningTable />
-          <img src="static/mining/MiningPortal.svg" />
+          <MiningPortal />
           <img src="static/LogoGradient.svg" />
         </Grid>
         <Grid
@@ -42,8 +46,66 @@ const Mining: React.FC = (): JSX.Element => {
           container
           item
         >
-          <RewardsTable picture="static/mining/BlockRewards.svg" />
-          <RewardsTable picture="static/mining/MyRewards.svg" />
+          <RewardsTable
+            picture="static/mining/BlockRewards.svg"
+            columns={[
+              {
+                name: "Age",
+                dataKey: "age"
+              },
+              {
+                name: "Coin",
+                dataKey: "coin"
+              },
+              {
+                name: "Height",
+                dataKey: "height"
+              },
+              {
+                name: "Reward",
+                dataKey: "reward"
+              },
+              {
+                name: "Tx Fee",
+                dataKey: "txFee"
+              },
+              {
+                name: "Block Hash",
+                dataKey: "blockHash"
+              }
+            ]}
+            data={blockRewards}
+          />
+          <RewardsTable
+            picture="static/mining/MyRewards.svg"
+            columns={[
+              {
+                name: "Age",
+                dataKey: "age"
+              },
+              {
+                name: "Coin",
+                dataKey: "coin"
+              },
+              {
+                name: "% Block Reward",
+                dataKey: "blockReward"
+              },
+              {
+                name: "Reward",
+                dataKey: "reward"
+              },
+              {
+                name: "Fees",
+                dataKey: "fees"
+              },
+              {
+                name: "Earnings",
+                dataKey: "earnings"
+              }
+            ]}
+            data={myRewards}
+          />
         </Grid>
       </Grid>
     </MiningLayout>

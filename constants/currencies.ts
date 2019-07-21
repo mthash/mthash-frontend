@@ -23,6 +23,11 @@ export const CURRENCIES = {
     name: "Monero",
     currency: "XMR",
     color: "#FF6600"
+  },
+  ZEC: {
+    name: "Zcash",
+    currency: "ZEC",
+    color: "#f4b728"
   }
 };
 

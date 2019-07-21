@@ -7,71 +7,94 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Link from "@material-ui/core/Link";
 
-function createData(
-  name: number,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number
-) {
-  return { name, calories, fat, carbs, protein };
+interface ColumnDefinition {
+  name: string;
+  dataKey: string;
 }
 
-const rows = [
-  createData(12, 159, 6.0, 24, 4.0),
-  createData(3, 237, 9.0, 37, 4.3),
-  createData(5, 262, 16.0, 24, 6.0),
-  createData(56, 305, 3.7, 67, 4.3),
-  createData(109, 356, 16.0, 49, 3.9)
-];
+type DataDefinition = { [key: string]: string | number };
 
 interface Props {
   picture: string;
+  columns: ColumnDefinition[];
+  data: DataDefinition[];
   onShowAll?: () => {};
 }
 
-const RewardsTable: React.FC<Props> = ({ picture, onShowAll }): JSX.Element => {
+const RewardsTable: React.FC<Props> = ({
+  picture,
+  data,
+  columns,
+  onShowAll
+}): JSX.Element => {
   return (
-    <section>
+    <Wrapper>
       <Header>
         <img src={picture} />
-        <ShowAllLink>Show all</ShowAllLink>
+        <ShowAllLink onClick={onShowAll}>Show all</ShowAllLink>
       </Header>
       <Table>
         <TableHead>
           <TableRow>
-            <RewardCell>Age</RewardCell>
-            <RewardCell align="right">Coin</RewardCell>
-            <RewardCell align="right">Height</RewardCell>
-            <RewardCell align="right">Reward</RewardCell>
-            <RewardCell align="right">Tx Fee</RewardCell>
-            <RewardCell align="right">Block Hash</RewardCell>
+            {columns.map(
+              ({ name }): JSX.Element => (
+                <RewardCell key={name} align="right">
+                  {name}
+                </RewardCell>
+              )
+            )}
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map(row => (
-            <RewardsRow key={row.name} hover>
-              <RewardCell component="th" scope="row">
-                {row.name}
-              </RewardCell>
-              <RewardCell align="right">{row.calories}</RewardCell>
-              <RewardCell align="right">{row.fat}</RewardCell>
-              <RewardCell align="right">{row.carbs}</RewardCell>
-              <RewardCell align="right">{row.protein}</RewardCell>
-              <RewardCell align="right">{}</RewardCell>
-            </RewardsRow>
-          ))}
+          {data.map(
+            (row): JSX.Element => (
+              <RewardsRow key={row.id} hover>
+                {columns.map(
+                  ({ dataKey }): JSX.Element => (
+                    <RewardCell key={dataKey} align="right">
+                      {row[dataKey]}
+                    </RewardCell>
+                  )
+                )}
+              </RewardsRow>
+            )
+          )}
         </TableBody>
       </Table>
-    </section>
+    </Wrapper>
   );
 };
 
 export default RewardsTable;
 
+const Wrapper = styled.section`
+  width: 100%;
+`;
+
 const RewardsRow = styled(TableRow)`
+  background-color: ${p => p.theme.palette.background.paperDarkest};
+
   &:nth-of-type(2n + 1) {
     background-color: ${p => p.theme.palette.background.darkBlue};
+  }
+
+  &:first-child td:first-child {
+    border-top-left-radius: 10px;
+  }
+  &:first-child td:last-child {
+    border-top-right-radius: 10px;
+  }
+  &:last-child td:first-child {
+    border-bottom-left-radius: 10px;
+  }
+  &:last-child td:last-child {
+    border-bottom-right-radius: 10px;
+  }
+
+  &:hover {
+    td {
+      background-color: ${p => p.theme.palette.background.button};
+    }
   }
 `;
 

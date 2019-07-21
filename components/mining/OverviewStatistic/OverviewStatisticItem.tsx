@@ -23,7 +23,7 @@ const StatisticItem: React.FC<StatisticItemProps> = ({
       <StatisticCaption>{caption}</StatisticCaption>
     </StatisticListItem>
     <SelectedIndicator>
-      {selected && <img src={"/static/arrow-down.png"} />}
+      {selected && <img src={"/static/ArrowDown.svg"} />}
     </SelectedIndicator>
   </Wrapper>
 );

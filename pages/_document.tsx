@@ -42,7 +42,7 @@ export default class MyDocument extends Document {
         <Head>
           <link rel="icon" type="image/x-icon" href="/static/favicon.ico" />
           <link
-            href="https://fonts.googleapis.com/css?family=Montserrat:400,600&display=swap"
+            href="https://fonts.googleapis.com/css?family=Montserrat:200,400,600&display=swap"
             rel="stylesheet"
           ></link>
           <meta charSet="utf-8" />

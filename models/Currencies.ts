@@ -6,4 +6,5 @@ export default interface Currencies {
   BCH: Currency;
   ETH: Currency;
   XMR: Currency;
+  ZEC: Currency;
 }

@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "age": 2,
+    "coin": 159,
+    "blockReward": 6.0,
+    "reward": 24,
+    "fees": 4.0,
+    "earnings": 20.324
+  },
+  {
+    "id": 2,
+    "age": 3,
+    "coin": 237,
+    "blockReward": 6,
+    "reward": 37,
+    "fees": 4.3,
+    "earnings": 0.324
+  },
+  {
+    "id": 3,
+    "age": 5,
+    "coin": 262,
+    "blockReward": 16,
+    "reward": 24,
+    "fees": 6,
+    "earnings": 2.324
+  },
+  {
+    "id": 4,
+    "age": 56,
+    "coin": 305,
+    "blockReward": 3.7,
+    "reward": 67,
+    "fees": 4.3,
+    "earnings": 506.32
+  },
+  {
+    "id": 5,
+    "age": 109,
+    "coin": 356,
+    "blockReward": 16,
+    "reward": 49,
+    "fees": 3.9,
+    "earnings": 2.364
+  },
+  {
+    "id": 6,
+    "age": 2,
+    "coin": 159,
+    "blockReward": 6.0,
+    "reward": 24,
+    "fees": 4.0,
+    "earnings": 20.324
+  },
+  {
+    "id": 7,
+    "age": 3,
+    "coin": 237,
+    "blockReward": 6,
+    "reward": 37,
+    "fees": 4.3,
+    "earnings": 0.324
+  },
+  {
+    "id": 8,
+    "age": 5,
+    "coin": 262,
+    "blockReward": 16,
+    "reward": 24,
+    "fees": 6,
+    "earnings": 2.324
+  },
+  {
+    "id": 9,
+    "age": 56,
+    "coin": 305,
+    "blockReward": 3.7,
+    "reward": 67,
+    "fees": 4.3,
+    "earnings": 506.32
+  },
+  {
+    "id": 10,
+    "age": 109,
+    "coin": 356,
+    "blockReward": 16,
+    "reward": 49,
+    "fees": 3.9,
+    "earnings": 2.364
+  }
+]

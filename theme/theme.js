@@ -12,9 +12,13 @@ const muiTheme = createMuiTheme({
     },
     background: {
       paper: "#131828",
+      paper2: "#14172c",
+      paperDarkest: "#0f1221",
       default: "#101425",
       control: "#373e65",
+      control2: "#1a1c36",
       darkBlue: "#14182c",
+
       divider: "#1B223C",
       button: "#342a59"
     },
@@ -45,6 +49,7 @@ const muiTheme = createMuiTheme({
     text: {
       primary: "#fff",
       secondary: "#676f91",
+      third: "#191d33",
       disabled: "rgba(0, 0, 0, 0.38)",
       hint: "rgba(0, 0, 0, 0.38)"
     }

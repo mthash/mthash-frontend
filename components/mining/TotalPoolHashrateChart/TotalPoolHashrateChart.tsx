@@ -1,7 +1,9 @@
 import { ResponsiveLine, Line } from "@nivo/line";
 import styled from "styled-components";
+import Paper from "~/components/common/Paper";
 
 import data from "~/_mocks_/totalPoolHashrate.json";
+import TotalPoolHeader from "./TotalPoolHeader";
 
 const height = 300;
 const width = 800;
@@ -125,6 +127,7 @@ const theme = {
 // you'll often use just a few of them.
 const TotalPoolHashrateChart = props => (
   <Wrapper>
+    <TotalPoolHeader />
     <SvgDefs style={{ visibility: "hidden" }}>
       <defs>
         <linearGradient
@@ -261,11 +264,10 @@ const TotalPoolHashrateChart = props => (
         </linearGradient>
       </defs>
     </SvgDefs>
-
     <ResponsiveLine
       data={data}
       curve="natural"
-      margin={{ top: 0, right: 50, bottom: 50, left: 60 }}
+      margin={{ top: 0, right: 10, bottom: 100, left: 60 }}
       xScale={{ type: "point" }}
       // yScale={{ type: "linear", stacked: true, min: "auto", max: "auto" }}
       axisTop={null}
@@ -314,9 +316,12 @@ const TotalPoolHashrateChart = props => (
 
 export default TotalPoolHashrateChart;
 
-const Wrapper = styled.div`
+const Wrapper = styled(Paper)`
   width: 100%;
-  height: 50vh;
+  height: 55vh;
+  background-color: ${p => p.theme.palette.background.paperDarkest};
+  padding: 20px;
+  margin: 30px 0;
 `;
 
 const SvgDefs = styled.svg`

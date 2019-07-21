@@ -21,8 +21,11 @@ declare module "styled-components" {
       };
       background: {
         paper: string;
+        paper2: string;
+        paperDarkest: string;
         default: string;
         control: string;
+        control2: string;
         darkBlue: string;
         divider: string;
         button: string;
@@ -54,6 +57,7 @@ declare module "styled-components" {
       text: {
         primary: string;
         secondary: string;
+        third: string;
         disabled: string;
         hint: string;
       };
