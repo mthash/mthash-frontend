@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "currency": "BTC",
+    "revenue": {
+      "value": "0.0078",
+      "unit": "/hr",
+      "shift": 12.5
+    },
+    "hashrate": {
+      "value": "120.0011",
+      "unit": "Th/s",
+      "shift": 12.5
+    },
+    "mining": {
+      "value": "171.1042",
+      "unit": "HASH",
+      "shift": 12.5
+    },
+    "balance": {
+      "value": "12.7143",
+      "unit": "BTC",
+      "shift": 12.5
+    }
+  },
+  {
+    "id": 2,
+    "currency": "ETH",
+    "revenue": {
+      "value": "0.2394",
+      "unit": "/hr",
+      "shift": -5.23
+    },
+    "hashrate": {
+      "value": "352.3712",
+      "unit": "Mh/s",
+      "shift": -5.23
+    },
+    "mining": {
+      "value": "165.0234",
+      "unit": "HASH",
+      "shift": -5.23
+    },
+    "balance": {
+      "value": "85.2401",
+      "unit": "ETH",
+      "shift": -5.23
+    }
+  },
+  {
+    "id": 3,
+    "currency": "LTC",
+    "revenue": {
+      "value": "0.3264",
+      "unit": "/hr",
+      "shift": 39.68
+    },
+    "hashrate": {
+      "value": "251.9171",
+      "unit": "Mh/s",
+      "shift": 39.68
+    },
+    "mining": {
+      "value": "172.2034",
+      "unit": "HASH",
+      "shift": 39.68
+    },
+    "balance": {
+      "value": "57.8311",
+      "unit": "LTC",
+      "shift": 39.68
+    }
+  },
+  {
+    "id": 4,
+    "currency": "ZEC",
+    "revenue": {
+      "value": "3.3384",
+      "unit": "/hr",
+      "shift": 39.68
+    },
+    "hashrate": {
+      "value": "1,221.5227",
+      "unit": "Sol/s",
+      "shift": 39.68
+    },
+    "mining": {
+      "value": "147.3374",
+      "unit": "HASH",
+      "shift": 39.68
+    },
+    "balance": {
+      "value": "278.3778",
+      "unit": "ZEC",
+      "shift": 39.68
+    }
+  }
+]

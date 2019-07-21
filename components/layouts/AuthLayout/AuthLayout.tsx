@@ -80,7 +80,7 @@ const CompanyName = styled.div`
   display: flex;
   margin: 25px;
   align-items: center;
-  color: ${p => p.theme.palette.text.main};
+  color: ${p => p.theme.palette.text.primary};
 
   > img {
     margin: 10px;

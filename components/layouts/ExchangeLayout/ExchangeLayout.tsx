@@ -14,7 +14,7 @@ const ExchangeLayout: React.FC<Props> = ({ children }): JSX.Element => {
   return (
     <Wrapper>
       <CssBaseline />
-      <Header user="Henri Miel" activatedSection={APP_SECTION_IDS.exchange} />
+      <Header activatedSection={APP_SECTION_IDS.exchange} />
       <Content>{children}</Content>
     </Wrapper>
   );

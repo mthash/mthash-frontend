@@ -8,15 +8,15 @@ import { isEmpty } from "ramda";
 import { RESPONSE_ERROR_NAME } from "~/constants/request";
 import ENDPOINTS from "~/constants/endpoints";
 import { TextField } from "~/components/common/TextField";
-import { PasswordField } from "~/components/common/PasswordField"
+import { PasswordField } from "~/components/common/PasswordField";
 import { login } from "~/utils/auth";
 import { AsyncService } from "~/services";
 
 import FormErrors from "../FormErrors";
 import RedirectButtons from "./RedirectButtons";
 
-const CAPTION = "LOG IN";
-const SUBMIT_TEXT = "Log in";
+const CAPTION: string = "LOG IN";
+const SUBMIT_TEXT: string = "Log in";
 
 export interface Props {
   children?: React.ReactNode;
@@ -70,7 +70,7 @@ const LoginForm: React.FC<InjectedFormikProps<FormProps, FormValues>> = (
   </WrapperForm>
 );
 
-export default withFormik<FormProps, FormValues>({
+export default withFormik({
   mapPropsToValues: () => ({ login: "", password: "" }),
   validationSchema: Yup.object().shape({
     login: Yup.string().required("Please input login"),
@@ -79,11 +79,12 @@ export default withFormik<FormProps, FormValues>({
   handleSubmit: async (values, { setSubmitting, setErrors }) => {
     try {
       const result = await AsyncService.post(ENDPOINTS.auth.login, values);
-      const token = result?.data?.body;
+      const token = result.data.body;
       login({ token });
     } catch (error) {
-      setErrors({ 
-        [RESPONSE_ERROR_NAME]: error.response?.message || "login or password is incorrect" 
+      setErrors({
+        [RESPONSE_ERROR_NAME]:
+          error.response.message || "login or password is incorrect"
       });
     }
 

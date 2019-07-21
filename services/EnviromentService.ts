@@ -1,7 +1,17 @@
+import Environment from "~/models/common/Environment";
+
+declare global {
+  interface Window {
+    env: {
+      API: string;
+    };
+  }
+}
+
 const EnviromentService = new Proxy(
   {},
   {
-    get: (target, name) => {
+    get: (target, name: string) => {
       if (process && !process.browser && process.env && process.env[name]) {
         return process.env[name];
       }
@@ -13,4 +23,4 @@ const EnviromentService = new Proxy(
   }
 );
 
-export default EnviromentService;
+export default EnviromentService as Environment;

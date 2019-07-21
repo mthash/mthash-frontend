@@ -6,15 +6,21 @@ const muiTheme = createMuiTheme({
       black: "#000",
       white: "#fff"
     },
-    action: {
-      disabledBackground: "#676f91"
+    hightlight: {
+      dark: "#181D30",
+      blue: "#14BAE3"
     },
     background: {
       paper: "#131828",
+      paper2: "#14172c",
+      paperDarkest: "#0f1221",
       default: "#101425",
-      highlight: "#181D30",
       control: "#373e65",
-      divider: "#1B223C"
+      control2: "#1a1c36",
+      darkBlue: "#14182c",
+
+      divider: "#1B223C",
+      button: "#342a59"
     },
     primary: {
       light: "#75feb0",
@@ -28,6 +34,12 @@ const muiTheme = createMuiTheme({
       dark: "#c51162",
       contrastText: "#fff"
     },
+    success: {
+      light: "#add8ce",
+      main: "#50E3C2",
+      dark: "#2f947d",
+      contrastText: "#fff"
+    },
     error: {
       light: "#e57373",
       main: "#f44336",
@@ -37,6 +49,7 @@ const muiTheme = createMuiTheme({
     text: {
       primary: "#fff",
       secondary: "#676f91",
+      third: "#191d33",
       disabled: "rgba(0, 0, 0, 0.38)",
       hint: "rgba(0, 0, 0, 0.38)"
     }
@@ -53,6 +66,10 @@ const muiTheme = createMuiTheme({
   rounding: {
     md: 5,
     lg: 8
+  },
+  typography: {
+    fontFamily: `Montserrat, -apple-system,system-ui, BlinkMacSystemFont,
+    Segoe UI, Roboto, Helvetica Neue,Arial,sans-serif`
   },
   layouts: {
     dashboard: {

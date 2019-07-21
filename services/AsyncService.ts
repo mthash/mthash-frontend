@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from "axios";
+import axios, { AxiosInstance } from "axios";
 import cookie from "js-cookie";
 
 import EnviromentService from "./EnviromentService";
@@ -8,6 +8,8 @@ const { API } = EnviromentService;
 type RequestMethod = "get" | "post" | "put";
 
 class AsyncService {
+  private axios: AxiosInstance;
+
   constructor() {
     this.axios = axios.create({
       headers: {
@@ -23,7 +25,7 @@ class AsyncService {
     return `${API}/${endpoint}`;
   }
 
-  get = async (endpoint: string, data: any): Promise<any> => {
+  get = async (endpoint: string, data?: any): Promise<any> => {
     return await this.axiosRequst(endpoint, "get", data);
   };
 

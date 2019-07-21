@@ -1,12 +1,13 @@
 import * as React from "react";
-import { ThemeProvider } from "styled-components";
-import { MuiThemeProvider, CssBaseline } from "@material-ui/core";
-import { StylesProvider } from "@material-ui/styles";
+import { ThemeProvider, DefaultTheme } from "styled-components";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import MuiThemeProvider from "@material-ui/styles/ThemeProvider";
+import StylesProvider from "@material-ui/styles/StylesProvider";
 
 import theme from "~/theme/theme";
 
 export interface Props {
-  children?: React.ReactNode;
+  children?: React.ReactElement;
 }
 
 export interface State {}
@@ -17,7 +18,9 @@ export default class AppStylesProvider extends React.Component<Props, State> {
       <StylesProvider injectFirst>
         <MuiThemeProvider theme={theme}>
           <CssBaseline />
-          <ThemeProvider theme={theme}>{this.props.children}</ThemeProvider>
+          <ThemeProvider theme={theme as any}>
+            {this.props.children}
+          </ThemeProvider>
         </MuiThemeProvider>
       </StylesProvider>
     );
