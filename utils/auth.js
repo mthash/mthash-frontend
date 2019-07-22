@@ -9,6 +9,7 @@ const STUB_JWT =
   "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6IkVsa2luIiwibG9naW4iOiJlYWtodW5kemFkZUBnbWFpbC5jb20iLCJjcmVhdGVkX2F0IjoxNTYxNjUwNDQyLCJzdGF0dXMiOjEsImlhdCI6MTU2MjQyMzg2NiwiZXhwIjoxNTkzOTU5ODY2LCJmb3JfdGVzdGluZyI6dHJ1ZSwic2lnIjoiYTNmOGNmMjM3NTNlOTY3ODY2NWNlOGQwNDgwMGNlYjRkNDRkNzA3YyJ9.Oif53b0PWSg2PzEz2rmdYUm26-pId27Rh8PAqg_k4bY";
 
 export const login = async ({ token }) => {
+  // TODO: Stub implementation, change in for real token when the app will be in real development for production
   cookie.set("token", STUB_JWT, { expires: 1 });
   Router.push(ROUTES.dashboard);
 };
