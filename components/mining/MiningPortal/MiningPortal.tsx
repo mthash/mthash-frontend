@@ -22,7 +22,7 @@ const MiningPortal: React.FC = (): JSX.Element => {
   };
 
   const handleWithdraw = currency => {
-    miningContainer.minedAsset.deposit(currency);
+    miningContainer.minedAsset.withdraw(currency);
   };
 
   return (
