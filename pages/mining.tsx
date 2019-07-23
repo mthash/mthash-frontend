@@ -11,6 +11,7 @@ import {
   MiningPortal
 } from "~/components/mining";
 import MiningContainer from "~/containers/MiningContainer";
+import AppContext from "~/containers/AppContext";
 
 import blockRewards from "~/_mocks_/blockRewars.json";
 import myRewards from "~/_mocks_/myRewards.json";

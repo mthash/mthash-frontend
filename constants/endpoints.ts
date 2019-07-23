@@ -4,8 +4,11 @@ const ENDPOINTS = {
     signup: "user"
   },
   wallets: "user/wallet",
+  asset: "asset",
   mining: {
-    statistic: "mining/stats"
+    statistic: "mining/stats",
+    deposit: "mining/{asset}/deposit",
+    withdraw: "mining/{asset}/withdraw"
   }
 };
 

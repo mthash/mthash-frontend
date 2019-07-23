@@ -7,11 +7,23 @@ const ACTIONS = {
   stop: "Stop"
 };
 
-const MiningSlotActions: React.FC = (): JSX.Element => {
+interface Props {
+  onDeposit: () => void;
+  onWithdraw: () => void;
+}
+
+const MiningSlotActions: React.FC<Props> = ({
+  onDeposit,
+  onWithdraw
+}): JSX.Element => {
   return (
     <>
-      <MineButton variant="contained">{ACTIONS.mine}</MineButton>
-      <StopButton variant="contained">{ACTIONS.stop}</StopButton>
+      <MineButton variant="contained" onClick={onDeposit}>
+        {ACTIONS.mine}
+      </MineButton>
+      <StopButton variant="contained" onClick={onWithdraw}>
+        {ACTIONS.stop}
+      </StopButton>
     </>
   );
 };

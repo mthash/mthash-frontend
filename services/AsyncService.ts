@@ -29,7 +29,7 @@ class AsyncService {
     return await this.axiosRequst(endpoint, "get", data);
   };
 
-  post = async (endpoint: string, data: any): Promise<any> => {
+  post = async (endpoint: string, data?: any): Promise<any> => {
     return await this.axiosRequst(endpoint, "post", data);
   };
 

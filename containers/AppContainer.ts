@@ -5,18 +5,20 @@ import jwt_decode from "jwt-decode";
 
 import User from "~/models/User";
 
-interface UserAppProps {
+interface AppProps {
   user: User;
 }
 
-function useApp(): UserAppProps {
+function useApp(): AppProps {
   const token = cookie.get("token");
-  // let [user, setUser] = React.useState(jwt_decode(token));
+
   let [user, setUser] = React.useState(
     token ? jwt_decode(token) : { name: "" }
   );
 
-  return { user };
+  return {
+    user
+  };
 }
 
 const AppContainer = createContainer(useApp);

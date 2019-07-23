@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Button from "@material-ui/core/Button";
 
 import MiningSlotModel from "~/models/MiningSlot";
+import Currency from "~/models/types/Currency";
 import Paper from "~/components/common/Paper";
 import MiningDynamic from "~/components/mining/common/MiningDynamic";
 import MiningValueUnit from "~/components/mining/common/MiningValueUnit";
@@ -11,7 +12,17 @@ import MiningSlotChart from "./MiningSlotChart";
 import MiningHashInput from "./MiningHashInput";
 import MiningSlotActions from "./MiningSlotActions";
 
-const MiningSlot: React.FC<MiningSlotModel> = ({
+interface DepositArgs {
+  currency: Currency;
+  amount: string;
+}
+
+interface Props extends MiningSlotModel {
+  onDeposit: (DepositArgs) => {};
+  onWithdraw: (cur: Currency) => {};
+}
+
+const MiningSlot: React.FC<Props> = ({
   id,
   currency,
   algorithm,
@@ -19,8 +30,24 @@ const MiningSlot: React.FC<MiningSlotModel> = ({
   unit,
   shift,
   miningValue,
-  chartData
+  chartData,
+  onDeposit,
+  onWithdraw
 }): JSX.Element => {
+  const [amount, setAmount] = React.useState(miningValue);
+
+  const handleAmountChange = (event: React.FormEvent<HTMLInputElement>) => {
+    setAmount(event.currentTarget.value);
+  };
+
+  const handleWithdraw = () => {
+    onWithdraw && onWithdraw(currency);
+  };
+
+  const handleDeposit = () => {
+    onDeposit && onDeposit({ currency, amount });
+  };
+
   return (
     <Wrapper>
       <MiningSlotHeader currency={currency} algorithm={algorithm} />
@@ -31,9 +58,12 @@ const MiningSlot: React.FC<MiningSlotModel> = ({
       <SlotChart>
         <MiningSlotChart chartData={chartData} />
       </SlotChart>
-      <MiningHashInput miningValue={miningValue} />
+      <MiningHashInput amount={amount} onChange={handleAmountChange} />
       <SlotActions>
-        <MiningSlotActions />
+        <MiningSlotActions
+          onDeposit={handleDeposit}
+          onWithdraw={handleWithdraw}
+        />
       </SlotActions>
     </Wrapper>
   );
