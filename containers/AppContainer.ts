@@ -4,9 +4,15 @@ import cookie from "js-cookie";
 import jwt_decode from "jwt-decode";
 
 import User from "~/models/User";
+import NOTIFICATION_TYPES from "~/constants/notificationTypes";
+import NotificationType from "~/models/types/NotificationType";
 
 interface AppProps {
   user: User;
+  notifications: {
+    notification: any;
+    addNotification: (any, string) => void;
+  };
 }
 
 function useApp(): AppProps {
@@ -15,9 +21,18 @@ function useApp(): AppProps {
   let [user, setUser] = React.useState(
     token ? jwt_decode(token) : { name: "" }
   );
+  let [notification, setNotification] = React.useState({});
+
+  const addNotification = (content: any, type: NotificationType): void => {
+    setNotification({ content, type });
+  };
 
   return {
-    user
+    user,
+    notifications: {
+      notification,
+      addNotification
+    }
   };
 }
 

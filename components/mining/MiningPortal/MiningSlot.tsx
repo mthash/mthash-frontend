@@ -12,14 +12,14 @@ import MiningSlotChart from "./MiningSlotChart";
 import MiningHashInput from "./MiningHashInput";
 import MiningSlotActions from "./MiningSlotActions";
 
-interface DepositArgs {
+interface OperationArgs {
   currency: Currency;
   amount: string;
 }
 
 interface Props extends MiningSlotModel {
-  onDeposit: (DepositArgs) => {};
-  onWithdraw: (cur: Currency) => {};
+  onDeposit: (OperationArgs) => {};
+  onWithdraw: (OperationArgs) => {};
 }
 
 const MiningSlot: React.FC<Props> = ({
@@ -41,7 +41,7 @@ const MiningSlot: React.FC<Props> = ({
   };
 
   const handleWithdraw = () => {
-    onWithdraw && onWithdraw(currency);
+    onWithdraw && onWithdraw({ currency, amount });
   };
 
   const handleDeposit = () => {

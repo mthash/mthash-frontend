@@ -42,24 +42,17 @@ const GlobalStyle = createGlobalStyle`
   svg {
     fill: currentColor;
   }
-
-  #progressInput {
-    margin: 20px auto;
-    width: 30%;
+ 
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
   }
   
-  .tooltip {
-    font-size: 14px;
+  input[type=number] {
+    -moz-appearance:textfield; /* Firefox */
   }
-  
-  .popper .tooltip {
-    max-width: unset; 
-  }
-  
-  .import-modal {
-    order: 999;
-  }
-  
 `;
 
 export default GlobalStyle;

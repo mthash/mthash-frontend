@@ -17,7 +17,16 @@ const MiningHashInput: React.FC<Props> = ({
 }): JSX.Element => {
   return (
     <Wrapper>
-      <HashInput value={amount} onChange={onChange} variant="filled" />
+      <HashInput
+        value={amount}
+        onChange={onChange}
+        variant="filled"
+        type="number"
+        inputProps={{
+          step: 0.0001,
+          min: 0
+        }}
+      />
       <HashIcon />
     </Wrapper>
   );

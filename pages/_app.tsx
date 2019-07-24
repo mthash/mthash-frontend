@@ -4,11 +4,14 @@ import Head from "next/head";
 
 import { AppLayout } from "~/components/layouts";
 import { AppStylesProvider } from "~/components/providers";
+import Notifications from "~/components/common/Notifications";
+
 import AppContainer from "~/containers/AppContainer";
 import AppContext from "~/containers/AppContext";
 
 import { AsyncService } from "~/services";
 import ENDPOINTS from "~/constants/endpoints";
+import { NoSsr } from "@material-ui/core";
 
 export interface Props {
   children?: React.ReactNode;
@@ -53,6 +56,9 @@ export default class MtHashApp extends App<Props, State> {
               <AppLayout>
                 <Component />
               </AppLayout>
+              <NoSsr>
+                <Notifications />
+              </NoSsr>
             </AppContext.Provider>
           </AppContainer.Provider>
         </AppStylesProvider>

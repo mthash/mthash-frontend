@@ -8,7 +8,8 @@ const ENDPOINTS = {
   mining: {
     statistic: "mining/stats",
     deposit: "mining/{asset}/deposit",
-    withdraw: "mining/{asset}/withdraw"
+    withdraw: "mining/{asset}/withdraw",
+    blockRewards: "mining/reward/widget"
   }
 };
 

@@ -1,3 +1,4 @@
+export { default as MiningDashboard } from "./MiningDashboard/MiningDashboard";
 export {
   default as OverviewStatistic
 } from "./OverviewStatistic/OverviewStatistic";
