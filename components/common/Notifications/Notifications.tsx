@@ -30,8 +30,6 @@ const Notifications: React.FC = () => {
     }
   }, [notification]);
 
-  console.log(notification.content + " from notifications", open);
-
   return (
     <Snackbar
       anchorOrigin={{ vertical: "bottom", horizontal: "right" }}

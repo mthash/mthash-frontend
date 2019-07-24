@@ -37,7 +37,6 @@ const RewardCell: React.FC<RewardCellProps> = ({
   value,
   options = {}
 }): JSX.Element => {
-  console.log(options);
   const { withTooltip } = options;
   const content = (() => {
     if (withTooltip) {
