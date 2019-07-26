@@ -11,8 +11,8 @@ import { isEmpty } from "ramda";
 
 import { RESPONSE_ERROR_NAME } from "~/constants/request";
 import ENDPOINTS from "~/constants/endpoints";
-import { TextField } from "~/components/common/TextField";
-import { PasswordField } from "~/components/common/PasswordField";
+import TextField from "~/components/common/TextField";
+import PasswordField from "~/components/common/PasswordField";
 import { AsyncService } from "~/services";
 import { login } from "~/utils/auth";
 

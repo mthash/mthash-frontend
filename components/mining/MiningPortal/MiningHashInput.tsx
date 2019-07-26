@@ -2,7 +2,7 @@ import * as React from "react";
 import styled from "styled-components";
 // import Input from "@material-ui/core/Input";
 
-import { TextField } from "~/components/common/TextField";
+import TextField from "~/components/common/TextField";
 
 import Hash from "../../../static/currencies/HashMono.svg";
 

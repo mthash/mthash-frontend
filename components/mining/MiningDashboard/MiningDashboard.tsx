@@ -73,7 +73,7 @@ const MiningDashboard: React.FC = (): JSX.Element => {
               },
               {
                 name: "Tx Fee",
-                dataKey: "txFee"
+                dataKey: "fee"
               },
               {
                 name: "Block Hash",

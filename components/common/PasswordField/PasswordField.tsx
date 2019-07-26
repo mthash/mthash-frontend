@@ -5,7 +5,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
-import { TextField } from "~/components/common/TextField";
+import TextField from "~/components/common/TextField";
 
 const PasswordField: React.FC<FilledTextFieldProps> = (props): JSX.Element => {
   const [passwordShown, setPasswordShown] = React.useState(false);

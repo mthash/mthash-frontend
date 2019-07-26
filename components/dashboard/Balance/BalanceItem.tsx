@@ -6,24 +6,10 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Grid from "@material-ui/core/Grid";
 
 import { CURRENCIES, REAL_CURRENCIES } from "~/constants/currencies";
-import Currency from "~/models/types/Currency";
 import Wallet from "~/models/Wallet";
 
-import Bitcoin from "../../../static/currencies/Bitcoin.svg"; // "~/static/currencies/Bitcoin.svg";
-import Litecoin from "../../../static/currencies/Litecoin.svg";
-import BitcoinCash from "../../../static/currencies/BitcoinCash.svg";
-import Ethereum from "../../../static/currencies/Ethereum.svg";
-import Monero from "../../../static/currencies/Monero.svg";
-
 import SharePercentage from "./SharePercentage";
-
-const CURRENCY_ICONS: { [name: string]: React.FC } = {
-  BTC: Bitcoin,
-  LTC: Litecoin,
-  BCH: BitcoinCash,
-  ETH: Ethereum,
-  XMR: Monero
-};
+import CurrencyIcon from "~/components/common/CurrencyIcon";
 
 const BalanceItem: React.FC<Wallet> = ({
   currency,
@@ -31,12 +17,11 @@ const BalanceItem: React.FC<Wallet> = ({
   balanceUSD,
   share
 }): JSX.Element => {
-  const Icon = CURRENCY_ICONS[currency];
   const currencyParams = CURRENCIES[currency];
 
   return (
     <TokenListItem button>
-      <ListItemIcon>{Icon && <Icon />}</ListItemIcon>
+      <ListItemIcon>{<CurrencyIcon currency={currency} />}</ListItemIcon>
       <ListItemText>
         <Grid container>
           <Grid item xs={3}>

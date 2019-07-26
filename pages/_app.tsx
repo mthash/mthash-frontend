@@ -35,9 +35,7 @@ export default class MtHashApp extends App<Props, State> {
       pageProps = await Component.getInitialProps(ctx);
     }
 
-    if (!process.browser) {
-      currencies = await fetchCurrencies();
-    }
+    currencies = await fetchCurrencies();
 
     return { pageProps, currencies };
   }
