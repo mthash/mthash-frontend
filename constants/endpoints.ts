@@ -5,6 +5,7 @@ const ENDPOINTS = {
   },
   wallets: "user/wallet",
   asset: "asset",
+  freeDeposit: "transaction/free_deposit",
   mining: {
     statistic: "mining/stats",
     deposit: "mining/{asset}/deposit",

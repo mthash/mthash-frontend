@@ -15,11 +15,14 @@ import BalanceItem from "./BalanceItem";
 import balanceMock from "~/_mocks_/balance.json";
 import Wallet from "~/models/Wallet";
 
+import FreeDepositDialog from "./FreeDepositDialog";
+
 const BALANCE_CAPTION: string = "Balance";
 const WALLET_ACTION: string = "Wallet";
 
 const Balance: React.FC = (): JSX.Element => {
   const dashboard = DashboardContainer.useContainer();
+  const [dialogOpened, setDialogOpened] = React.useState(false);
   // TODO: using mocks for a while
   const wallets = balanceMock; //dashboard.balance.wallets;
 
@@ -27,11 +30,24 @@ const Balance: React.FC = (): JSX.Element => {
     dashboard.balance.fetch();
   }, []);
 
+  const handleOpenFreeDepositDialog = () => {
+    setDialogOpened(true);
+  };
+
+  const handleDialogClose = () => {
+    setDialogOpened(false);
+  };
+
   return (
     <Paper>
       <WidgetHeader
         caption={BALANCE_CAPTION}
-        actions={<Button>{WALLET_ACTION}</Button>}
+        actions={
+          <>
+            <Button onClick={handleOpenFreeDepositDialog}>+</Button>
+            <Button>{WALLET_ACTION}</Button>
+          </>
+        }
       />
       <TokensList>
         {wallets.map((wallet: Wallet, index: number) => (
@@ -41,6 +57,7 @@ const Balance: React.FC = (): JSX.Element => {
           </React.Fragment>
         ))}
       </TokensList>
+      <FreeDepositDialog open={dialogOpened} onClose={handleDialogClose} />
     </Paper>
   );
 };
