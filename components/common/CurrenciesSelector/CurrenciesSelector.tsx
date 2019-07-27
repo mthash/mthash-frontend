@@ -15,6 +15,10 @@ interface Props {
   onChange: (Currency) => void;
 }
 
+const SelectedCurrency = props => {
+  return <SelectedItem {...props} />;
+};
+
 const CurrenciesSelector: React.FC<Props> = ({
   selected,
   onChange,
@@ -24,7 +28,10 @@ const CurrenciesSelector: React.FC<Props> = ({
     <Select
       value={selected}
       onChange={onChange}
-      input={<TextField name="currency" variant="filled" fullWidth />}
+      input={<SelectorInput name="currency" variant="filled" fullWidth />}
+      variant="standard"
+      fullWidth
+      renderValue={SelectedCurrency}
     >
       {currencies &&
         currencies.map(
@@ -42,8 +49,22 @@ const CurrenciesSelector: React.FC<Props> = ({
 
 export default CurrenciesSelector;
 
+const SelectedItem = styled(CurrencyItem)`
+  padding: 0;
+`;
+
 const CurrencyMenuItem = styled(MenuItem)`
   display: flex;
   align-items: center;
   justify-content: flex-start;
+`;
+
+const SelectorInput = styled(TextField)`
+  padding: 0;
+
+  .MuiSelect-select {
+    display: flex;
+    padding: 12px;
+    min-height: 33px;
+  }
 `;

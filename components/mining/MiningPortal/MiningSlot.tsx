@@ -36,7 +36,7 @@ const MiningSlot: React.FC<Props> = ({
 }): JSX.Element => {
   const [amount, setAmount] = React.useState(miningValue);
 
-  const handleAmountChange = (event: React.FormEvent<HTMLInputElement>) => {
+  const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAmount(event.currentTarget.value);
   };
 

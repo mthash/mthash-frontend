@@ -16,6 +16,7 @@ interface Props {
   open: boolean;
   title: React.ReactNode;
   children: React.ReactNode;
+  className?: string;
   onClose: () => void;
 }
 
@@ -43,23 +44,18 @@ const Dialog: React.FC<Props> = ({
   open,
   title,
   children,
+  className,
   onClose
 }): JSX.Element => {
   return (
-    <MuiDialog open={open} onClose={onClose}>
+    <MuiDialog open={open} onClose={onClose} className={className}>
       <DialogTitle onClose={onClose}>{title}</DialogTitle>
-      <MuiDialogContent>
-        <ContentWrapper>{children}</ContentWrapper>
-      </MuiDialogContent>
+      <MuiDialogContent>{children}</MuiDialogContent>
     </MuiDialog>
   );
 };
 
 export default Dialog;
-
-const ContentWrapper = styled.div`
-  min-width: 400px;
-`;
 
 const TitleWrapper = styled.div`
   display: flex;

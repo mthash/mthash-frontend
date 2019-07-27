@@ -4,10 +4,21 @@ import styled from "styled-components";
 import Currency from "~/models/Currency";
 import CurrencyIcon from "~/components/common/CurrencyIcon";
 
-const CurrencyItem: React.FC<Currency> = ({ name, symbol }): JSX.Element => {
+interface Props extends Currency {
+  className?: string;
+}
+
+const CurrencyItem: React.FC<Props> = ({
+  name,
+  symbol,
+  className
+}): JSX.Element => {
   return (
-    <Wrapper>
-      <CurrencyIcon currency={symbol} /> {name} ({symbol})
+    <Wrapper className={className}>
+      <CurrencyIcon currency={symbol} />
+      <Name>
+        {name} ({symbol})
+      </Name>
     </Wrapper>
   );
 };
@@ -19,4 +30,8 @@ const Wrapper = styled.div`
   align-items: center;
   padding: 5px 10px;
   width: 100%;
+`;
+
+const Name = styled.span`
+  padding: 0 10px;
 `;
