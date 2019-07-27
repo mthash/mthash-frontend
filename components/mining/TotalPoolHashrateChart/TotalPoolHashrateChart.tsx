@@ -266,7 +266,7 @@ const TotalPoolHashrateChart = props => (
     </SvgDefs>
     <ResponsiveLine
       data={data}
-      curve="natural"
+      curve="linear"
       margin={{ top: 0, right: 10, bottom: 100, left: 60 }}
       xScale={{ type: "point" }}
       // yScale={{ type: "linear", stacked: true, min: "auto", max: "auto" }}

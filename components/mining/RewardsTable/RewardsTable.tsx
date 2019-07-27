@@ -6,10 +6,17 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Link from "@material-ui/core/Link";
+import { isEmpty } from "ramda";
+import { Tooltip } from "@material-ui/core";
+
+interface Options {
+  withTooltip?: boolean;
+}
 
 interface ColumnDefinition {
   name: string;
   dataKey: string;
+  options?: Options;
 }
 
 type DataDefinition = { [key: string]: string | number };
@@ -17,9 +24,34 @@ type DataDefinition = { [key: string]: string | number };
 interface Props {
   picture: string;
   columns: ColumnDefinition[];
-  data: DataDefinition[];
+  data?: DataDefinition[];
   onShowAll?: () => {};
 }
+
+interface RewardCellProps {
+  value: string | number;
+  options?: Options;
+}
+
+const RewardCell: React.FC<RewardCellProps> = ({
+  value,
+  options = {}
+}): JSX.Element => {
+  const { withTooltip } = options;
+  const content = (() => {
+    if (withTooltip) {
+      return (
+        <Tooltip title={value} placement="top-start">
+          <TooltipContent>{value}</TooltipContent>
+        </Tooltip>
+      );
+    } else {
+      return value;
+    }
+  })();
+
+  return <RewardsTableCell align="right">{content}</RewardsTableCell>;
+};
 
 const RewardsTable: React.FC<Props> = ({
   picture,
@@ -33,34 +65,38 @@ const RewardsTable: React.FC<Props> = ({
         <img src={picture} />
         <ShowAllLink onClick={onShowAll}>Show all</ShowAllLink>
       </Header>
-      <Table>
+      <RewardTable>
         <TableHead>
           <TableRow>
             {columns.map(
               ({ name }): JSX.Element => (
-                <RewardCell key={name} align="right">
+                <RewardsTableCell key={name} align="right">
                   {name}
-                </RewardCell>
+                </RewardsTableCell>
               )
             )}
           </TableRow>
         </TableHead>
-        <TableBody>
-          {data.map(
-            (row): JSX.Element => (
-              <RewardsRow key={row.id} hover>
-                {columns.map(
-                  ({ dataKey }): JSX.Element => (
-                    <RewardCell key={dataKey} align="right">
-                      {row[dataKey]}
-                    </RewardCell>
-                  )
-                )}
-              </RewardsRow>
-            )
-          )}
-        </TableBody>
-      </Table>
+        {data && !isEmpty(data) && (
+          <TableBody>
+            {data.map(
+              (row): JSX.Element => (
+                <RewardsTableRow key={row.id} hover>
+                  {columns.map(
+                    ({ dataKey, options }): JSX.Element => (
+                      <RewardCell
+                        key={dataKey}
+                        value={row[dataKey]}
+                        options={options}
+                      />
+                    )
+                  )}
+                </RewardsTableRow>
+              )
+            )}
+          </TableBody>
+        )}
+      </RewardTable>
     </Wrapper>
   );
 };
@@ -71,7 +107,11 @@ const Wrapper = styled.section`
   width: 100%;
 `;
 
-const RewardsRow = styled(TableRow)`
+const RewardTable = styled(Table)`
+  table-layout: fixed;
+`;
+
+const RewardsTableRow = styled(TableRow)`
   background-color: ${p => p.theme.palette.background.paperDarkest};
 
   &:nth-of-type(2n + 1) {
@@ -98,8 +138,10 @@ const RewardsRow = styled(TableRow)`
   }
 `;
 
-const RewardCell = styled(TableCell)`
+const RewardsTableCell = styled(TableCell)`
   border-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const Header = styled.head`
@@ -111,4 +153,9 @@ const ShowAllLink = styled(Link)`
   color: ${p => p.theme.palette.text.secondary};
   cursor: pointer;
   margin: 0 0 14px 10px;
+`;
+
+const TooltipContent = styled.div`
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;

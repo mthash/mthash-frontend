@@ -2,27 +2,30 @@ import * as React from "react";
 import styled from "styled-components";
 // import Input from "@material-ui/core/Input";
 
-import { TextField } from "~/components/common/TextField";
+import TextField from "~/components/common/TextField";
 
 import Hash from "../../../static/currencies/HashMono.svg";
 
 interface Props {
-  miningValue: string;
+  amount: string;
+  onChange: (any) => void;
 }
 
-const MiningHashInput: React.FC<Props> = ({ miningValue }): JSX.Element => {
-  const [inputValue, setInputValue] = React.useState(miningValue);
-
-  const handleOnChangeValue = event => {
-    setInputValue(event.target.value);
-  };
-
+const MiningHashInput: React.FC<Props> = ({
+  amount,
+  onChange
+}): JSX.Element => {
   return (
     <Wrapper>
       <HashInput
-        value={inputValue}
-        onChange={handleOnChangeValue}
+        value={amount}
+        onChange={onChange}
         variant="filled"
+        type="number"
+        inputProps={{
+          step: 0.0001,
+          min: 0
+        }}
       />
       <HashIcon />
     </Wrapper>

@@ -48,6 +48,18 @@ declare module "styled-components" {
         dark: string;
         contrastText: string;
       };
+      warning: {
+        light: string;
+        main: string;
+        dark: string;
+        contrastText: string;
+      };
+      info: {
+        light: string;
+        main: string;
+        dark: string;
+        contrastText: string;
+      };
       success: {
         light: string;
         main: string;
