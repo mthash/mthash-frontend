@@ -81,7 +81,10 @@ const muiTheme = createMuiTheme({
   },
   typography: {
     fontFamily: `Montserrat, -apple-system,system-ui, BlinkMacSystemFont,
-    Segoe UI, Roboto, Helvetica Neue,Arial,sans-serif`
+    Segoe UI, Roboto, Helvetica Neue,Arial,sans-serif`,
+    button: {
+      textTransform: "none"
+    }
   },
   layouts: {
     dashboard: {

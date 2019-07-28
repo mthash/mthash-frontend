@@ -12,6 +12,10 @@ interface MinedProps {
     statistic: any;
     fetch: () => Promise<any>;
   };
+  arcadeMining: {
+    data: any;
+    fetch: () => Promise<any>;
+  };
   minedAsset: {
     deposited: any;
     withdrawn: any;
@@ -22,13 +26,19 @@ interface MinedProps {
     data: any;
     fetch: () => Promise<any>;
   };
+  myRewards: {
+    data: any;
+    fetch: () => Promise<any>;
+  };
 }
 
 function useMining(): MinedProps {
   let [statistic, setStatistic] = React.useState(null);
   let [depositedAsset, setDeposited] = React.useState(null);
   let [withdrawnAsset, setWithdrawn] = React.useState(null);
+  let [arcadeMining, setArcadeMining] = React.useState(null);
   let [blockRewards, setBlockRewards] = React.useState(null);
+  let [myRewards, setMyRewards] = React.useState(null);
 
   const appContainer = AppContainer.useContainer();
 
@@ -40,6 +50,24 @@ function useMining(): MinedProps {
           const result = await AsyncService.get(ENDPOINTS.mining.statistic);
           const data = result.data.body;
           setStatistic(data);
+
+          return data;
+        } catch ({ message }) {
+          appContainer.notifications.addNotification(
+            message,
+            NOTIFICATION_TYPES.error
+          );
+          throw Error(message);
+        }
+      }
+    },
+    arcadeMining: {
+      data: arcadeMining,
+      fetch: async (): Promise<any> => {
+        try {
+          const result = await AsyncService.get(ENDPOINTS.mining.arcade);
+          const data = result.data.body;
+          setArcadeMining(data);
 
           return data;
         } catch ({ message }) {
@@ -104,6 +132,25 @@ function useMining(): MinedProps {
           const result = await AsyncService.get(ENDPOINTS.mining.blockRewards);
           const data = result.data.body;
           setBlockRewards(data);
+
+          return data;
+        } catch ({ message }) {
+          appContainer.notifications.addNotification(
+            message,
+            NOTIFICATION_TYPES.error
+          );
+
+          return Error(message);
+        }
+      }
+    },
+    myRewards: {
+      data: myRewards,
+      fetch: async (): Promise<any> => {
+        try {
+          const result = await AsyncService.get(ENDPOINTS.mining.myRewards);
+          const data = result.data.body;
+          setMyRewards(data);
 
           return data;
         } catch ({ message }) {

@@ -40,10 +40,6 @@ const FreeDepositDialog: React.FC<Props> = ({ open, onClose }): JSX.Element => {
 
   const handleFreeDeposit = async () => {
     try {
-      const arcadeMining = await AsyncService.get("arcade");
-
-      console.log(arcadeMining);
-
       const result = await AsyncService.post(ENDPOINTS.freeDeposit, {
         asset_id: selectedCurrency.id
       });

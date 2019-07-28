@@ -18,6 +18,7 @@ import ZCash from "../../../static/currencies/ZCashMono.svg";
 
 import rows from "~/_mocks_/arcadeMiningStatistic.json";
 import hashStat from "~/_mocks_/arcadeMiningStatisticHash.json";
+import MiningContainer from "~/containers/MiningContainer";
 
 const CURRENCY_ICONS: { [name: string]: React.FC } = {
   BTC: Bitcoin,
@@ -27,6 +28,12 @@ const CURRENCY_ICONS: { [name: string]: React.FC } = {
 };
 
 const ArcadeMiningTable: React.FC = (): JSX.Element => {
+  const { arcadeMining } = MiningContainer.useContainer();
+
+  React.useEffect(() => {
+    arcadeMining.fetch();
+  }, []);
+
   return (
     <Wrapper>
       <img src="static/mining/ArcadeMining.svg" />
@@ -35,7 +42,7 @@ const ArcadeMiningTable: React.FC = (): JSX.Element => {
           <TableRow>
             <HeaderCell size="small"></HeaderCell>
             <HeaderCell align="center">Revenue</HeaderCell>
-            <HeaderCell align="center">hashrate</HeaderCell>
+            <HeaderCell align="center">Hashrate</HeaderCell>
             <HeaderCell align="center">Mining</HeaderCell>
             <HeaderCell align="center">Balance</HeaderCell>
           </TableRow>

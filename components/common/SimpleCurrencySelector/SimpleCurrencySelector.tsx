@@ -3,41 +3,34 @@ import styled from "styled-components";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 
-import TextField from "~/components/common/TextField";
 import Currency from "~/models/Currency";
-
-import CurrencyItem from "./CurrencyItem";
 
 interface Props {
   currencies: Currency[];
   selected?: Currency;
   onChange?: (Currency) => void;
+  className?: string;
 }
 
-const SelectedCurrency = props => {
-  return <SelectedItem {...props} />;
-};
-
-const CurrenciesSelector: React.FC<Props> = ({
+const SimpleCurrenciesSelector: React.FC<Props> = ({
   selected,
   onChange,
-  currencies
+  currencies,
+  className
 }): JSX.Element => {
   return (
     <Select
       value={selected}
       onChange={onChange}
-      input={<SelectorInput name="currency" variant="filled" fullWidth />}
-      variant="standard"
       fullWidth
-      renderValue={SelectedCurrency}
+      className={className}
     >
       {currencies &&
         currencies.map(
           (currency: Currency): JSX.Element => {
             return (
               <CurrencyMenuItem key={currency.id} value={currency as any}>
-                <CurrencyItem {...currency} />
+                {currency.name}
               </CurrencyMenuItem>
             );
           }
@@ -46,24 +39,11 @@ const CurrenciesSelector: React.FC<Props> = ({
   );
 };
 
-export default CurrenciesSelector;
-
-const SelectedItem = styled(CurrencyItem)`
-  padding: 0;
-`;
+export default SimpleCurrenciesSelector;
 
 const CurrencyMenuItem = styled(MenuItem)`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-`;
-
-const SelectorInput = styled(TextField)`
-  padding: 0;
-
-  .MuiSelect-select {
-    display: flex;
-    padding: 12px;
-    min-height: 33px;
-  }
+  padding: 5px 15px;
 `;
