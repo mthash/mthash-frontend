@@ -76,6 +76,9 @@ declare module "styled-components" {
     };
     typography: {
       fontFamily: string;
+      button: {
+        textTransform: string;
+      };
     };
     breakpoints: {
       values: {

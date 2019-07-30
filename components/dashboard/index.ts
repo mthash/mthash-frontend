@@ -1,2 +1,4 @@
 export { default as Balance } from "./Balance/Balance";
-export { default as TotalHashrate } from "./TotalHashrate/TotalHashrate";
+export {
+  default as TotalHashrateChart
+} from "./TotalHashrateChart/TotalHashrateChart";

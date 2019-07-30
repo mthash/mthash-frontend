@@ -12,13 +12,14 @@ import {
 } from "~/components/mining";
 
 import blockRewardsMock from "~/_mocks_/blockRewars.json";
-import myRewards from "~/_mocks_/myRewards.json";
+import myRewardsMock from "~/_mocks_/myRewards.json";
 
 const MiningDashboard: React.FC = (): JSX.Element => {
-  const { blockRewards } = MiningContainer.useContainer();
+  const { blockRewards, myRewards } = MiningContainer.useContainer();
 
   React.useEffect(() => {
     blockRewards.fetch();
+    myRewards.fetch();
   }, []);
 
   return (
@@ -98,22 +99,22 @@ const MiningDashboard: React.FC = (): JSX.Element => {
               },
               {
                 name: "% Block Reward",
-                dataKey: "blockReward"
+                dataKey: "percent_reward"
               },
               {
                 name: "Reward",
-                dataKey: "reward"
+                dataKey: "amount_reward"
               },
               {
                 name: "Fees",
-                dataKey: "fees"
+                dataKey: "fee"
               },
               {
                 name: "Earnings",
                 dataKey: "earnings"
               }
             ]}
-            data={myRewards}
+            data={myRewards.data}
           />
         </Grid>
       </Grid>
