@@ -30,6 +30,10 @@ interface MinedProps {
     data: any;
     fetch: () => Promise<any>;
   };
+  hashBalance: {
+    data: any;
+    fetch: () => Promise<any>;
+  };
 }
 
 function useMining(): MinedProps {
@@ -39,6 +43,7 @@ function useMining(): MinedProps {
   let [arcadeMining, setArcadeMining] = React.useState(null);
   let [blockRewards, setBlockRewards] = React.useState(null);
   let [myRewards, setMyRewards] = React.useState(null);
+  let [hashBalance, setHashBalance] = React.useState(null);
 
   const appContainer = AppContainer.useContainer();
 
@@ -160,6 +165,24 @@ function useMining(): MinedProps {
           );
 
           return Error(message);
+        }
+      }
+    },
+    hashBalance: {
+      data: hashBalance,
+      fetch: async (): Promise<any> => {
+        try {
+          const result = await AsyncService.get(ENDPOINTS.mining.hashBalance);
+          const data = result.data.body;
+          setHashBalance(data);
+
+          return data;
+        } catch ({ message }) {
+          appContainer.notifications.addNotification(
+            message,
+            NOTIFICATION_TYPES.error
+          );
+          throw Error(message);
         }
       }
     }

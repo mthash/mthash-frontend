@@ -12,7 +12,8 @@ const ENDPOINTS = {
     deposit: "mining/{asset}/deposit",
     withdraw: "mining/{asset}/withdraw",
     blockRewards: "mining/reward/widget",
-    myRewards: "mining/my_reward/widget"
+    myRewards: "mining/my_reward/widget",
+    hashBalance: "arcade/hash"
   }
 };
 

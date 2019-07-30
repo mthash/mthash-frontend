@@ -26,11 +26,11 @@ const FreeDepositDialog: React.FC<Props> = ({ open, onClose }): JSX.Element => {
   const { notifications } = AppContainer.useContainer();
   // const { minedAsset } = MiningContainer.useContainer();
   const [selectedCurrency, setSelectedCurrency] = React.useState(currencies[0]);
-  // const [amount, setAmount] = React.useState("0");
+  const [amount, setAmount] = React.useState("0");
 
-  // const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setAmount(event.currentTarget.value);
-  // };
+  const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setAmount(event.currentTarget.value);
+  };
 
   const handleChangeCurrency = (
     event: React.ChangeEvent<{ value: Currency }>
@@ -41,12 +41,13 @@ const FreeDepositDialog: React.FC<Props> = ({ open, onClose }): JSX.Element => {
   const handleFreeDeposit = async () => {
     try {
       const result = await AsyncService.post(ENDPOINTS.freeDeposit, {
-        asset_id: selectedCurrency.id
+        asset_id: selectedCurrency.id,
+        amount
       });
       const data = result.data.body;
 
       notifications.addNotification(
-        "Withdraw successfully made",
+        "Free deposit is made",
         NOTIFICATION_TYPES.success
       );
       // return data;
@@ -72,7 +73,7 @@ const FreeDepositDialog: React.FC<Props> = ({ open, onClose }): JSX.Element => {
           selected={selectedCurrency}
           currencies={currencies}
         />
-        {/* <TextField
+        <TextField
           value={amount}
           onChange={handleAmountChange}
           variant="filled"
@@ -82,10 +83,11 @@ const FreeDepositDialog: React.FC<Props> = ({ open, onClose }): JSX.Element => {
             min: 0
           }}
           fullWidth
-        /> */}
+        />
       </ContentWrapper>
       <ActionsWrapper>
         <Button onClick={handleFreeDeposit}>Add</Button>
+        <Button onClick={onClose}>Cancel</Button>
       </ActionsWrapper>
     </Dialog>
   );
@@ -95,6 +97,7 @@ export default FreeDepositDialog;
 
 const ContentWrapper = styled.div`
   max-width: 300px;
+  min-height: 125px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

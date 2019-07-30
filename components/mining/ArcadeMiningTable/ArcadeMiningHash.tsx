@@ -5,6 +5,7 @@ import Button from "@material-ui/core/Button";
 import ArcadeMinigValue from "./ArcadeMiningValue";
 
 import Hash from "../../../static/currencies/HashMono.svg";
+import MiningContainer from "~/containers/MiningContainer";
 
 interface Props {
   value: number | string;
@@ -13,10 +14,16 @@ interface Props {
 }
 
 const ArcadeMiningHash: React.FC<Props> = (props): JSX.Element => {
+  const { hashBalance } = MiningContainer.useContainer();
+
+  React.useEffect(() => {
+    hashBalance.fetch();
+  }, []);
+
   return (
     <HashButton>
       <HashIcon />
-      <ArcadeMinigValue {...props} />
+      <ArcadeMinigValue {...props} value={hashBalance.data} />
     </HashButton>
   );
 };
