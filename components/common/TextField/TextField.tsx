@@ -16,6 +16,10 @@ const StyledTextField = styled(MuiTextField)`
   background-color: ${p => p.theme.palette.background.control};
   overflow: hidden;
 
+  input {
+    padding: 27px 12px 10px;
+  }
+
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
   input:-webkit-autofill:focus {

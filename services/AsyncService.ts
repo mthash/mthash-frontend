@@ -7,6 +7,20 @@ const { API } = EnviromentService;
 
 type RequestMethod = "get" | "post" | "put";
 
+function Catch(target, key, descriptor) {
+  const originalMethod = descriptor.value;
+
+  descriptor.value = async function(...args) {
+    try {
+      return await originalMethod.apply(this, args);
+    } catch (error) {
+      throw error.response.data || error;
+    }
+  };
+
+  return descriptor;
+}
+
 class AsyncService {
   private axios: AxiosInstance;
 
@@ -25,13 +39,15 @@ class AsyncService {
     return `${API}/${endpoint}`;
   }
 
-  get = async (endpoint: string, data?: any): Promise<any> => {
+  @Catch
+  async get(endpoint: string, data?: any): Promise<any> {
     return await this.axiosRequst(endpoint, "get", data);
-  };
+  }
 
-  post = async (endpoint: string, data?: any): Promise<any> => {
+  @Catch
+  async post(endpoint: string, data?: any): Promise<any> {
     return await this.axiosRequst(endpoint, "post", data);
-  };
+  }
 
   axiosRequst = (
     endpoint: string,

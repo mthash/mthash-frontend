@@ -62,7 +62,7 @@ function useMining(): MinedProps {
             message,
             NOTIFICATION_TYPES.error
           );
-          throw Error(message);
+          return Error(message);
         }
       }
     },
@@ -80,7 +80,7 @@ function useMining(): MinedProps {
             message,
             NOTIFICATION_TYPES.error
           );
-          throw Error(message);
+          return Error(message);
         }
       }
     },
@@ -92,20 +92,23 @@ function useMining(): MinedProps {
 
         try {
           const result = await AsyncService.post(mineEndpoint, { amount });
+
           const data = result.data.body;
           setDeposited(data);
+
           appContainer.notifications.addNotification(
             "Deposit successfully made",
             NOTIFICATION_TYPES.success
           );
 
           return data;
-        } catch ({ message }) {
+        } catch (err) {
+          const { message } = err;
           appContainer.notifications.addNotification(
             message,
             NOTIFICATION_TYPES.error
           );
-          throw Error(message);
+          return Error(message);
         }
       },
       withdraw: async ({ asset, amount }): Promise<any> => {
@@ -126,7 +129,7 @@ function useMining(): MinedProps {
             message,
             NOTIFICATION_TYPES.error
           );
-          throw Error(message);
+          return Error(message);
         }
       }
     },
@@ -182,7 +185,7 @@ function useMining(): MinedProps {
             message,
             NOTIFICATION_TYPES.error
           );
-          throw Error(message);
+          return Error(message);
         }
       }
     }

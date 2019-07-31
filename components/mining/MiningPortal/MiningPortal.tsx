@@ -15,14 +15,22 @@ const MiningPortal: React.FC = (): JSX.Element => {
   const miningContainer = MiningContainer.useContainer();
 
   const handleDeposit = ({ amount, currency }) => {
-    miningContainer.minedAsset.deposit({
-      amount,
-      asset: currency
-    });
+    try {
+      miningContainer.minedAsset.deposit({
+        amount,
+        asset: currency
+      });
+    } catch (error) {
+      console.log("Vah!");
+    }
   };
 
   const handleWithdraw = currency => {
-    miningContainer.minedAsset.withdraw(currency);
+    try {
+      miningContainer.minedAsset.withdraw(currency);
+    } catch (error) {
+      console.log("Vah withdraw!");
+    }
   };
 
   return (

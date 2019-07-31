@@ -11,7 +11,6 @@ import { DialogActions, Button, Divider } from "@material-ui/core";
 import MiningActions from "./MiningActions";
 import AppContainer from "~/containers/AppContainer";
 import MiningContainer from "~/containers/MiningContainer";
-import { on } from "cluster";
 
 interface Props {
   open: boolean;
@@ -44,15 +43,14 @@ const MiningAddCurrencyDialog: React.FC<Props> = ({
   };
 
   const handleAddCurrency = async () => {
-    try {
-      const res = await minedAsset.deposit({
-        asset: selectedCurrency.symbol,
-        amount
-      });
-      onClose();
-    } catch (err) {
-      console.error(err);
-    }
+    const result: any = await minedAsset.deposit({
+      asset: selectedCurrency.symbol,
+      amount
+    });
+
+    if (result instanceof Error) return;
+
+    onClose();
   };
 
   return (
