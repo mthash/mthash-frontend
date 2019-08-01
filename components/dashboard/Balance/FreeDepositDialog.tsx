@@ -25,7 +25,9 @@ const FreeDepositDialog: React.FC<Props> = ({ open, onClose }): JSX.Element => {
   const { currencies } = React.useContext(AppContext);
   const { notifications } = AppContainer.useContainer();
   // const { minedAsset } = MiningContainer.useContainer();
-  const [selectedCurrency, setSelectedCurrency] = React.useState(currencies[0]);
+  const [selectedCurrency, setSelectedCurrency] = React.useState(
+    currencies && currencies[0]
+  );
   const [amount, setAmount] = React.useState("0");
 
   const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {

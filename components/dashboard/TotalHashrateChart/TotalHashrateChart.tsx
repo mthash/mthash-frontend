@@ -27,7 +27,9 @@ const TotalHashrateChart: React.FC<Props> = ({
   chartColors
 }): JSX.Element => {
   const { currencies } = React.useContext(AppContext);
-  const [selectedCurrency, setSelectedCurrency] = React.useState(currencies[0]);
+  const [selectedCurrency, setSelectedCurrency] = React.useState(
+    currencies && currencies[0]
+  );
 
   const handleChangeCurrency = (
     event: React.ChangeEvent<{ value: Currency }>
