@@ -40,7 +40,7 @@ const TotalHashrate: React.FC = (): JSX.Element => {
         <TotalHashrateChart
           chartData={totalHashrateMock}
           statistic={totalHashrateStatisticMock}
-          chartColors={["#AAFFA9", "#B2FEFA"]}
+          chartColors={["#AAFFA9", "#0ED2F7"]}
         />
       )}
       {selectedTab === exchangeTab.id && (

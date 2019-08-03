@@ -11,9 +11,6 @@ import {
   MiningPortal
 } from "~/components/mining";
 
-import blockRewardsMock from "~/_mocks_/blockRewars.json";
-import myRewardsMock from "~/_mocks_/myRewards.json";
-
 const MiningDashboard: React.FC = (): JSX.Element => {
   const { blockRewards, myRewards } = MiningContainer.useContainer();
 

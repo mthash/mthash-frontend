@@ -6,6 +6,7 @@ import { DashboardLayout } from "~/components/layouts";
 import Balance from "~/components/dashboard/Balance";
 import DashboardContainer from "~/containers/DashboardContainer";
 import TotalHashrate from "~/components/dashboard/TotalHashrate";
+import MiningPowerChart from "~/components/dashboard/MiningPowerChart";
 
 const Dashboard: React.FC = (): JSX.Element => {
   return (
@@ -16,7 +17,10 @@ const Dashboard: React.FC = (): JSX.Element => {
             <TotalHashrate />
           </Grid>
           <Grid item xs={12}></Grid>
-          <Grid item xs={12}>
+          <Grid item xs={6}>
+            <MiningPowerChart />
+          </Grid>
+          <Grid item xs={6}>
             <Balance />
           </Grid>
         </Grid>

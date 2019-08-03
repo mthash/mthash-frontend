@@ -55,7 +55,7 @@ const colorDefine = ({ trend, theme }: WithTrendProps): string => {
 };
 
 const Wrapper = styled.div`
-  font-size: 40px;
+  font-size: 2em;
   line-height: 1;
 `;
 

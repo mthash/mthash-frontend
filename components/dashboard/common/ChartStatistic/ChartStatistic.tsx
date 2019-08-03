@@ -26,6 +26,7 @@ export default ChartStatistic;
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  width: 100%;
   justify-content: space-around;
+  width: 100%;
+  margin: 20px 0;
 `;

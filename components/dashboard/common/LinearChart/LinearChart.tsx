@@ -115,7 +115,7 @@ const LinearChart: React.FC<Props> = ({ colors, data }): JSX.Element => {
     <ResponsiveLine
       data={data}
       theme={theme}
-      margin={{ top: 50, right: 50, bottom: 50, left: 60 }}
+      margin={{ top: 10, right: 50, bottom: 50, left: 60 }}
       xScale={{ type: "point" }}
       yScale={{ type: "linear", stacked: false, min: "auto", max: "auto" }}
       curve="natural"

@@ -4,6 +4,7 @@ import Button from "@material-ui/core/Button";
 
 import MiningSlotModel from "~/models/MiningSlot";
 import Currency from "~/models/types/Currency";
+import { ChartPoint } from "~/models/ChartData";
 import Paper from "~/components/common/Paper";
 import MiningDynamic from "~/components/mining/common/MiningDynamic";
 import MiningValueUnit from "~/components/mining/common/MiningValueUnit";
@@ -11,6 +12,8 @@ import MiningSlotHeader from "./MiningSlotHeader";
 import MiningSlotChart from "./MiningSlotChart";
 import MiningHashInput from "./MiningHashInput";
 import MiningSlotActions from "./MiningSlotActions";
+
+import miningPortalMock from "~/_mocks_/miningPortal.json";
 
 interface OperationArgs {
   currency: Currency;
@@ -35,6 +38,8 @@ const MiningSlot: React.FC<Props> = ({
   onWithdraw
 }): JSX.Element => {
   const [amount, setAmount] = React.useState(miningValue);
+  const mockedChartData = miningPortalMock[id % 4].chartData;
+  const chartDataToDisplay = chartData || mockedChartData;
 
   const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAmount(event.currentTarget.value);
@@ -56,7 +61,7 @@ const MiningSlot: React.FC<Props> = ({
         <MiningDynamic shift={shift} isWithChart={false} />
       </SlotValue>
       <SlotChart>
-        <MiningSlotChart chartData={chartData} />
+        <MiningSlotChart chartData={chartDataToDisplay as any} />
       </SlotChart>
       <MiningHashInput amount={amount} onChange={handleAmountChange} />
       <SlotActions>

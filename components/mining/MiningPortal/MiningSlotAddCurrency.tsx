@@ -34,6 +34,7 @@ const AddCurrencyButton = styled(Button)`
   height: 100%;
   font-size: 18px;
   border-radius: 10px;
+  min-height: 302px;
   text-transform: unset;
   color: ${p => p.theme.palette.text.third};
   border: 1px dashed ${p => p.theme.palette.text.third};
