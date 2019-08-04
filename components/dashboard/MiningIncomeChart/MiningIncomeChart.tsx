@@ -1,31 +1,27 @@
 import * as React from "react";
 import styled from "styled-components";
-import { ResponsiveLine, Line } from "@nivo/line";
 
 import Paper from "~/components/common/Paper";
 import LinearChart from "~/components/dashboard/common/LinearChart";
 import ChartStatistic from "~/components/dashboard/common/ChartStatistic";
+import SimpleCurrenciesSelector from "~/components/common/SimpleCurrencySelector";
 import ChartStatisticModel from "~/models/ChartStatistic";
 
 import WidgetHeader from "../common/WidgetHeader";
 import PeriodsFilter from "../common/PeriodsFilter";
-import SimpleCurrenciesSelector from "~/components/common/SimpleCurrencySelector";
 import AppContext from "~/containers/AppContext";
 import Currency from "~/models/Currency";
 
-const CAPTION = "Total Hashrate";
+const CAPTION = "Mining Income";
 
-interface Props {
-  chartData: any;
-  statistic: any;
-  chartColors: string[];
-}
+import miningIncomeData from "~/_mocks_/miningIncome.json";
+import miningIncomeStatistic from "~/_mocks_/miningIncomeStatistic.json";
 
-const TotalHashrateChart: React.FC<Props> = ({
-  chartData,
-  statistic,
-  chartColors
-}): JSX.Element => {
+const MiningIncomeChart: React.FC = (): JSX.Element => {
+  const chartData = miningIncomeData;
+  const statistic = miningIncomeStatistic;
+  const chartColors = ["#FF5F6D"];
+
   const {
     currencies: { all: allCurrencies }
   } = React.useContext(AppContext);
@@ -62,10 +58,12 @@ const TotalHashrateChart: React.FC<Props> = ({
   );
 };
 
-export default TotalHashrateChart;
+export default MiningIncomeChart;
 
 const Wrapper = styled(Paper)`
-  font-size: 1.3rem;
+  height: 45vh;
+  display: flex;
+  flex-direction: column;
 `;
 
 const CaptionWrapper = styled.div`
@@ -75,7 +73,6 @@ const CaptionWrapper = styled.div`
 
 const Caption = styled.span`
   display: inline-block;
-  font-size: 14px;
   margin-right: 30px;
   white-space: nowrap;
 `;
@@ -87,6 +84,7 @@ const CurrenciesSelector = styled(SimpleCurrenciesSelector)`
 `;
 
 const ChartWrapper = styled.div`
-  height: 50vh;
   width: 100%;
+  height: 25vh;
+  flex: 1;
 `;

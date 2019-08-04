@@ -5,8 +5,10 @@ import TableBody from "@material-ui/core/TableBody";
 import TableHead from "@material-ui/core/TableHead";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
+import { find, propEq } from "ramda";
 
 import ArcadeMiningStatistic from "~/models/ArcadeMiningStatistic";
+import AppContext from "~/containers/AppContext";
 import ArcadeMiningHash from "./ArcadeMiningHash";
 
 import rows from "~/_mocks_/arcadeMiningStatistic.json";
@@ -15,12 +17,25 @@ import MiningContainer from "~/containers/MiningContainer";
 import ArcadeMiningTableRow from "./ArcadeMiningTableRow";
 
 const ArcadeMiningTable: React.FC = (): JSX.Element => {
-  const { arcadeMining } = MiningContainer.useContainer();
+  const { arcadeMining, selectedCurrency } = MiningContainer.useContainer();
+  const {
+    currencies: { all: allCurrencies }
+  } = React.useContext(AppContext);
   const data = arcadeMining.data;
 
   React.useEffect(() => {
     arcadeMining.fetch();
   }, []);
+
+  const handleRowClick = (currencyId: number) => {
+    selectedCurrency.set(currencyId);
+  };
+
+  const handleHashButtonClick = () => {
+    // TODO: probably this approach should be change in the future
+    const hashCurrency = find(propEq("symbol", "HASH"))(allCurrencies);
+    selectedCurrency.set(hashCurrency.id);
+  };
 
   return (
     <Wrapper>
@@ -38,11 +53,15 @@ const ArcadeMiningTable: React.FC = (): JSX.Element => {
         <TableBody>
           {data &&
             data.map((row: ArcadeMiningStatistic) => (
-              <ArcadeMiningTableRow {...row} />
+              <ArcadeMiningTableRow
+                {...row}
+                selected={row.id === selectedCurrency.id}
+                onClick={handleRowClick}
+              />
             ))}
         </TableBody>
       </MiningTable>
-      <ArcadeMiningHash {...hashStat} />
+      <ArcadeMiningHash {...hashStat} onClick={handleHashButtonClick} />
     </Wrapper>
   );
 };

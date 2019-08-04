@@ -27,10 +27,12 @@ const MiningAddCurrencyDialog: React.FC<Props> = ({
   open,
   onClose
 }): JSX.Element => {
-  const { currencies } = React.useContext(AppContext);
+  const {
+    currencies: { mineable: mineableCurrencies }
+  } = React.useContext(AppContext);
   const { minedAsset } = MiningContainer.useContainer();
   const [selectedCurrency, setSelectedCurrency] = React.useState(
-    currencies && currencies[0]
+    mineableCurrencies && mineableCurrencies[0]
   );
   const [amount, setAmount] = React.useState("0");
 
@@ -61,7 +63,7 @@ const MiningAddCurrencyDialog: React.FC<Props> = ({
         <CurrenciesSelector
           onChange={handleChangeCurrency}
           selected={selectedCurrency}
-          currencies={currencies}
+          currencies={mineableCurrencies}
         />
         <TextField
           value={amount}

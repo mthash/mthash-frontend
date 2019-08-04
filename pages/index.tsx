@@ -7,6 +7,8 @@ import Balance from "~/components/dashboard/Balance";
 import DashboardContainer from "~/containers/DashboardContainer";
 import TotalHashrate from "~/components/dashboard/TotalHashrate";
 import MiningPowerChart from "~/components/dashboard/MiningPowerChart";
+import MiningIncomeChart from "~/components/dashboard/MiningIncomeChart";
+import DiversityChart from "~/components/dashboard/DiversityChart";
 
 const Dashboard: React.FC = (): JSX.Element => {
   return (
@@ -22,6 +24,12 @@ const Dashboard: React.FC = (): JSX.Element => {
           </Grid>
           <Grid item xs={6}>
             <Balance />
+          </Grid>
+          <Grid item xs={6}>
+            <MiningIncomeChart />
+          </Grid>
+          <Grid item xs={6}>
+            <DiversityChart />
           </Grid>
         </Grid>
       </DashboardContainer.Provider>

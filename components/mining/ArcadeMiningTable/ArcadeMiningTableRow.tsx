@@ -13,6 +13,8 @@ interface Props {
   hashrate: any;
   mining: any;
   balance: any;
+  selected: boolean;
+  onClick: (number) => void;
 }
 
 const ArcadeMiningTableRow: React.FC<Props> = ({
@@ -21,33 +23,43 @@ const ArcadeMiningTableRow: React.FC<Props> = ({
   revenue,
   hashrate,
   mining,
-  balance
-}): JSX.Element => {
-  // const CurrencyIcon = CURRENCY_ICONS[currency];
-  return (
-    <MiningRow key={id} hover>
-      <CurrencyIconCell component="th" scope="row">
-        <CurrencyIcon currency={currency} monochrome />
-      </CurrencyIconCell>
-      <MiningCell align="center">
-        <ArcadeMiningValue {...revenue} />
-      </MiningCell>
-      <MiningCell align="center">
-        <ArcadeMiningValue {...hashrate} />
-      </MiningCell>
-      <MiningCell align="center">
-        <ArcadeMiningValue {...mining} />
-      </MiningCell>
-      <MiningCell align="center">
-        <ArcadeMiningValue {...balance} />
-      </MiningCell>
-    </MiningRow>
-  );
-};
+  balance,
+  selected,
+  onClick
+}): JSX.Element => (
+  <MiningRow key={id} hover onClick={() => onClick(id)} selected={selected}>
+    <CurrencyIconCell component="th" scope="row">
+      <CurrencyIcon currency={currency} monochrome />
+    </CurrencyIconCell>
+    <MiningCell align="center">
+      <ArcadeMiningValue {...revenue} />
+    </MiningCell>
+    <MiningCell align="center">
+      <ArcadeMiningValue {...hashrate} />
+    </MiningCell>
+    <MiningCell align="center">
+      <ArcadeMiningValue {...mining} />
+    </MiningCell>
+    <MiningCell align="center">
+      <ArcadeMiningValue {...balance} />
+    </MiningCell>
+  </MiningRow>
+);
 
 export default ArcadeMiningTableRow;
 
-const MiningRow = styled(TableRow)`
+interface MiningRowProps {
+  selected: boolean;
+  theme: any;
+}
+
+const MiningRow = styled(TableRow)<MiningRowProps>`
+  > td,
+  > th {
+    background-color: ${p =>
+      p.selected && p.theme.palette.hightlight.blue} !important;
+  }
+
   &:hover {
     > td,
     > th {

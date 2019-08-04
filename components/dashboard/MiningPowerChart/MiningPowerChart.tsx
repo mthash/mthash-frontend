@@ -22,9 +22,11 @@ const MiningPowerChart: React.FC = (): JSX.Element => {
   const statistic = miningPowerStatistic;
   const chartColors = ["#00C9FF"];
 
-  const { currencies } = React.useContext(AppContext);
+  const {
+    currencies: { all: allCurrencies }
+  } = React.useContext(AppContext);
   const [selectedCurrency, setSelectedCurrency] = React.useState(
-    currencies && currencies[0]
+    allCurrencies && allCurrencies[0]
   );
 
   const handleChangeCurrency = (
@@ -40,7 +42,7 @@ const MiningPowerChart: React.FC = (): JSX.Element => {
           <CaptionWrapper>
             <Caption>{CAPTION}</Caption>
             <CurrenciesSelector
-              currencies={currencies}
+              currencies={allCurrencies}
               selected={selectedCurrency}
               onChange={handleChangeCurrency}
             />

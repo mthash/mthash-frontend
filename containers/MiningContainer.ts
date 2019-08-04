@@ -7,8 +7,13 @@ import ENDPOINTS from "~/constants/endpoints";
 import NOTIFICATION_TYPES from "~/constants/notificationTypes";
 import AsyncService from "~/services/AsyncService";
 import AppContainer from "~/containers/AppContainer";
+import ErrorViewer from "~/components/common/ErrorViewer";
 
 interface MinedProps {
+  selectedCurrency: {
+    id: number;
+    set: (number) => void;
+  };
   overviewStatistic: {
     statistic: any;
     fetch: () => Promise<any>;
@@ -50,6 +55,7 @@ function useMining(): MinedProps {
   let [blockRewards, setBlockRewards] = React.useState(null);
   let [myRewards, setMyRewards] = React.useState(null);
   let [hashBalance, setHashBalance] = React.useState(null);
+  let [selectedCurrencyId, setSelectedCurrencyId] = React.useState(null);
 
   const appContainer = AppContainer.useContainer();
 
@@ -61,10 +67,10 @@ function useMining(): MinedProps {
 
       return data;
     } catch ({ message }) {
-      appContainer.notifications.addNotification(
+      appContainer.notifications.addNotification({
         message,
-        NOTIFICATION_TYPES.error
-      );
+        type: NOTIFICATION_TYPES.error
+      });
       return Error(message);
     }
   };
@@ -78,10 +84,10 @@ function useMining(): MinedProps {
 
       return data;
     } catch ({ message }) {
-      appContainer.notifications.addNotification(
+      appContainer.notifications.addNotification({
         message,
-        NOTIFICATION_TYPES.error
-      );
+        type: NOTIFICATION_TYPES.error
+      });
       return Error(message);
     }
   };
@@ -94,10 +100,10 @@ function useMining(): MinedProps {
 
       return data;
     } catch ({ message }) {
-      appContainer.notifications.addNotification(
+      appContainer.notifications.addNotification({
         message,
-        NOTIFICATION_TYPES.error
-      );
+        type: NOTIFICATION_TYPES.error
+      });
       return Error(message);
     }
   };
@@ -131,21 +137,21 @@ function useMining(): MinedProps {
       fetchBalance();
       fetchArcadeMining();
 
-      appContainer.notifications.addNotification(
-        "Deposit successfully made",
-        NOTIFICATION_TYPES.success
-      );
+      appContainer.notifications.addNotification({
+        message: "Deposit successfully made",
+        type: NOTIFICATION_TYPES.success
+      });
 
       return data;
     } catch (err) {
       const { message } = err;
 
-      console.log(err);
-
-      appContainer.notifications.addNotification(
+      appContainer.notifications.addNotification({
         message,
-        NOTIFICATION_TYPES.error
-      );
+        type: NOTIFICATION_TYPES.error,
+        details: err.errors,
+        Renderer: ErrorViewer
+      });
       return Error(message);
     }
   };
@@ -172,16 +178,20 @@ function useMining(): MinedProps {
       fetchBalance();
       fetchArcadeMining();
 
-      appContainer.notifications.addNotification(
-        "Withdraw successfully made",
-        NOTIFICATION_TYPES.success
-      );
+      appContainer.notifications.addNotification({
+        message: "Withdraw successfully made",
+        type: NOTIFICATION_TYPES.success
+      });
       return data;
-    } catch ({ message }) {
-      appContainer.notifications.addNotification(
+    } catch (err) {
+      const { message } = err;
+
+      appContainer.notifications.addNotification({
         message,
-        NOTIFICATION_TYPES.error
-      );
+        type: NOTIFICATION_TYPES.error,
+        details: err.errors,
+        Renderer: ErrorViewer
+      });
       return Error(message);
     }
   };
@@ -194,10 +204,10 @@ function useMining(): MinedProps {
 
       return data;
     } catch ({ message }) {
-      appContainer.notifications.addNotification(
+      appContainer.notifications.addNotification({
         message,
-        NOTIFICATION_TYPES.error
-      );
+        type: NOTIFICATION_TYPES.error
+      });
 
       return Error(message);
     }
@@ -211,10 +221,10 @@ function useMining(): MinedProps {
 
       return data;
     } catch ({ message }) {
-      appContainer.notifications.addNotification(
+      appContainer.notifications.addNotification({
         message,
-        NOTIFICATION_TYPES.error
-      );
+        type: NOTIFICATION_TYPES.error
+      });
 
       return Error(message);
     }
@@ -228,15 +238,19 @@ function useMining(): MinedProps {
 
       return data;
     } catch ({ message }) {
-      appContainer.notifications.addNotification(
+      appContainer.notifications.addNotification({
         message,
-        NOTIFICATION_TYPES.error
-      );
+        type: NOTIFICATION_TYPES.error
+      });
       return Error(message);
     }
   };
 
   return {
+    selectedCurrency: {
+      id: selectedCurrencyId,
+      set: id => setSelectedCurrencyId(id)
+    },
     overviewStatistic: {
       statistic,
       fetch: fetchOverviewStatistic

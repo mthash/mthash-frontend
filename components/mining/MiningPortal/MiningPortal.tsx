@@ -10,11 +10,13 @@ import MiningSlot from "./MiningSlot";
 import MiningSlotAddCurrency from "./MiningSlotAddCurrency";
 
 const MiningPortal: React.FC = (): JSX.Element => {
-  const { currencies } = React.useContext(AppContext);
+  const {
+    currencies: { mineable: mineableCurrencies }
+  } = React.useContext(AppContext);
   const { miningPortal } = MiningContainer.useContainer();
   const miningContainer = MiningContainer.useContainer();
   const portalData = miningPortal.data;
-  const notAllAdded = portalData.length !== currencies.length;
+  const notAllAdded = portalData.length !== mineableCurrencies.length;
 
   React.useEffect(() => {
     miningPortal.fetch();
