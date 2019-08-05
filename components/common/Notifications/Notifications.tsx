@@ -19,14 +19,16 @@ const Notifications: React.FC = () => {
   const {
     notifications: { notification }
   } = AppContainer.useContainer();
-  const [open, setOpen] = React.useState(Boolean(notification.content));
+  const { message, type, details, Renderer } = notification;
+
+  const [open, setOpen] = React.useState(Boolean(message));
   const handleClose = () => {
     setOpen(false);
   };
 
   React.useEffect(() => {
     if (!open) {
-      setOpen(Boolean(notification.content));
+      setOpen(Boolean(message));
     }
   }, [notification]);
 
@@ -38,8 +40,14 @@ const Notifications: React.FC = () => {
       open={open}
     >
       <NotificationContent
-        message={notification.content}
-        type={notification.type}
+        message={
+          Renderer ? (
+            <Renderer message={message} details={details} type={type} />
+          ) : (
+            message
+          )
+        }
+        type={type}
         action={[
           <IconButton
             key="close"

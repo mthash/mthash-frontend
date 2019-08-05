@@ -4,16 +4,20 @@ const ENDPOINTS = {
     signup: "user"
   },
   wallets: "user/wallet",
-  asset: "asset",
+  asset: {
+    all: "asset",
+    mineable: "asset/mineable"
+  },
   freeDeposit: "transaction/free_deposit",
   mining: {
-    arcade: "arcade",
+    arcade: "mining/arcade",
+    portal: "mining/portal",
     statistic: "mining/stats",
     deposit: "mining/{asset}/deposit",
     withdraw: "mining/{asset}/withdraw",
-    blockRewards: "mining/reward/widget",
-    myRewards: "mining/my_reward/widget",
-    hashBalance: "arcade/hash"
+    blockRewards: "mining/rewards",
+    myRewards: "mining/my/rewards",
+    hashBalance: "mining/arcade/hash"
   }
 };
 

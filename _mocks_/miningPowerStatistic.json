@@ -1,0 +1,16 @@
+[
+  {
+    "value": "250.12 Th/s",
+    "caption": "Total Hashrate"
+  },
+  {
+    "value": "30.4 Th/s",
+    "caption": "Since Last Week",
+    "trend": "positive"
+  },
+  {
+    "value": "15.27 %",
+    "caption": "Since Last Week",
+    "trend": "positive"
+  }
+]

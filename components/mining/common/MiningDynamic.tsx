@@ -29,7 +29,7 @@ const ShiftDirection: React.FC<ShiftDirectionProps> = ({
   className
 }): JSX.Element => {
   if (shift === 0) {
-    return <span className={className}>_</span>;
+    return <span className={className}></span>;
   } else if (shift > 0) {
     return <PositiveShiftDirection className={className} />;
   } else if (shift < 0) {
@@ -42,11 +42,12 @@ const MiningDynamic: React.FC<MiningDynamicProps> = ({
   isWithChart = true
 }): JSX.Element => {
   const isPositiveShift = shift > 0;
+  const isNil = shift === 0;
   const shiftSign = isPositiveShift && SIGNS.plus;
 
   return (
     <>
-      {isWithChart && (
+      {isWithChart && !isNil && (
         <img
           src={`static/mining/${SHIFT_IMG_BY_GROW[isPositiveShift.toString()]}`}
         />

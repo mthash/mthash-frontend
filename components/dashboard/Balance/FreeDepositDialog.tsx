@@ -22,10 +22,14 @@ interface Props {
 const FREE_DEPOSIT_TITLE = "Deposit";
 
 const FreeDepositDialog: React.FC<Props> = ({ open, onClose }): JSX.Element => {
-  const { currencies } = React.useContext(AppContext);
+  const {
+    currencies: { all: allCurrencies }
+  } = React.useContext(AppContext);
   const { notifications } = AppContainer.useContainer();
   // const { minedAsset } = MiningContainer.useContainer();
-  const [selectedCurrency, setSelectedCurrency] = React.useState(currencies[0]);
+  const [selectedCurrency, setSelectedCurrency] = React.useState(
+    allCurrencies && allCurrencies[0]
+  );
   const [amount, setAmount] = React.useState("0");
 
   const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,13 +50,16 @@ const FreeDepositDialog: React.FC<Props> = ({ open, onClose }): JSX.Element => {
       });
       const data = result.data.body;
 
-      notifications.addNotification(
-        "Free deposit is made",
-        NOTIFICATION_TYPES.success
-      );
+      notifications.addNotification({
+        message: "Free deposit is made",
+        type: NOTIFICATION_TYPES.success
+      });
       // return data;
     } catch ({ message }) {
-      notifications.addNotification(message, NOTIFICATION_TYPES.error);
+      notifications.addNotification({
+        message,
+        type: NOTIFICATION_TYPES.error
+      });
     }
     // try {
     //   const res = await minedAsset.deposit({
@@ -71,7 +78,7 @@ const FreeDepositDialog: React.FC<Props> = ({ open, onClose }): JSX.Element => {
         <CurrenciesSelector
           onChange={handleChangeCurrency}
           selected={selectedCurrency}
-          currencies={currencies}
+          currencies={allCurrencies}
         />
         <TextField
           value={amount}

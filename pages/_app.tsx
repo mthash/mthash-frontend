@@ -21,23 +21,34 @@ export interface Props {
 
 export interface State {}
 
-const fetchCurrencies = async () => {
-  const result = await AsyncService.get(ENDPOINTS.asset);
+const fetchMineableCurrencies = async () => {
+  const result = await AsyncService.get(ENDPOINTS.asset.mineable);
+  return result.data.body;
+};
+
+const fetchAllCurrencies = async () => {
+  const result = await AsyncService.get(ENDPOINTS.asset.all);
   return result.data.body;
 };
 
 export default class MtHashApp extends App<Props, State> {
   static async getInitialProps({ Component, router, ctx }): Promise<any> {
     let pageProps = {};
-    let currencies = {};
 
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx);
     }
 
-    currencies = await fetchCurrencies();
+    const currenciesAll = await fetchAllCurrencies();
+    const currenciesMineable = await fetchMineableCurrencies();
 
-    return { pageProps, currencies };
+    return {
+      pageProps,
+      currencies: {
+        all: currenciesAll,
+        mineable: currenciesMineable
+      }
+    };
   }
 
   render(): JSX.Element {

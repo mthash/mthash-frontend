@@ -26,8 +26,12 @@ const TotalHashrateChart: React.FC<Props> = ({
   statistic,
   chartColors
 }): JSX.Element => {
-  const { currencies } = React.useContext(AppContext);
-  const [selectedCurrency, setSelectedCurrency] = React.useState(currencies[0]);
+  const {
+    currencies: { all: allCurrencies }
+  } = React.useContext(AppContext);
+  const [selectedCurrency, setSelectedCurrency] = React.useState(
+    allCurrencies && allCurrencies[0]
+  );
 
   const handleChangeCurrency = (
     event: React.ChangeEvent<{ value: Currency }>
@@ -36,13 +40,13 @@ const TotalHashrateChart: React.FC<Props> = ({
   };
 
   return (
-    <Paper>
+    <Wrapper>
       <WidgetHeader
         caption={
           <CaptionWrapper>
             <Caption>{CAPTION}</Caption>
             <CurrenciesSelector
-              currencies={currencies}
+              currencies={allCurrencies}
               selected={selectedCurrency}
               onChange={handleChangeCurrency}
             />
@@ -54,11 +58,15 @@ const TotalHashrateChart: React.FC<Props> = ({
       <ChartWrapper>
         <LinearChart data={chartData} colors={chartColors} />
       </ChartWrapper>
-    </Paper>
+    </Wrapper>
   );
 };
 
 export default TotalHashrateChart;
+
+const Wrapper = styled(Paper)`
+  font-size: 1.3rem;
+`;
 
 const CaptionWrapper = styled.div`
   display: flex;
@@ -67,6 +75,7 @@ const CaptionWrapper = styled.div`
 
 const Caption = styled.span`
   display: inline-block;
+  font-size: 14px;
   margin-right: 30px;
   white-space: nowrap;
 `;

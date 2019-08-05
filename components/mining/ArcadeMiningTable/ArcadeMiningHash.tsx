@@ -11,6 +11,7 @@ interface Props {
   value: number | string;
   unit: string;
   shift: number;
+  onClick: () => void;
 }
 
 const ArcadeMiningHash: React.FC<Props> = (props): JSX.Element => {
@@ -21,7 +22,7 @@ const ArcadeMiningHash: React.FC<Props> = (props): JSX.Element => {
   }, []);
 
   return (
-    <HashButton>
+    <HashButton onClick={props.onClick}>
       <HashIcon />
       <ArcadeMinigValue {...props} value={hashBalance.data} />
     </HashButton>

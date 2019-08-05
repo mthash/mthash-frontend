@@ -7,11 +7,18 @@ import User from "~/models/User";
 import NOTIFICATION_TYPES from "~/constants/notificationTypes";
 import NotificationType from "~/models/types/NotificationType";
 
+interface AddNotificationArgs {
+  message: string;
+  type: NotificationType;
+  details?: any;
+  Renderer?: any;
+}
+
 interface AppProps {
   user: User;
   notifications: {
     notification: any;
-    addNotification: (any, string) => void;
+    addNotification: (AddNotificationArgs) => void;
   };
 }
 
@@ -23,8 +30,8 @@ function useApp(): AppProps {
   );
   let [notification, setNotification] = React.useState({});
 
-  const addNotification = (content: any, type: NotificationType): void => {
-    setNotification({ content, type });
+  const addNotification = (notificationProps: AddNotificationArgs): void => {
+    setNotification(notificationProps);
   };
 
   return {

@@ -1,4 +1,5 @@
 import * as React from "react";
+import styled from "styled-components";
 import Grid from "@material-ui/core/Grid";
 
 import MiningSlotModel from "~/models/MiningSlot";
@@ -8,11 +9,18 @@ import MiningContainer from "~/containers/MiningContainer";
 import MiningSlot from "./MiningSlot";
 import MiningSlotAddCurrency from "./MiningSlotAddCurrency";
 
-import portalData from "~/_mocks_/miningPortal.json";
-
 const MiningPortal: React.FC = (): JSX.Element => {
-  const { currencies } = React.useContext(AppContext);
+  const {
+    currencies: { mineable: mineableCurrencies }
+  } = React.useContext(AppContext);
+  const { miningPortal } = MiningContainer.useContainer();
   const miningContainer = MiningContainer.useContainer();
+  const portalData = miningPortal.data;
+  const notAllAdded = portalData.length !== mineableCurrencies.length;
+
+  React.useEffect(() => {
+    miningPortal.fetch();
+  }, []);
 
   const handleDeposit = ({ amount, currency }) => {
     miningContainer.minedAsset.deposit({
@@ -21,36 +29,42 @@ const MiningPortal: React.FC = (): JSX.Element => {
     });
   };
 
-  const handleWithdraw = currency => {
-    miningContainer.minedAsset.withdraw(currency);
+  const handleWithdraw = ({ amount, currency }) => {
+    miningContainer.minedAsset.withdraw({
+      amount,
+      asset: currency
+    });
   };
 
   return (
-    <div>
+    <Wrapper>
       <img src="static/mining/MiningPortal.svg" />
       <Grid container spacing={3}>
-        {portalData.map(
-          (slotData: any): JSX.Element => {
-            const { id, currency } = slotData;
-
-            return (
+        {portalData &&
+          portalData.map(
+            (slotData: any): JSX.Element => (
               <Grid item xs={4}>
                 <MiningSlot
-                  key={id}
+                  key={slotData.id}
                   {...slotData}
                   onDeposit={handleDeposit}
                   onWithdraw={handleWithdraw}
                 />
               </Grid>
-            );
-          }
+            )
+          )}
+        {notAllAdded && (
+          <Grid item xs={4}>
+            <MiningSlotAddCurrency />
+          </Grid>
         )}
-        <Grid item xs={4}>
-          <MiningSlotAddCurrency />
-        </Grid>
       </Grid>
-    </div>
+    </Wrapper>
   );
 };
 
 export default MiningPortal;
+
+const Wrapper = styled.div`
+  width: 100%;
+`;

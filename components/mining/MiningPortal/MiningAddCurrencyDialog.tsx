@@ -11,7 +11,6 @@ import { DialogActions, Button, Divider } from "@material-ui/core";
 import MiningActions from "./MiningActions";
 import AppContainer from "~/containers/AppContainer";
 import MiningContainer from "~/containers/MiningContainer";
-import { on } from "cluster";
 
 interface Props {
   open: boolean;
@@ -28,9 +27,13 @@ const MiningAddCurrencyDialog: React.FC<Props> = ({
   open,
   onClose
 }): JSX.Element => {
-  const { currencies } = React.useContext(AppContext);
+  const {
+    currencies: { mineable: mineableCurrencies }
+  } = React.useContext(AppContext);
   const { minedAsset } = MiningContainer.useContainer();
-  const [selectedCurrency, setSelectedCurrency] = React.useState(currencies[0]);
+  const [selectedCurrency, setSelectedCurrency] = React.useState(
+    mineableCurrencies && mineableCurrencies[0]
+  );
   const [amount, setAmount] = React.useState("0");
 
   const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,15 +47,14 @@ const MiningAddCurrencyDialog: React.FC<Props> = ({
   };
 
   const handleAddCurrency = async () => {
-    try {
-      const res = await minedAsset.deposit({
-        asset: selectedCurrency.symbol,
-        amount
-      });
-      onClose();
-    } catch (err) {
-      console.error(err);
-    }
+    const result: any = await minedAsset.deposit({
+      asset: selectedCurrency.symbol,
+      amount
+    });
+
+    if (result instanceof Error) return;
+
+    onClose();
   };
 
   return (
@@ -61,7 +63,7 @@ const MiningAddCurrencyDialog: React.FC<Props> = ({
         <CurrenciesSelector
           onChange={handleChangeCurrency}
           selected={selectedCurrency}
-          currencies={currencies}
+          currencies={mineableCurrencies}
         />
         <TextField
           value={amount}
