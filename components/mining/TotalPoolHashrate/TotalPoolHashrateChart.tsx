@@ -1,9 +1,5 @@
 import { ResponsiveLine, Line } from "@nivo/line";
 import styled from "styled-components";
-import Paper from "~/components/common/Paper";
-
-import data from "~/_mocks_/totalPoolHashrate.json";
-import TotalPoolHeader from "./TotalPoolHeader";
 
 const height = 300;
 const width = 800;
@@ -120,14 +116,12 @@ const theme = {
   }
 };
 
-// make sure parent container have a defined height when using
-// responsive component, otherwise height will be 0 and
-// no chart will be rendered.
-// website examples showcase many properties,
-// you'll often use just a few of them.
-const TotalPoolHashrateChart = props => (
-  <Wrapper>
-    <TotalPoolHeader />
+interface Props {
+  data: any[];
+}
+
+const TotalPoolHashrateChart: React.FC<Props> = ({ data }): JSX.Element => (
+  <>
     <SvgDefs style={{ visibility: "hidden" }}>
       <defs>
         <linearGradient
@@ -311,18 +305,10 @@ const TotalPoolHashrateChart = props => (
       useMesh={true}
       animate={true}
     />
-  </Wrapper>
+  </>
 );
 
 export default TotalPoolHashrateChart;
-
-const Wrapper = styled(Paper)`
-  width: 100%;
-  height: 55vh;
-  background-color: ${p => p.theme.palette.background.paperDarkest};
-  padding: 20px;
-  margin: 30px 0;
-`;
 
 const SvgDefs = styled.svg`
   height: 0;

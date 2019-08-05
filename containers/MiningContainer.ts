@@ -5,18 +5,32 @@ import { findIndex, propEq, update, append, remove, isEmpty } from "ramda";
 
 import ENDPOINTS from "~/constants/endpoints";
 import NOTIFICATION_TYPES from "~/constants/notificationTypes";
+import OVERVIEW_CATEGORIES from "~/constants/overviewCategories";
 import AsyncService from "~/services/AsyncService";
 import AppContainer from "~/containers/AppContainer";
 import ErrorViewer from "~/components/common/ErrorViewer";
+import { PERIODS_SHORT } from "~/constants/periods";
 
 interface MinedProps {
   selectedCurrency: {
     id: number;
     set: (number) => void;
   };
+  selectedOverviewCategory: {
+    category: string;
+    set: (string) => void;
+  };
+  selectedOverviewPeriod: {
+    period: string;
+    set: (string) => void;
+  };
+  totalPoolHashrate: {
+    chart: any;
+    fetch: (filter?: any) => Promise<any>;
+  };
   overviewStatistic: {
     statistic: any;
-    fetch: () => Promise<any>;
+    fetch: (filter?: any) => Promise<any>;
   };
   arcadeMining: {
     data: any;
@@ -34,11 +48,11 @@ interface MinedProps {
   };
   blockRewards: {
     data: any;
-    fetch: () => Promise<any>;
+    fetch: (filter?: any) => Promise<any>;
   };
   myRewards: {
     data: any;
-    fetch: () => Promise<any>;
+    fetch: (filter?: any) => Promise<any>;
   };
   hashBalance: {
     data: any;
@@ -48,6 +62,7 @@ interface MinedProps {
 
 function useMining(): MinedProps {
   let [statistic, setStatistic] = React.useState(null);
+  let [totalHashrateChart, setTotalHashrateChart] = React.useState(null);
   let [depositedAsset, setDeposited] = React.useState(null);
   let [withdrawnAsset, setWithdrawn] = React.useState(null);
   let [arcadeMining, setArcadeMining] = React.useState([]);
@@ -56,14 +71,59 @@ function useMining(): MinedProps {
   let [myRewards, setMyRewards] = React.useState(null);
   let [hashBalance, setHashBalance] = React.useState(null);
   let [selectedCurrencyId, setSelectedCurrencyId] = React.useState(null);
+  let [selectedOverviewCategory, setSelectedOverviewCategory] = React.useState(
+    OVERVIEW_CATEGORIES.pools
+  );
+  let [selectedPeriod, setSelectedPeriod] = React.useState(PERIODS_SHORT.D7);
 
   const appContainer = AppContainer.useContainer();
 
-  const fetchOverviewStatistic = async (): Promise<any> => {
+  React.useEffect(() => {
+    const filter = selectedCurrencyId
+      ? { filter: { asset_id: selectedCurrencyId } }
+      : null;
+
+    fetchBlockRewards(filter);
+    fetchMyRewards(filter);
+    fetchOverviewStatistic(filter);
+  }, [selectedCurrencyId]);
+
+  React.useEffect(() => {
+    const filter = {
+      filter: {
+        period: selectedPeriod,
+        ...(selectedCurrencyId && { asset_id: selectedCurrencyId })
+      }
+    };
+
+    fetchTotalPoolHashrate(filter);
+  }, [selectedOverviewCategory, selectedPeriod, selectedCurrencyId]);
+
+  const fetchOverviewStatistic = async (filter?: any): Promise<any> => {
     try {
-      const result = await AsyncService.get(ENDPOINTS.mining.statistic);
+      const result = await AsyncService.get(ENDPOINTS.mining.statistic, filter);
       const data = result.data.body;
       setStatistic(data);
+
+      return data;
+    } catch ({ message }) {
+      appContainer.notifications.addNotification({
+        message,
+        type: NOTIFICATION_TYPES.error
+      });
+      return Error(message);
+    }
+  };
+
+  const fetchTotalPoolHashrate = async (filter?: any): Promise<any> => {
+    try {
+      const url = format(ENDPOINTS.mining.chart, {
+        category: selectedOverviewCategory
+      });
+
+      const result = await AsyncService.get(url, filter);
+      const data = result.data.body;
+      setTotalHashrateChart(data);
 
       return data;
     } catch ({ message }) {
@@ -196,9 +256,12 @@ function useMining(): MinedProps {
     }
   };
 
-  const fetchBlockRewards = async (): Promise<any> => {
+  const fetchBlockRewards = async (filter?: any): Promise<any> => {
     try {
-      const result = await AsyncService.get(ENDPOINTS.mining.blockRewards);
+      const result = await AsyncService.get(
+        ENDPOINTS.mining.blockRewards,
+        filter
+      );
       const data = result.data.body;
       setBlockRewards(data);
 
@@ -213,9 +276,9 @@ function useMining(): MinedProps {
     }
   };
 
-  const fetchMyRewards = async (): Promise<any> => {
+  const fetchMyRewards = async (filter?: any): Promise<any> => {
     try {
-      const result = await AsyncService.get(ENDPOINTS.mining.myRewards);
+      const result = await AsyncService.get(ENDPOINTS.mining.myRewards, filter);
       const data = result.data.body;
       setMyRewards(data);
 
@@ -250,6 +313,18 @@ function useMining(): MinedProps {
     selectedCurrency: {
       id: selectedCurrencyId,
       set: id => setSelectedCurrencyId(id)
+    },
+    selectedOverviewCategory: {
+      category: selectedOverviewCategory,
+      set: category => setSelectedOverviewCategory(category)
+    },
+    selectedOverviewPeriod: {
+      period: selectedPeriod,
+      set: period => setSelectedPeriod(period)
+    },
+    totalPoolHashrate: {
+      chart: totalHashrateChart,
+      fetch: fetchTotalPoolHashrate
     },
     overviewStatistic: {
       statistic,

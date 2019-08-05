@@ -11,6 +11,7 @@ const ENDPOINTS = {
   freeDeposit: "transaction/free_deposit",
   mining: {
     arcade: "mining/arcade",
+    chart: "mining/chart/{category}",
     portal: "mining/portal",
     statistic: "mining/stats",
     deposit: "mining/{asset}/deposit",

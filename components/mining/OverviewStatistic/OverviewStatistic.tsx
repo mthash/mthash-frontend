@@ -6,9 +6,8 @@ import MiningStatistic from "../../../static/mining/MiningStatistic.svg";
 import MiningContainer from "~/containers/MiningContainer";
 import OverviewStatisticList from "./OverviewStatisticList";
 
-// import miningStatistic from "~/_mocks_/miningStatistic.json";
 const OverviewStatistic: React.FC = (): JSX.Element => {
-  const [selected, setSelected] = React.useState(null);
+  const { selectedOverviewCategory } = MiningContainer.useContainer();
   const mining = MiningContainer.useContainer();
   const overviewStatistic = mining.overviewStatistic.statistic;
 
@@ -17,7 +16,7 @@ const OverviewStatistic: React.FC = (): JSX.Element => {
   }, []);
 
   const handleSelect = id => {
-    setSelected(id);
+    selectedOverviewCategory.set(id);
   };
 
   return (
@@ -25,7 +24,7 @@ const OverviewStatistic: React.FC = (): JSX.Element => {
       <MiningStatistic />
       <OverviewStatisticList
         onSelect={handleSelect}
-        selected={selected}
+        selected={selectedOverviewCategory.category}
         overviewStatistic={overviewStatistic}
       />
     </Wrapper>
