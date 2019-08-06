@@ -62,7 +62,7 @@ interface MinedProps {
 
 function useMining(): MinedProps {
   let [statistic, setStatistic] = React.useState(null);
-  let [totalHashrateChart, setTotalHashrateChart] = React.useState(null);
+  let [totalHashrateChart, setTotalHashrateChart] = React.useState([]);
   let [depositedAsset, setDeposited] = React.useState(null);
   let [withdrawnAsset, setWithdrawn] = React.useState(null);
   let [arcadeMining, setArcadeMining] = React.useState([]);
@@ -74,7 +74,7 @@ function useMining(): MinedProps {
   let [selectedOverviewCategory, setSelectedOverviewCategory] = React.useState(
     OVERVIEW_CATEGORIES.pools
   );
-  let [selectedPeriod, setSelectedPeriod] = React.useState(PERIODS_SHORT.D7);
+  let [selectedPeriod, setSelectedPeriod] = React.useState(PERIODS_SHORT.d7);
 
   const appContainer = AppContainer.useContainer();
 

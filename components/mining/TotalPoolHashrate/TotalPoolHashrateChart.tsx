@@ -29,12 +29,13 @@ const theme = {
         stroke: "#777777",
         strokeWidth: 1
       },
-      text: {}
+      text: {
+        fill: "#aaaaaa"
+      }
     },
     legend: {
       text: {
-        fontSize: 12,
-        fill: "#fff"
+        fill: "#aaaaaa"
       }
     }
   },
@@ -118,9 +119,23 @@ const theme = {
 
 interface Props {
   data: any[];
+  xFormat?: string;
+  precision?: any;
+  axisBottom?: {
+    tickValues: string;
+    format: string;
+  };
 }
 
-const TotalPoolHashrateChart: React.FC<Props> = ({ data }): JSX.Element => (
+const TotalPoolHashrateChart: React.FC<Props> = ({
+  data,
+  precision = "hour",
+  xFormat = "time:%I %M",
+  axisBottom = {
+    tickValues: "every 1 hour",
+    format: "%I:%M %p"
+  }
+}): JSX.Element => (
   <>
     <SvgDefs style={{ visibility: "hidden" }}>
       <defs>
@@ -260,9 +275,16 @@ const TotalPoolHashrateChart: React.FC<Props> = ({ data }): JSX.Element => (
     </SvgDefs>
     <ResponsiveLine
       data={data}
-      curve="linear"
-      margin={{ top: 0, right: 10, bottom: 100, left: 60 }}
-      xScale={{ type: "point" }}
+      curve="monotoneX"
+      margin={{ top: 50, right: 10, bottom: 70, left: 60 }}
+      xScale={{
+        type: "time",
+        format: "%Y-%m-%d %I:%M:%S %p",
+        precision
+      }}
+      xFormat={xFormat}
+      axisBottom={axisBottom}
+      // xScale={{ type: "point" }}
       // yScale={{ type: "linear", stacked: true, min: "auto", max: "auto" }}
       axisTop={null}
       axisRight={null}
@@ -281,7 +303,7 @@ const TotalPoolHashrateChart: React.FC<Props> = ({ data }): JSX.Element => (
           direction: "row",
           justify: false,
           translateX: 0,
-          translateY: 0,
+          translateY: -50,
           itemsSpacing: 0,
           itemDirection: "left-to-right",
           itemWidth: 80,
@@ -290,6 +312,7 @@ const TotalPoolHashrateChart: React.FC<Props> = ({ data }): JSX.Element => (
           symbolSize: 12,
           symbolShape: "circle",
           symbolBorderColor: "#3f4069",
+          itemTextColor: "#ffffff",
           effects: [
             {
               on: "hover",

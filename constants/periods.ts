@@ -8,8 +8,8 @@ export const PERIODS = [
 export const PERIODS_SHORT = {
   h1: "1h",
   h3: "3h",
-  D1: "1d",
-  D7: "7d",
-  M1: "1m",
-  All: "all"
+  d1: "1d",
+  d7: "7d",
+  m1: "1m",
+  all: "all"
 };
