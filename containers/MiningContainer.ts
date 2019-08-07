@@ -60,6 +60,26 @@ interface MinedProps {
   };
 }
 
+function useInterval(callback, delay) {
+  const savedCallback: any = React.useRef();
+
+  // Remember the latest callback.
+  React.useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  // Set up the interval.
+  React.useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+    if (delay !== null) {
+      let id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay]);
+}
+
 function useMining(): MinedProps {
   let [statistic, setStatistic] = React.useState(null);
   let [totalHashrateChart, setTotalHashrateChart] = React.useState([]);
@@ -75,32 +95,49 @@ function useMining(): MinedProps {
     OVERVIEW_CATEGORIES.pools
   );
   let [selectedPeriod, setSelectedPeriod] = React.useState(PERIODS_SHORT.d7);
+  // const [emulationIntervals, setEmulationIntervals] = React.useState(null);
+  let [emulationOn, setEmulationOn] = React.useState(false);
+  const emulationIntervals = [];
 
   const appContainer = AppContainer.useContainer();
 
   React.useEffect(() => {
-    const filter = selectedCurrencyId
-      ? { filter: { asset_id: selectedCurrencyId } }
-      : null;
-
-    fetchBlockRewards(filter);
-    fetchMyRewards(filter);
-    fetchOverviewStatistic(filter);
+    fetchBlockRewards();
+    fetchMyRewards();
+    fetchOverviewStatistic();
   }, [selectedCurrencyId]);
 
   React.useEffect(() => {
-    const filter = {
-      filter: {
-        period: selectedPeriod,
-        ...(selectedCurrencyId && { asset_id: selectedCurrencyId })
-      }
-    };
-
-    fetchTotalPoolHashrate(filter);
+    fetchTotalPoolHashrate();
   }, [selectedOverviewCategory, selectedPeriod, selectedCurrencyId]);
 
-  const fetchOverviewStatistic = async (filter?: any): Promise<any> => {
+  // Live update emulation //
+  useInterval(() => {
+    fetchBlockRewards();
+    fetchMyRewards();
+  }, 6e4 * 10);
+
+  useInterval(() => {
+    fetchTotalPoolHashrate();
+  }, 6e4);
+
+  useInterval(() => {
+    fetchOverviewStatistic();
+  }, 6e4 + 1000);
+
+  useInterval(() => {
+    fetchArcadeMining();
+    fetchMiningPortal();
+  }, 6e4 + 2000);
+
+  // /Live update emulation //
+
+  const fetchOverviewStatistic = async (): Promise<any> => {
     try {
+      const filter = selectedCurrencyId
+        ? { filter: { asset_id: selectedCurrencyId } }
+        : null;
+
       const result = await AsyncService.get(ENDPOINTS.mining.statistic, filter);
       const data = result.data.body;
       setStatistic(data);
@@ -115,8 +152,14 @@ function useMining(): MinedProps {
     }
   };
 
-  const fetchTotalPoolHashrate = async (filter?: any): Promise<any> => {
+  const fetchTotalPoolHashrate = async (): Promise<any> => {
     try {
+      const filter = {
+        filter: {
+          period: selectedPeriod,
+          ...(selectedCurrencyId && { asset_id: selectedCurrencyId })
+        }
+      };
       const url = format(ENDPOINTS.mining.chart, {
         category: selectedOverviewCategory
       });
@@ -256,8 +299,12 @@ function useMining(): MinedProps {
     }
   };
 
-  const fetchBlockRewards = async (filter?: any): Promise<any> => {
+  const fetchBlockRewards = async (): Promise<any> => {
     try {
+      const filter = selectedCurrencyId
+        ? { filter: { asset_id: selectedCurrencyId } }
+        : null;
+
       const result = await AsyncService.get(
         ENDPOINTS.mining.blockRewards,
         filter
@@ -276,8 +323,11 @@ function useMining(): MinedProps {
     }
   };
 
-  const fetchMyRewards = async (filter?: any): Promise<any> => {
+  const fetchMyRewards = async (): Promise<any> => {
     try {
+      const filter = selectedCurrencyId
+        ? { filter: { asset_id: selectedCurrencyId } }
+        : null;
       const result = await AsyncService.get(ENDPOINTS.mining.myRewards, filter);
       const data = result.data.body;
       setMyRewards(data);
