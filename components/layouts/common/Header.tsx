@@ -10,8 +10,6 @@ import SectionTabs from "./SectionTabs";
 
 import AppContainer from "~/containers/AppContainer";
 
-import { APP_SECTION_IDS } from "~/constants/appSections";
-
 interface Props {
   activatedSection: number;
 }
@@ -33,7 +31,7 @@ const Header: React.FC<Props> = ({ activatedSection }): JSX.Element => {
 export default Header;
 
 const StyledAppBar = styled(AppBar)`
-  z-index: ${p => p.theme.zIndex.drawer + 1};
+  z-index: 1201;
   background-color: ${p => p.theme.palette.background.paper};
   box-shadow: none;
   color: ${p => p.theme.palette.text.secondary};

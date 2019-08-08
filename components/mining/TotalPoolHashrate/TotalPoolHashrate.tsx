@@ -37,6 +37,8 @@ const CHART_PRECISION_BY_PERIOD = {
     precision: "hour",
     axisBottom: {
       format: "%d/%m %I:%M %p",
+      tickSize: 4,
+      tickRotation: -15,
       tickValues: "every 6 hour"
     }
   },

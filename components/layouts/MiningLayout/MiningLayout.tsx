@@ -8,13 +8,14 @@ import { APP_SECTION_IDS } from "~/constants/appSections";
 
 interface Props {
   children: React.ReactNode;
+  demo?: boolean;
 }
 
-const MiningLayout: React.FC<Props> = ({ children }): JSX.Element => {
+const MiningLayout: React.FC<Props> = ({ children, demo }): JSX.Element => {
   return (
     <Wrapper>
       <CssBaseline />
-      <Header activatedSection={APP_SECTION_IDS.mining} />
+      {!demo && <Header activatedSection={APP_SECTION_IDS.mining} />}
       <Content>{children}</Content>
     </Wrapper>
   );

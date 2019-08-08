@@ -83,8 +83,7 @@ export default withFormik({
       login({ token });
     } catch (error) {
       setErrors({
-        [RESPONSE_ERROR_NAME]:
-          error.response.message || "login or password is incorrect"
+        [RESPONSE_ERROR_NAME]: "login or password is incorrect"
       });
     }
 
