@@ -8,19 +8,14 @@ import TableRow from "@material-ui/core/TableRow";
 import { find, propEq } from "ramda";
 
 import ArcadeMiningStatistic from "~/models/ArcadeMiningStatistic";
-import AppContext from "~/containers/AppContext";
 import ArcadeMiningHash from "./ArcadeMiningHash";
 
-import rows from "~/_mocks_/arcadeMiningStatistic.json";
 import hashStat from "~/_mocks_/arcadeMiningStatisticHash.json";
 import MiningContainer from "~/containers/MiningContainer";
 import ArcadeMiningTableRow from "./ArcadeMiningTableRow";
 
 const ArcadeMiningTable: React.FC = (): JSX.Element => {
   const { arcadeMining, selectedCurrency } = MiningContainer.useContainer();
-  const {
-    currencies: { all: allCurrencies }
-  } = React.useContext(AppContext);
   const data = arcadeMining.data;
 
   React.useEffect(() => {
@@ -32,9 +27,7 @@ const ArcadeMiningTable: React.FC = (): JSX.Element => {
   };
 
   const handleHashButtonClick = () => {
-    // TODO: probably this approach should be change in the future
-    const hashCurrency = find(propEq("symbol", "HASH"))(allCurrencies);
-    selectedCurrency.set(hashCurrency.id);
+    selectedCurrency.set(null);
   };
 
   return (

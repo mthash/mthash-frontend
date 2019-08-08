@@ -1,5 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 import cookie from "js-cookie";
+import qs from "qs";
 
 import EnviromentService from "./EnviromentService";
 
@@ -40,8 +41,9 @@ class AsyncService {
   }
 
   @Catch
-  async get(endpoint: string, data?: any): Promise<any> {
-    return await this.axiosRequst(endpoint, "get", data);
+  async get(endpoint: string, query?: any): Promise<any> {
+    const url = query ? `${endpoint}?${qs.stringify(query)}` : endpoint;
+    return await this.axiosRequst(url, "get");
   }
 
   @Catch
@@ -52,7 +54,7 @@ class AsyncService {
   axiosRequst = (
     endpoint: string,
     method: RequestMethod,
-    data: any
+    data?: any
   ): Promise<any> => {
     return this.axios({
       method,

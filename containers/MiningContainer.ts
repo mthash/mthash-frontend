@@ -5,18 +5,32 @@ import { findIndex, propEq, update, append, remove, isEmpty } from "ramda";
 
 import ENDPOINTS from "~/constants/endpoints";
 import NOTIFICATION_TYPES from "~/constants/notificationTypes";
+import OVERVIEW_CATEGORIES from "~/constants/overviewCategories";
 import AsyncService from "~/services/AsyncService";
 import AppContainer from "~/containers/AppContainer";
 import ErrorViewer from "~/components/common/ErrorViewer";
+import { PERIODS_SHORT } from "~/constants/periods";
 
 interface MinedProps {
   selectedCurrency: {
     id: number;
     set: (number) => void;
   };
+  selectedOverviewCategory: {
+    category: string;
+    set: (string) => void;
+  };
+  selectedOverviewPeriod: {
+    period: string;
+    set: (string) => void;
+  };
+  totalPoolHashrate: {
+    chart: any;
+    fetch: (filter?: any) => Promise<any>;
+  };
   overviewStatistic: {
     statistic: any;
-    fetch: () => Promise<any>;
+    fetch: (filter?: any) => Promise<any>;
   };
   arcadeMining: {
     data: any;
@@ -34,11 +48,11 @@ interface MinedProps {
   };
   blockRewards: {
     data: any;
-    fetch: () => Promise<any>;
+    fetch: (filter?: any) => Promise<any>;
   };
   myRewards: {
     data: any;
-    fetch: () => Promise<any>;
+    fetch: (filter?: any) => Promise<any>;
   };
   hashBalance: {
     data: any;
@@ -46,8 +60,29 @@ interface MinedProps {
   };
 }
 
+function useInterval(callback, delay) {
+  const savedCallback: any = React.useRef();
+
+  // Remember the latest callback.
+  React.useEffect(() => {
+    savedCallback.current = callback;
+  }, [callback]);
+
+  // Set up the interval.
+  React.useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+    if (delay !== null) {
+      let id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay]);
+}
+
 function useMining(): MinedProps {
   let [statistic, setStatistic] = React.useState(null);
+  let [totalHashrateChart, setTotalHashrateChart] = React.useState([]);
   let [depositedAsset, setDeposited] = React.useState(null);
   let [withdrawnAsset, setWithdrawn] = React.useState(null);
   let [arcadeMining, setArcadeMining] = React.useState([]);
@@ -56,14 +91,82 @@ function useMining(): MinedProps {
   let [myRewards, setMyRewards] = React.useState(null);
   let [hashBalance, setHashBalance] = React.useState(null);
   let [selectedCurrencyId, setSelectedCurrencyId] = React.useState(null);
+  let [selectedOverviewCategory, setSelectedOverviewCategory] = React.useState(
+    OVERVIEW_CATEGORIES.pools
+  );
+  let [selectedPeriod, setSelectedPeriod] = React.useState(PERIODS_SHORT.d7);
+  // const [emulationIntervals, setEmulationIntervals] = React.useState(null);
+  let [emulationOn, setEmulationOn] = React.useState(false);
+  const emulationIntervals = [];
 
   const appContainer = AppContainer.useContainer();
 
+  React.useEffect(() => {
+    fetchBlockRewards();
+    fetchMyRewards();
+    fetchOverviewStatistic();
+  }, [selectedCurrencyId]);
+
+  React.useEffect(() => {
+    fetchTotalPoolHashrate();
+  }, [selectedOverviewCategory, selectedPeriod, selectedCurrencyId]);
+
+  // Live update emulation //
+  useInterval(() => {
+    fetchBlockRewards();
+    fetchMyRewards();
+  }, 6e4 * 10);
+
+  useInterval(() => {
+    fetchTotalPoolHashrate();
+  }, 6e4);
+
+  useInterval(() => {
+    fetchOverviewStatistic();
+  }, 6e4 + 1000);
+
+  useInterval(() => {
+    fetchArcadeMining();
+    fetchMiningPortal();
+  }, 6e4 + 2000);
+
+  // /Live update emulation //
+
   const fetchOverviewStatistic = async (): Promise<any> => {
     try {
-      const result = await AsyncService.get(ENDPOINTS.mining.statistic);
+      const filter = selectedCurrencyId
+        ? { filter: { asset_id: selectedCurrencyId } }
+        : null;
+
+      const result = await AsyncService.get(ENDPOINTS.mining.statistic, filter);
       const data = result.data.body;
       setStatistic(data);
+
+      return data;
+    } catch ({ message }) {
+      appContainer.notifications.addNotification({
+        message,
+        type: NOTIFICATION_TYPES.error
+      });
+      return Error(message);
+    }
+  };
+
+  const fetchTotalPoolHashrate = async (): Promise<any> => {
+    try {
+      const filter = {
+        filter: {
+          period: selectedPeriod,
+          ...(selectedCurrencyId && { asset_id: selectedCurrencyId })
+        }
+      };
+      const url = format(ENDPOINTS.mining.chart, {
+        category: selectedOverviewCategory
+      });
+
+      const result = await AsyncService.get(url, filter);
+      const data = result.data.body;
+      setTotalHashrateChart(data);
 
       return data;
     } catch ({ message }) {
@@ -198,7 +301,14 @@ function useMining(): MinedProps {
 
   const fetchBlockRewards = async (): Promise<any> => {
     try {
-      const result = await AsyncService.get(ENDPOINTS.mining.blockRewards);
+      const filter = selectedCurrencyId
+        ? { filter: { asset_id: selectedCurrencyId } }
+        : null;
+
+      const result = await AsyncService.get(
+        ENDPOINTS.mining.blockRewards,
+        filter
+      );
       const data = result.data.body;
       setBlockRewards(data);
 
@@ -215,7 +325,10 @@ function useMining(): MinedProps {
 
   const fetchMyRewards = async (): Promise<any> => {
     try {
-      const result = await AsyncService.get(ENDPOINTS.mining.myRewards);
+      const filter = selectedCurrencyId
+        ? { filter: { asset_id: selectedCurrencyId } }
+        : null;
+      const result = await AsyncService.get(ENDPOINTS.mining.myRewards, filter);
       const data = result.data.body;
       setMyRewards(data);
 
@@ -250,6 +363,18 @@ function useMining(): MinedProps {
     selectedCurrency: {
       id: selectedCurrencyId,
       set: id => setSelectedCurrencyId(id)
+    },
+    selectedOverviewCategory: {
+      category: selectedOverviewCategory,
+      set: category => setSelectedOverviewCategory(category)
+    },
+    selectedOverviewPeriod: {
+      period: selectedPeriod,
+      set: period => setSelectedPeriod(period)
+    },
+    totalPoolHashrate: {
+      chart: totalHashrateChart,
+      fetch: fetchTotalPoolHashrate
     },
     overviewStatistic: {
       statistic,

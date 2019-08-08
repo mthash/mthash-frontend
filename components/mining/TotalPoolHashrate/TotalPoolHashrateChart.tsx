@@ -1,9 +1,5 @@
 import { ResponsiveLine, Line } from "@nivo/line";
 import styled from "styled-components";
-import Paper from "~/components/common/Paper";
-
-import data from "~/_mocks_/totalPoolHashrate.json";
-import TotalPoolHeader from "./TotalPoolHeader";
 
 const height = 300;
 const width = 800;
@@ -33,12 +29,13 @@ const theme = {
         stroke: "#777777",
         strokeWidth: 1
       },
-      text: {}
+      text: {
+        fill: "#aaaaaa"
+      }
     },
     legend: {
       text: {
-        fontSize: 12,
-        fill: "#fff"
+        fill: "#aaaaaa"
       }
     }
   },
@@ -120,14 +117,26 @@ const theme = {
   }
 };
 
-// make sure parent container have a defined height when using
-// responsive component, otherwise height will be 0 and
-// no chart will be rendered.
-// website examples showcase many properties,
-// you'll often use just a few of them.
-const TotalPoolHashrateChart = props => (
-  <Wrapper>
-    <TotalPoolHeader />
+interface Props {
+  data: any[];
+  xFormat?: string;
+  precision?: any;
+  axisBottom?: {
+    tickValues: string;
+    format: string;
+  };
+}
+
+const TotalPoolHashrateChart: React.FC<Props> = ({
+  data,
+  precision = "hour",
+  xFormat = "time:%I %M",
+  axisBottom = {
+    tickValues: "every 1 hour",
+    format: "%I:%M %p"
+  }
+}): JSX.Element => (
+  <>
     <SvgDefs style={{ visibility: "hidden" }}>
       <defs>
         <linearGradient
@@ -266,9 +275,16 @@ const TotalPoolHashrateChart = props => (
     </SvgDefs>
     <ResponsiveLine
       data={data}
-      curve="linear"
-      margin={{ top: 0, right: 10, bottom: 100, left: 60 }}
-      xScale={{ type: "point" }}
+      curve="monotoneX"
+      margin={{ top: 50, right: 10, bottom: 70, left: 60 }}
+      xScale={{
+        type: "time",
+        format: "%Y-%m-%d %I:%M:%S %p",
+        precision
+      }}
+      xFormat={xFormat}
+      axisBottom={axisBottom}
+      // xScale={{ type: "point" }}
       // yScale={{ type: "linear", stacked: true, min: "auto", max: "auto" }}
       axisTop={null}
       axisRight={null}
@@ -287,7 +303,7 @@ const TotalPoolHashrateChart = props => (
           direction: "row",
           justify: false,
           translateX: 0,
-          translateY: 0,
+          translateY: -50,
           itemsSpacing: 0,
           itemDirection: "left-to-right",
           itemWidth: 80,
@@ -296,6 +312,7 @@ const TotalPoolHashrateChart = props => (
           symbolSize: 12,
           symbolShape: "circle",
           symbolBorderColor: "#3f4069",
+          itemTextColor: "#ffffff",
           effects: [
             {
               on: "hover",
@@ -311,18 +328,10 @@ const TotalPoolHashrateChart = props => (
       useMesh={true}
       animate={true}
     />
-  </Wrapper>
+  </>
 );
 
 export default TotalPoolHashrateChart;
-
-const Wrapper = styled(Paper)`
-  width: 100%;
-  height: 55vh;
-  background-color: ${p => p.theme.palette.background.paperDarkest};
-  padding: 20px;
-  margin: 30px 0;
-`;
 
 const SvgDefs = styled.svg`
   height: 0;

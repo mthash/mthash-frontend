@@ -5,7 +5,7 @@ import MiningContainer from "~/containers/MiningContainer";
 import AppContext from "~/containers/AppContext";
 import {
   OverviewStatistic,
-  TotalPoolHashrateChart,
+  TotalPoolHashrate,
   ArcadeMiningTable,
   RewardsTable,
   MiningPortal
@@ -26,7 +26,7 @@ const MiningDashboard: React.FC = (): JSX.Element => {
           <OverviewStatistic />
         </Grid>
         <Grid item xs={12}>
-          <TotalPoolHashrateChart />
+          <TotalPoolHashrate />
         </Grid>
       </Grid>
       <Grid container spacing={5}>

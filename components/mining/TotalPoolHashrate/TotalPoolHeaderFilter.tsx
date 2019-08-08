@@ -1,29 +1,23 @@
 import * as React from "react";
 import styled, { css } from "styled-components";
 import Button from "@material-ui/core/Button";
+import MiningContainer from "~/containers/MiningContainer";
+import { PERIODS_SHORT } from "~/constants/periods";
 
-interface Props {
-  onChange?: (string) => string;
-  selected?: string;
-}
+const TotalPoolHeaderFilter: React.FC = (): JSX.Element => {
+  const { selectedOverviewPeriod } = MiningContainer.useContainer();
 
-const FILTERS = ["1H", "3H", "1D", "7D", "1M", "All"];
-
-const TotalPoolHeaderFilter: React.FC<Props> = ({
-  onChange,
-  selected = "7D"
-}): JSX.Element => {
   const handleChange = (filter: string) => {
-    onChange && onChange(filter);
+    selectedOverviewPeriod.set(filter);
   };
 
   return (
     <div>
-      {FILTERS.map(
+      {Object.values(PERIODS_SHORT).map(
         (filter: string): JSX.Element => (
           <FilterButton
             onClick={handleChange.bind(null, filter)}
-            selected={filter === selected}
+            selected={filter === selectedOverviewPeriod.period}
           >
             {filter}
           </FilterButton>

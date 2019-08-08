@@ -2,6 +2,7 @@ import * as React from "react";
 import styled from "styled-components";
 import List from "@material-ui/core/List";
 
+import OVERVIEW_CATEGORIES from "~/constants/overviewCategories";
 import StatisticItem from "./OverviewStatisticItem";
 import OverviewMiningStatistic from "~/models/OverviewMiningStatistic";
 
@@ -13,25 +14,25 @@ interface Props {
 
 const STATISTIC_BLOCKS = [
   {
-    dataKey: "pools",
+    dataKey: OVERVIEW_CATEGORIES.pools,
     caption: "Pools"
   },
   {
-    dataKey: "algorithms",
+    dataKey: OVERVIEW_CATEGORIES.algorithms,
     caption: "Algorithms"
   },
   {
-    dataKey: "tokens",
+    dataKey: OVERVIEW_CATEGORIES.tokens,
     caption: "Tokens"
   },
   ,
   {
-    dataKey: "power",
+    dataKey: OVERVIEW_CATEGORIES.power,
     caption: "Power",
     formatter: ({ value, unit }) => `${value}${unit}`
   },
   {
-    dataKey: "daily_revenue",
+    dataKey: OVERVIEW_CATEGORIES.daily_revenue,
     caption: "Daily Revenue",
     formatter: ({ value, unit }) => `$${value}${unit}`
   }
