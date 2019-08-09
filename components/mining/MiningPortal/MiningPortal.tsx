@@ -43,20 +43,20 @@ const MiningPortal: React.FC = (): JSX.Element => {
         {portalData &&
           portalData.map(
             (slotData: any): JSX.Element => (
-              <Grid item xs={4}>
+              <AdaptiveGrid item lg={4} xs={6}>
                 <MiningSlot
                   key={slotData.id}
                   {...slotData}
                   onDeposit={handleDeposit}
                   onWithdraw={handleWithdraw}
                 />
-              </Grid>
+              </AdaptiveGrid>
             )
           )}
         {notAllAdded && (
-          <Grid item xs={4}>
+          <AdaptiveGrid item lg={4} xs={6}>
             <MiningSlotAddCurrency />
-          </Grid>
+          </AdaptiveGrid>
         )}
       </Grid>
     </Wrapper>
@@ -67,4 +67,11 @@ export default MiningPortal;
 
 const Wrapper = styled.div`
   width: 100%;
+`;
+
+const AdaptiveGrid = styled(Grid)`
+  @media screen and (max-width: 600px) {
+    max-width: 100%;
+    flex-basis: 100%;
+  }
 `;

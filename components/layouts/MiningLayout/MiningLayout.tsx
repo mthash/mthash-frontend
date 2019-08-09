@@ -31,5 +31,6 @@ const Content = styled.main`
   margin: auto;
   margin-top: ${p => p.theme.layouts.dashboard.headerHeight}px;
   max-width: ${p => p.theme.layouts.dashboard.contentMaxWidth}px;
+  width: 100%;
   padding: 20px;
 `;

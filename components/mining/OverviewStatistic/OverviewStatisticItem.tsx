@@ -34,6 +34,18 @@ const Wrapper = styled.div`
   display: block;
   flex: 1;
   margin: 0 10px;
+
+  @media screen and (max-width: 1100px) {
+    margin: 0 8px;
+  }
+
+  @media screen and (max-width: 770px) {
+    margin: 0 6px;
+  }
+
+  @media screen and (max-width: 670px) {
+    margin: 0 5px;
+  }
 `;
 
 const StatisticListItem = styled(ListItem)`
@@ -42,6 +54,8 @@ const StatisticListItem = styled(ListItem)`
   flex-direction: column;
   border-radius: 10px;
   border: 1px solid ${p => p.theme.palette.background.divider};
+  min-height: 100px;
+
   ${p =>
     p.selected &&
     css`
@@ -53,14 +67,41 @@ const StatisticListItem = styled(ListItem)`
   &:hover {
     background-color: ${p => p.theme.palette.background.divider};
   }
+
+  @media screen and (max-width: 1100px) {
+    padding: 30px;
+    font-size: 12px;
+  }
+
+  @media screen and (max-width: 770px) {
+    padding: 20px;
+  }
+
+  @media screen and (max-width: 670px) {
+    padding: 15px;
+    font-size: 10px;
+  }
 `;
 
 const StatisticValue = styled.p`
   font-size: 40px;
+
+  @media screen and (max-width: 1100px) {
+    font-size: 25px;
+  }
+
+  @media screen and (max-width: 670px) {
+    font-size: 16px;
+  }
+
+  @media screen and (max-width: 520px) {
+    font-size: 13px;
+  }
 `;
 
 const StatisticCaption = styled.p`
   color: ${p => p.theme.palette.text.secondary};
+  text-align: center;
 `;
 
 const SelectedIndicator = styled.div`

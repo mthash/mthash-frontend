@@ -142,6 +142,18 @@ const RewardsTableCell = styled(TableCell)`
   border-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
+  @media screen and (max-width: ${p => p.theme.breakpoints.values.md}px) {
+    font-size: 12px;
+    padding: 12px 6px;
+  }
+  @media screen and (max-width: ${p => p.theme.breakpoints.values.sm}px) {
+    font-size: 10px;
+    padding: 12px 4px;
+  }
+  @media screen and (max-width: ${p => p.theme.breakpoints.values.xs}px) {
+    font-size: 10px;
+    padding: 12px 2px;
+  }
 `;
 
 const Header = styled.head`

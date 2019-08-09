@@ -35,4 +35,8 @@ export default OverviewStatistic;
 
 const Wrapper = styled.div`
   margin: 0 100px;
+
+  @media screen and (max-width: 1210px) {
+    margin: 0px;
+  }
 `;

@@ -136,7 +136,8 @@ const LinearChart: React.FC<Props> = ({ colors, data }): JSX.Element => {
       colors={colors ? colors : { scheme: "nivo" }}
       lineWidth={3}
       enableGridX={false}
-      enablePoints={false}
+      enablePoints={true}
+      enablePointLabel={true}
       pointSize={10}
       pointColor={{ theme: "background" }}
       pointBorderWidth={2}
