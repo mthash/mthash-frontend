@@ -5,7 +5,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableHead from "@material-ui/core/TableHead";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
-import { find, propEq } from "ramda";
+import { isNil, isEmpty } from "ramda";
 
 import ArcadeMiningStatistic from "~/models/ArcadeMiningStatistic";
 import ArcadeMiningHash from "./ArcadeMiningHash";
@@ -17,6 +17,7 @@ import ArcadeMiningTableRow from "./ArcadeMiningTableRow";
 const ArcadeMiningTable: React.FC = (): JSX.Element => {
   const { arcadeMining, selectedCurrency } = MiningContainer.useContainer();
   const data = arcadeMining.data;
+  const hasData = !isNil(data) && !isEmpty(data);
 
   React.useEffect(() => {
     arcadeMining.fetch();
@@ -33,28 +34,32 @@ const ArcadeMiningTable: React.FC = (): JSX.Element => {
   return (
     <Wrapper>
       <img src="static/mining/ArcadeMining.svg" />
-      <MiningTable>
-        <TableHead>
-          <TableRow>
-            <HeaderCell size="small"></HeaderCell>
-            <HeaderCell align="center">Revenue</HeaderCell>
-            <HeaderCell align="center">Hashrate</HeaderCell>
-            <HeaderCell align="center">Mining</HeaderCell>
-            <HeaderCell align="center">Balance</HeaderCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data &&
-            data.map((row: ArcadeMiningStatistic) => (
-              <ArcadeMiningTableRow
-                {...row}
-                selected={row.id === selectedCurrency.id}
-                onClick={handleRowClick}
-              />
-            ))}
-        </TableBody>
-      </MiningTable>
-      <ArcadeMiningHash {...hashStat} onClick={handleHashButtonClick} />
+      {hasData && (
+        <MiningTable>
+          <TableHead>
+            <TableRow>
+              <HeaderCell size="small"></HeaderCell>
+              <HeaderCell align="center">Revenue</HeaderCell>
+              <HeaderCell align="center">Hashrate</HeaderCell>
+              <HeaderCell align="center">Mining</HeaderCell>
+              <HeaderCell align="center">Balance</HeaderCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data &&
+              data.map((row: ArcadeMiningStatistic) => (
+                <ArcadeMiningTableRow
+                  {...row}
+                  selected={row.id === selectedCurrency.id}
+                  onClick={handleRowClick}
+                />
+              ))}
+          </TableBody>
+        </MiningTable>
+      )}
+      <HashWrapper>
+        <ArcadeMiningHash {...hashStat} onClick={handleHashButtonClick} />
+      </HashWrapper>
     </Wrapper>
   );
 };
@@ -75,4 +80,9 @@ const HeaderCell = styled(TableCell)`
   border-width: 0;
   padding-top: 0;
   padding-bottom: 0;
+`;
+
+const HashWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
 `;

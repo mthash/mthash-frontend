@@ -31,7 +31,8 @@ const MiningDashboard: React.FC = (): JSX.Element => {
       </Grid>
       <Grid container spacing={5}>
         <Grid
-          xs={7}
+          xs={12}
+          sm={7}
           direction="column"
           justify="flex-start"
           alignItems="flex-start"
@@ -43,7 +44,8 @@ const MiningDashboard: React.FC = (): JSX.Element => {
           <img src="static/LogoGradient.svg" />
         </Grid>
         <Grid
-          xs={5}
+          xs={12}
+          sm={5}
           direction="column"
           justify="flex-start"
           alignItems="flex-start"

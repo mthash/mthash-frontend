@@ -10,6 +10,7 @@ import AsyncService from "~/services/AsyncService";
 import AppContainer from "~/containers/AppContainer";
 import ErrorViewer from "~/components/common/ErrorViewer";
 import { PERIODS_SHORT } from "~/constants/periods";
+import { useInterval } from "~/utils/useTimeout";
 
 interface MinedProps {
   selectedCurrency: {
@@ -58,26 +59,6 @@ interface MinedProps {
     data: any;
     fetch: () => Promise<any>;
   };
-}
-
-function useInterval(callback, delay) {
-  const savedCallback: any = React.useRef();
-
-  // Remember the latest callback.
-  React.useEffect(() => {
-    savedCallback.current = callback;
-  }, [callback]);
-
-  // Set up the interval.
-  React.useEffect(() => {
-    function tick() {
-      savedCallback.current();
-    }
-    if (delay !== null) {
-      let id = setInterval(tick, delay);
-      return () => clearInterval(id);
-    }
-  }, [delay]);
 }
 
 function useMining(): MinedProps {

@@ -36,7 +36,7 @@ const MiningSlotChart: React.FC<Props> = ({
         pointColor={{ theme: "background" }}
         pointBorderWidth={2}
         pointBorderColor={{ from: "serieColor" }}
-        useMesh={true}
+        useMesh={false}
         legends={[]}
       />
       <SvgDefs>

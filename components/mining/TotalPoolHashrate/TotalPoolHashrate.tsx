@@ -6,6 +6,7 @@ import TotalPoolHeader from "./TotalPoolHeader";
 import MiningContainer from "~/containers/MiningContainer";
 import TotalPoolHashrateChart from "./TotalPoolHashrateChart";
 import { PERIODS_SHORT } from "~/constants/periods";
+import { median, mean, isEmpty } from "ramda";
 
 const CHART_PRECISION_BY_PERIOD = {
   [PERIODS_SHORT.h1]: {
@@ -37,6 +38,8 @@ const CHART_PRECISION_BY_PERIOD = {
     precision: "hour",
     axisBottom: {
       format: "%d/%m %I:%M %p",
+      tickSize: 4,
+      tickRotation: -15,
       tickValues: "every 6 hour"
     }
   },
@@ -68,12 +71,46 @@ const TotalPoolHashrate: React.FC = (): JSX.Element => {
     totalPoolHashrate.fetch();
   }, []);
 
+  // TODO: Temporary function than implement a calculation of boundaries (will be implemented on the backend (I hope)).
+  let redefinedYScale = null;
+  if (!isEmpty(totalPoolHashrate.chart)) {
+    const medians = [];
+    const maxs = [];
+
+    const medianIsMax = totalPoolHashrate.chart.every(chart => {
+      if (!isEmpty(chart.data)) {
+        const yValues = chart.data.map(point => Number.parseInt(point.y));
+        const yMax = Math.max(...yValues);
+        const yMedian = mean(yValues);
+
+        medians.push(yMedian);
+        maxs.push(yMax);
+
+        return yMedian === yMax;
+      }
+      return false;
+    });
+
+    if (medianIsMax) {
+      const dataMedian = median(medians);
+      const dataMax = Math.max(...maxs);
+
+      redefinedYScale = {
+        type: "linear",
+        stacked: false,
+        min: 0,
+        max: dataMax * 2
+      };
+    }
+  }
+
   return (
     <Wrapper>
       <TotalPoolHeader />
       <TotalPoolHashrateChart
         data={totalPoolHashrate.chart}
         {...CHART_PRECISION_BY_PERIOD[selectedOverviewPeriod.period]}
+        {...(redefinedYScale && { yScale: redefinedYScale })}
       />
     </Wrapper>
   );

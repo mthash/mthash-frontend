@@ -9,6 +9,9 @@ import TotalHashrate from "~/components/dashboard/TotalHashrate";
 import MiningPowerChart from "~/components/dashboard/MiningPowerChart";
 import MiningIncomeChart from "~/components/dashboard/MiningIncomeChart";
 import DiversityChart from "~/components/dashboard/DiversityChart";
+import MiningPayoutChart from "~/components/dashboard/MiningPayoutChart";
+import WeeklyActivity from "~/components/dashboard/WeeklyActivity";
+import WeeklyActivityChart from "~/components/dashboard/WeeklyActivity";
 
 const Dashboard: React.FC = (): JSX.Element => {
   return (
@@ -30,6 +33,12 @@ const Dashboard: React.FC = (): JSX.Element => {
           </Grid>
           <Grid item xs={6}>
             <DiversityChart />
+          </Grid>
+          <Grid item xs={6}>
+            <MiningPayoutChart />
+          </Grid>
+          <Grid item xs={6}>
+            <WeeklyActivityChart />
           </Grid>
         </Grid>
       </DashboardContainer.Provider>

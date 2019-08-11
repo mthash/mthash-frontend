@@ -26,6 +26,7 @@ const MiningHashInput: React.FC<Props> = ({
           step: 0.0001,
           min: 0
         }}
+        fullWidth
       />
       <HashIcon />
     </Wrapper>

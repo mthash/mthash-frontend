@@ -10,21 +10,27 @@ import SectionTabs from "./SectionTabs";
 
 import AppContainer from "~/containers/AppContainer";
 
-import { APP_SECTION_IDS } from "~/constants/appSections";
-
 interface Props {
   activatedSection: number;
+  hasNavigation?: boolean;
 }
 
-const Header: React.FC<Props> = ({ activatedSection }): JSX.Element => {
+const Header: React.FC<Props> = ({
+  activatedSection,
+  hasNavigation = true
+}): JSX.Element => {
   const { user } = AppContainer.useContainer();
+
+  React.useEffect(() => {
+    user.refresh();
+  }, []);
 
   return (
     <StyledAppBar position="fixed">
       <StyledToolbar>
         <StyledLogo />
-        <SectionTabs activatedSection={activatedSection} />
-        <User user={user} />
+        {hasNavigation && <SectionTabs activatedSection={activatedSection} />}
+        <User user={user.data} />
       </StyledToolbar>
     </StyledAppBar>
   );
@@ -33,7 +39,7 @@ const Header: React.FC<Props> = ({ activatedSection }): JSX.Element => {
 export default Header;
 
 const StyledAppBar = styled(AppBar)`
-  z-index: ${p => p.theme.zIndex.drawer + 1};
+  z-index: 1201;
   background-color: ${p => p.theme.palette.background.paper};
   box-shadow: none;
   color: ${p => p.theme.palette.text.secondary};
@@ -48,6 +54,7 @@ const StyledToolbar = styled(Toolbar)`
 
 const StyledLogo = styled(Logo)`
   color: ${p => p.theme.palette.text.primary};
+  display: block;
   height: 47px;
   width: 48px;
   margin: 15px 0;

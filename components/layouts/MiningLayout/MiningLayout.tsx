@@ -8,13 +8,20 @@ import { APP_SECTION_IDS } from "~/constants/appSections";
 
 interface Props {
   children: React.ReactNode;
+  hasNavigation?: boolean;
 }
 
-const MiningLayout: React.FC<Props> = ({ children }): JSX.Element => {
+const MiningLayout: React.FC<Props> = ({
+  children,
+  hasNavigation
+}): JSX.Element => {
   return (
     <Wrapper>
       <CssBaseline />
-      <Header activatedSection={APP_SECTION_IDS.mining} />
+      <Header
+        activatedSection={APP_SECTION_IDS.mining}
+        hasNavigation={hasNavigation}
+      />
       <Content>{children}</Content>
     </Wrapper>
   );
@@ -30,5 +37,6 @@ const Content = styled.main`
   margin: auto;
   margin-top: ${p => p.theme.layouts.dashboard.headerHeight}px;
   max-width: ${p => p.theme.layouts.dashboard.contentMaxWidth}px;
+  width: 100%;
   padding: 20px;
 `;

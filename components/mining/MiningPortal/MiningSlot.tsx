@@ -32,14 +32,13 @@ const MiningSlot: React.FC<Props> = ({
   value,
   unit,
   shift,
-  miningValue,
-  chartData,
+  chart_data,
   onDeposit,
   onWithdraw
 }): JSX.Element => {
-  const [amount, setAmount] = React.useState(miningValue);
+  const [amount, setAmount] = React.useState(null);
   const mockedChartData = miningPortalMock[id % 4].chartData;
-  const chartDataToDisplay = chartData || mockedChartData;
+  const chartDataToDisplay = chart_data || mockedChartData;
 
   const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAmount(event.currentTarget.value);

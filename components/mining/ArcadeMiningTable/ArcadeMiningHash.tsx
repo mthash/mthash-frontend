@@ -33,8 +33,6 @@ export default ArcadeMiningHash;
 
 const HashButton = styled(Button)`
   padding: 8px 30px;
-  float: right;
-
   background: linear-gradient(
     ${p => p.theme.palette.background.default},
     ${p => p.theme.palette.background.button}

@@ -9,8 +9,7 @@ export default interface MiningSlot {
   value: string;
   unit: string;
   shift: number;
-  miningValue: string;
-  chartData: {
+  chart_data: {
     id: string | number;
     trend: Trend;
     data: ChartPoint[];

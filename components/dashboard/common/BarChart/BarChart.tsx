@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ResponsiveLine, Line } from "@nivo/line";
+import { ResponsiveBar } from "@nivo/bar";
 
 const theme = {
   background: "transparent",
@@ -106,48 +106,46 @@ const theme = {
 };
 
 interface Props {
-  colors?: string[];
+  keys: string[];
   data: any[];
+  indexedBy: string;
+  // colors?: string[];
 }
 
-const LinearChart: React.FC<Props> = ({ colors, data }): JSX.Element => {
+const BarChart: React.FC<Props> = ({ keys, data, indexedBy }): JSX.Element => {
   return (
-    <ResponsiveLine
-      data={data}
+    <ResponsiveBar
       theme={theme}
-      margin={{ top: 10, right: 50, bottom: 50, left: 60 }}
-      xScale={{ type: "point" }}
-      yScale={{ type: "linear", stacked: false, min: "auto", max: "auto" }}
-      curve="natural"
+      data={data}
+      keys={keys}
+      margin={{ top: 0, right: 60, bottom: 50, left: 60 }}
+      padding={0.3}
+      indexBy={indexedBy}
+      colors={{ scheme: "nivo" }}
       axisTop={null}
       axisRight={null}
       axisBottom={{
-        orient: "bottom",
         tickSize: 5,
         tickPadding: 5,
-        tickRotation: 0
+        tickRotation: 0,
+        legendPosition: "middle",
+        legendOffset: 32
       }}
       axisLeft={{
-        orient: "left",
         tickSize: 5,
         tickPadding: 5,
-        tickRotation: 0
+        tickRotation: 0,
+        legendPosition: "middle",
+        legendOffset: -40
       }}
-      colors={colors ? colors : { scheme: "nivo" }}
-      lineWidth={3}
-      enableGridX={false}
-      enablePoints={true}
-      enablePointLabel={true}
-      pointSize={10}
-      pointColor={{ theme: "background" }}
-      pointBorderWidth={2}
-      pointBorderColor={{ from: "serieColor", modifiers: [] }}
-      pointLabel="y"
-      pointLabelYOffset={-12}
-      useMesh={true}
-      legends={[]}
+      labelSkipWidth={12}
+      labelSkipHeight={12}
+      labelTextColor={{ from: "color", modifiers: [["darker", 1.6]] }}
+      animate={true}
+      motionStiffness={90}
+      motionDamping={15}
     />
   );
 };
 
-export default LinearChart;
+export default BarChart;
