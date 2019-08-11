@@ -125,6 +125,7 @@ interface Props {
     tickValues: string;
     format: string;
   };
+  yScale?: any;
 }
 
 const TotalPoolHashrateChart: React.FC<Props> = ({
@@ -134,7 +135,8 @@ const TotalPoolHashrateChart: React.FC<Props> = ({
   axisBottom = {
     tickValues: "every 1 hour",
     format: "%I:%M %p"
-  }
+  },
+  yScale = { type: "linear", stacked: false, min: 0, max: "auto" }
 }): JSX.Element => (
   <>
     <SvgDefs style={{ visibility: "hidden" }}>
@@ -284,8 +286,7 @@ const TotalPoolHashrateChart: React.FC<Props> = ({
       }}
       xFormat={xFormat}
       axisBottom={axisBottom}
-      // xScale={{ type: "point" }}
-      // yScale={{ type: "linear", stacked: true, min: "auto", max: "auto" }}
+      yScale={yScale}
       axisTop={null}
       axisRight={null}
       theme={theme}

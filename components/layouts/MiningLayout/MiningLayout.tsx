@@ -8,14 +8,20 @@ import { APP_SECTION_IDS } from "~/constants/appSections";
 
 interface Props {
   children: React.ReactNode;
-  demo?: boolean;
+  hasNavigation?: boolean;
 }
 
-const MiningLayout: React.FC<Props> = ({ children, demo }): JSX.Element => {
+const MiningLayout: React.FC<Props> = ({
+  children,
+  hasNavigation
+}): JSX.Element => {
   return (
     <Wrapper>
       <CssBaseline />
-      {!demo && <Header activatedSection={APP_SECTION_IDS.mining} />}
+      <Header
+        activatedSection={APP_SECTION_IDS.mining}
+        hasNavigation={hasNavigation}
+      />
       <Content>{children}</Content>
     </Wrapper>
   );
