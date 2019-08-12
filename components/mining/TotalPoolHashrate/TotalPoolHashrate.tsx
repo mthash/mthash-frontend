@@ -2,10 +2,11 @@ import * as React from "react";
 import styled from "styled-components";
 import Paper from "~/components/common/Paper";
 
+import { PERIODS_SHORT } from "~/constants/periods";
+import OVERVIEW_CATEGORIES from "~/constants/overviewCategories";
 import TotalPoolHeader from "./TotalPoolHeader";
 import MiningContainer from "~/containers/MiningContainer";
 import TotalPoolHashrateChart from "./TotalPoolHashrateChart";
-import { PERIODS_SHORT } from "~/constants/periods";
 import { median, mean, isEmpty } from "ramda";
 
 const CHART_PRECISION_BY_PERIOD = {
@@ -64,8 +65,11 @@ const CHART_PRECISION_BY_PERIOD = {
 const TotalPoolHashrate: React.FC = (): JSX.Element => {
   const {
     selectedOverviewPeriod,
+    selectedOverviewCategory,
     totalPoolHashrate
   } = MiningContainer.useContainer();
+  const selectedCategoryTitle =
+    OVERVIEW_CATEGORIES[selectedOverviewCategory.category].title;
 
   React.useEffect(() => {
     totalPoolHashrate.fetch();
@@ -106,7 +110,7 @@ const TotalPoolHashrate: React.FC = (): JSX.Element => {
 
   return (
     <Wrapper>
-      <TotalPoolHeader />
+      <TotalPoolHeader title={selectedCategoryTitle} />
       <TotalPoolHashrateChart
         data={totalPoolHashrate.chart}
         {...CHART_PRECISION_BY_PERIOD[selectedOverviewPeriod.period]}

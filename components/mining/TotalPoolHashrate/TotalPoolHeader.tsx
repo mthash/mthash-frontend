@@ -3,12 +3,14 @@ import styled from "styled-components";
 
 import TotalPoolHeaderFilter from "./TotalPoolHeaderFilter";
 
-const CAPTION = "Total pool hash rate";
+interface Props {
+  title: string;
+}
 
-const TotalPoolHeader: React.FC = () => {
+const TotalPoolHeader: React.FC<Props> = ({ title }) => {
   return (
     <Header>
-      <Caption>{CAPTION}</Caption>
+      <Caption>{title}</Caption>
       <TotalPoolHeaderFilter />
     </Header>
   );

@@ -14,27 +14,26 @@ interface Props {
 
 const STATISTIC_BLOCKS = [
   {
-    dataKey: OVERVIEW_CATEGORIES.pools,
+    dataKey: OVERVIEW_CATEGORIES.pools.name,
     caption: "Pools"
   },
   {
-    dataKey: OVERVIEW_CATEGORIES.algorithms,
+    dataKey: OVERVIEW_CATEGORIES.algorithms.name,
     caption: "Algorithms"
   },
   {
-    dataKey: OVERVIEW_CATEGORIES.tokens,
+    dataKey: OVERVIEW_CATEGORIES.tokens.name,
     caption: "Tokens"
   },
-  ,
   {
-    dataKey: OVERVIEW_CATEGORIES.power,
-    caption: "Power",
-    formatter: ({ value, unit }) => `${value}${unit}`
-  },
-  {
-    dataKey: OVERVIEW_CATEGORIES.daily_revenue,
+    dataKey: OVERVIEW_CATEGORIES.daily_revenue.name,
     caption: "Daily Revenue",
     formatter: ({ value, unit }) => `$${value}${unit}`
+  },
+  {
+    dataKey: OVERVIEW_CATEGORIES.power.name,
+    caption: "Power",
+    formatter: ({ value, unit }) => `${value}${unit}`
   }
 ];
 

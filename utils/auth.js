@@ -6,9 +6,6 @@ import cookie from "js-cookie";
 import ROUTES from "~/constants/routes";
 import AppContainer from "~/containers/AppContainer";
 
-const STUB_JWT =
-  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwibmFtZSI6IkVsa2luIiwibG9naW4iOiJlYWtodW5kemFkZUBnbWFpbC5jb20iLCJjcmVhdGVkX2F0IjoxNTYxNjUwNDQyLCJzdGF0dXMiOjEsImlhdCI6MTU2MjQyMzg2NiwiZXhwIjoxNTkzOTU5ODY2LCJmb3JfdGVzdGluZyI6dHJ1ZSwic2lnIjoiYTNmOGNmMjM3NTNlOTY3ODY2NWNlOGQwNDgwMGNlYjRkNDRkNzA3YyJ9.Oif53b0PWSg2PzEz2rmdYUm26-pId27Rh8PAqg_k4bY";
-
 export const setToken = token => {
   cookie.set("token", token, { expires: 1 });
 };
@@ -18,8 +15,7 @@ export const getToken = () => {
 };
 
 export const login = ({ token }) => {
-  // TODO: Stub implementation, change in for real token when the app will be in real development for production
-  setToken(STUB_JWT);
+  setToken(token);
   Router.push(ROUTES.dashboard);
 };
 

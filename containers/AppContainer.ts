@@ -35,15 +35,6 @@ function useApp(): AppProps {
   let [user, setUser] = React.useState(readUser());
   let [notification, setNotification] = React.useState({});
 
-  // // TODO: hack to read user's credentials. Probably there is better way to do it.
-  // React.useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     console.log(readUser());
-  //     setUser(readUser());
-  //   }, 2000);
-  //   return () => clearTimeout(timer);
-  // }, []);
-
   const addNotification = (notificationProps: AddNotificationArgs): void => {
     setNotification(notificationProps);
   };
@@ -52,7 +43,6 @@ function useApp(): AppProps {
     user: {
       data: user,
       refresh: () => {
-        console.log(readUser());
         setUser(readUser());
       }
     },

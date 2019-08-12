@@ -73,7 +73,7 @@ function useMining(): MinedProps {
   let [hashBalance, setHashBalance] = React.useState(null);
   let [selectedCurrencyId, setSelectedCurrencyId] = React.useState(null);
   let [selectedOverviewCategory, setSelectedOverviewCategory] = React.useState(
-    OVERVIEW_CATEGORIES.pools
+    OVERVIEW_CATEGORIES.pools.name
   );
   let [selectedPeriod, setSelectedPeriod] = React.useState(PERIODS_SHORT.d7);
   // const [emulationIntervals, setEmulationIntervals] = React.useState(null);
@@ -100,16 +100,16 @@ function useMining(): MinedProps {
 
   useInterval(() => {
     fetchTotalPoolHashrate();
-  }, 6e4);
+  }, 1e4);
 
   useInterval(() => {
     fetchOverviewStatistic();
-  }, 6e4 + 1000);
+  }, 1e4 + 1000);
 
   useInterval(() => {
     fetchArcadeMining();
     fetchMiningPortal();
-  }, 6e4 + 2000);
+  }, 1e4 + 2000);
 
   // /Live update emulation //
 
