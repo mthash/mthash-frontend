@@ -1,7 +1,7 @@
 export default {
   pools: {
     name: "pools",
-    title: "Token Pool Hashrate"
+    title: "Total Pool Hashrate"
   },
   algorithms: {
     name: "algorithms",
