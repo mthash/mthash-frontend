@@ -15,6 +15,7 @@ const ENDPOINTS = {
     chart: "mining/chart/{category}",
     portal: "mining/portal",
     statistic: "mining/stats",
+    bindAsset: "user/asset/{asset}",
     deposit: "mining/{asset}/deposit",
     withdraw: "mining/{asset}/withdraw",
     blockRewards: "mining/rewards",

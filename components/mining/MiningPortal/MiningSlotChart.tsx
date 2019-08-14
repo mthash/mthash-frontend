@@ -9,17 +9,19 @@ interface Props {
   chartData: {
     id: string | number;
     trend: Trend;
-    data: ChartPoint[];
+    data: {
+      chart: ChartPoint[]
+    };
   };
 }
 
 const MiningSlotChart: React.FC<Props> = ({
-  chartData: { id, trend, data }
+  chartData: { id, trend, data: { chart } }
 }): JSX.Element => {
   return (
     <>
       <ResponsiveLine
-        data={[{ id, data }]}
+        data={[{ id, data: chart }]}
         margin={{ top: 5, right: 20, bottom: 5, left: 0 }}
         xScale={{ type: "point" }}
         yScale={{ type: "linear", stacked: true, min: "auto", max: "auto" }}

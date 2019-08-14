@@ -29,8 +29,8 @@ const TotalWithdrawConfirm: React.FC<Props> = ({
         <DialogContentText>Stop all mining of this coin?</DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>Yes</Button>
-        <Button onClick={onConfirm} color="primary" autoFocus>
+        <Button onClick={onConfirm}>Yes</Button>
+        <Button onClick={onClose} color="primary" autoFocus>
           No
         </Button>
       </DialogActions>

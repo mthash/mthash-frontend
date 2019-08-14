@@ -11,6 +11,7 @@ import AppContainer from "~/containers/AppContainer";
 import ErrorViewer from "~/components/common/ErrorViewer";
 import { PERIODS_SHORT } from "~/constants/periods";
 import { useInterval } from "~/utils/useTimeout";
+import { ChartPoint } from "~/models/ChartData";
 
 interface MinedProps {
   selectedCurrency: {
@@ -26,7 +27,7 @@ interface MinedProps {
     set: (string) => void;
   };
   totalPoolHashrate: {
-    chart: any;
+    data: any;
     fetch: (filter?: any) => Promise<any>;
   };
   overviewStatistic: {
@@ -46,6 +47,8 @@ interface MinedProps {
     withdrawn: any;
     deposit: ({ asset, amount }: any) => Promise<void>;
     withdraw: ({ asset }: any) => Promise<void>;
+    bind: (asset) => Promise<void>;
+    unbind: (asset) => Promise<void>;
   };
   blockRewards: {
     data: any;
@@ -63,7 +66,7 @@ interface MinedProps {
 
 function useMining(): MinedProps {
   let [statistic, setStatistic] = React.useState(null);
-  let [totalHashrateChart, setTotalHashrateChart] = React.useState([]);
+  let [totalHashrateChart, setTotalHashrateChart] = React.useState({ chart: [] });
   let [depositedAsset, setDeposited] = React.useState(null);
   let [withdrawnAsset, setWithdrawn] = React.useState(null);
   let [arcadeMining, setArcadeMining] = React.useState([]);
@@ -280,6 +283,48 @@ function useMining(): MinedProps {
     }
   };
 
+  const bindAssetRequest = async (asset): Promise<any> => {
+    const mineEndpoint = format(ENDPOINTS.mining.bindAsset, { asset });
+
+    try {
+      const result = await AsyncService.post(mineEndpoint);
+      const data = result.data.body;
+      
+      fetchMiningPortal();
+      fetchArcadeMining();
+      fetchOverviewStatistic();
+      fetchTotalPoolHashrate();
+
+    } catch ({ message }) {
+      appContainer.notifications.addNotification({
+        message,
+        type: NOTIFICATION_TYPES.error,
+      });
+      return Error(message);
+    }
+  }
+
+  const unbindAssetRequest = async (asset): Promise<any> => {
+    const mineEndpoint = format(ENDPOINTS.mining.bindAsset, { asset });
+
+    try {
+      const result = await AsyncService.delete(mineEndpoint);
+      const data = result.data.body;
+      
+      fetchMiningPortal();
+      fetchArcadeMining();
+      fetchOverviewStatistic();
+      fetchTotalPoolHashrate();
+      
+    } catch ({ message }) {
+      appContainer.notifications.addNotification({
+        message,
+        type: NOTIFICATION_TYPES.error,
+      });
+      return Error(message);
+    }
+  }
+
   const fetchBlockRewards = async (): Promise<any> => {
     try {
       const filter = selectedCurrencyId
@@ -354,7 +399,7 @@ function useMining(): MinedProps {
       set: period => setSelectedPeriod(period)
     },
     totalPoolHashrate: {
-      chart: totalHashrateChart,
+      data: totalHashrateChart,
       fetch: fetchTotalPoolHashrate
     },
     overviewStatistic: {
@@ -373,7 +418,9 @@ function useMining(): MinedProps {
       deposited: depositedAsset,
       withdrawn: withdrawnAsset,
       deposit: depositRequest,
-      withdraw: withdrawRequest
+      withdraw: withdrawRequest,
+      bind: bindAssetRequest,
+      unbind: unbindAssetRequest
     },
     blockRewards: {
       data: blockRewards,

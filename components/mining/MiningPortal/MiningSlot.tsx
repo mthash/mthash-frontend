@@ -4,7 +4,6 @@ import Button from "@material-ui/core/Button";
 
 import MiningSlotModel from "~/models/MiningSlot";
 import Currency from "~/models/types/Currency";
-import { ChartPoint } from "~/models/ChartData";
 import Paper from "~/components/common/Paper";
 import MiningDynamic from "~/components/mining/common/MiningDynamic";
 import MiningValueUnit from "~/components/mining/common/MiningValueUnit";
@@ -13,8 +12,7 @@ import MiningSlotChart from "./MiningSlotChart";
 import MiningHashInput from "./MiningHashInput";
 import MiningSlotActions from "./MiningSlotActions";
 import TotalWithdrawConfirm from "./TotalWithdrawConfirm";
-
-import miningPortalMock from "~/_mocks_/miningPortal.json";
+import MiningContainer from "~/containers/MiningContainer";
 
 interface OperationArgs {
   currency: Currency;
@@ -39,8 +37,8 @@ const MiningSlot: React.FC<Props> = ({
 }): JSX.Element => {
   const [amount, setAmount] = React.useState(null);
   const [confirmShown, setConfirmShown] = React.useState(false);
-  const mockedChartData = miningPortalMock[id % 4].chartData;
-  const chartDataToDisplay = chart_data || mockedChartData;
+  const { minedAsset } = MiningContainer.useContainer();
+  const chartDataToDisplay = chart_data;
 
   const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAmount(event.currentTarget.value);
@@ -60,8 +58,10 @@ const MiningSlot: React.FC<Props> = ({
 
   const handleWithdrawClose = () => setConfirmShown(false);
 
-  // TODO: implement API interaction
-  const handleWithdrawConfirm = () => setConfirmShown(false);
+  const handleWithdrawConfirm = () => {
+    minedAsset.unbind(currency);
+    setConfirmShown(false);
+  };
 
   return (
     <Wrapper>

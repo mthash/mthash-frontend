@@ -4,6 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import { isEmpty } from "ramda";
 
 import MiningSlotModel from "~/models/MiningSlot";
+
 import AppContext from "~/containers/AppContext";
 import MiningContainer from "~/containers/MiningContainer";
 
@@ -21,6 +22,7 @@ const MiningPortal: React.FC = (): JSX.Element => {
     portalData && !isEmpty(portalData)
       ? portalData.length !== mineableCurrencies.length
       : true;
+  const addedCurrencies = portalData && !isEmpty(portalData) && portalData.map(item => item.currency) || [];
 
   React.useEffect(() => {
     miningPortal.fetch();
@@ -59,7 +61,7 @@ const MiningPortal: React.FC = (): JSX.Element => {
           )}
         {addingAvailable && (
           <AdaptiveGrid item lg={4} xs={6}>
-            <MiningSlotAddCurrency />
+            <MiningSlotAddCurrency addedCurrencies={addedCurrencies}/>
           </AdaptiveGrid>
         )}
       </Grid>

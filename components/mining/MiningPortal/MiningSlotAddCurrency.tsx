@@ -3,10 +3,15 @@ import styled from "styled-components";
 import Button from "@material-ui/core/Button";
 
 import MiningAddCurrencyDialog from "./MiningAddCurrencyDialog";
+import Currency from "~/models/types/Currency";
 
 const ADD_CURRENCY = "+ Add currency";
 
-const MiningSlotAddCurrency: React.FC = (): JSX.Element => {
+interface Props {
+  addedCurrencies: Currency[];
+}
+
+const MiningSlotAddCurrency: React.FC<Props> = ({ addedCurrencies }): JSX.Element => {
   const [modalOpened, setModalOpened] = React.useState(false);
 
   const handleOpenModal = () => {
@@ -22,7 +27,11 @@ const MiningSlotAddCurrency: React.FC = (): JSX.Element => {
       <AddCurrencyButton variant="outlined" onClick={handleOpenModal}>
         {ADD_CURRENCY}
       </AddCurrencyButton>
-      <MiningAddCurrencyDialog open={modalOpened} onClose={handleCloseModal} />
+      <MiningAddCurrencyDialog 
+        open={modalOpened} 
+        onClose={handleCloseModal} 
+        currenciesToExclude={addedCurrencies}
+      />
     </>
   );
 };

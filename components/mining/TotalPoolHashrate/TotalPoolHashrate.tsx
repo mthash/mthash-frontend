@@ -75,46 +75,22 @@ const TotalPoolHashrate: React.FC = (): JSX.Element => {
     totalPoolHashrate.fetch();
   }, []);
 
-  // TODO: Temporary function than implement a calculation of boundaries (will be implemented on the backend (I hope)).
-  let redefinedYScale = null;
-  if (!isEmpty(totalPoolHashrate.chart)) {
-    const medians = [];
-    const maxs = [];
+  const { chart, min, max } = totalPoolHashrate.data;
 
-    const medianIsMax = totalPoolHashrate.chart.every(chart => {
-      if (!isEmpty(chart.data)) {
-        const yValues = chart.data.map(point => Number.parseInt(point.y));
-        const yMax = Math.max(...yValues);
-        const yMedian = mean(yValues);
-
-        medians.push(yMedian);
-        maxs.push(yMax);
-
-        return yMedian === yMax;
-      }
-      return false;
-    });
-
-    if (medianIsMax) {
-      const dataMedian = median(medians);
-      const dataMax = Math.max(...maxs);
-
-      redefinedYScale = {
-        type: "linear",
-        stacked: false,
-        min: 0,
-        max: dataMax * 2
-      };
-    }
+  const yScale = {
+    type: "linear",
+    stacked: false,
+    min,
+    max
   }
 
   return (
     <Wrapper>
       <TotalPoolHeader title={selectedCategoryTitle} />
       <TotalPoolHashrateChart
-        data={totalPoolHashrate.chart}
+        data={chart}
         {...CHART_PRECISION_BY_PERIOD[selectedOverviewPeriod.period]}
-        {...(redefinedYScale && { yScale: redefinedYScale })}
+        yScale={yScale}
       />
     </Wrapper>
   );
