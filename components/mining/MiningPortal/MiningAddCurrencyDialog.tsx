@@ -61,10 +61,6 @@ const MiningAddCurrencyDialog: React.FC<Props> = ({
     }
   }, [currenciesToExclude]);
 
-  // React.useEffect(() => {
-
-  // }, [availableCurrencies]);
-
   const handleChangeCurrency = (
     event: React.ChangeEvent<{ value: Currency }>
   ) => {

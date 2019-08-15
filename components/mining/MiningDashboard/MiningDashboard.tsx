@@ -39,9 +39,7 @@ const MiningDashboard: React.FC = (): JSX.Element => {
           container
           item
         >
-          <ArcadeMiningTable />
           <MiningPortal />
-          <img src="static/LogoGradient.svg" />
         </Grid>
         <Grid
           xs={12}
@@ -52,6 +50,11 @@ const MiningDashboard: React.FC = (): JSX.Element => {
           container
           item
         >
+          <ArcadeMiningTable />
+          {/* <img src="static/LogoGradient.svg" /> */}
+        </Grid>
+
+        <Grid xs={12} sm={6} direction="column" container item>
           <RewardsTable
             picture="static/mining/BlockRewards.svg"
             columns={[
@@ -85,6 +88,8 @@ const MiningDashboard: React.FC = (): JSX.Element => {
             ]}
             data={blockRewards.data}
           />
+        </Grid>
+        <Grid xs={12} sm={6} direction="column" container item>
           <RewardsTable
             picture="static/mining/MyRewards.svg"
             columns={[

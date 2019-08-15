@@ -22,6 +22,7 @@ const MiningHashInput: React.FC<Props> = ({
         onChange={onChange}
         variant="filled"
         type="number"
+        placeholder="Amount"
         inputProps={{
           step: 0.0001,
           min: 0

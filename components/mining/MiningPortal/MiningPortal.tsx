@@ -22,7 +22,11 @@ const MiningPortal: React.FC = (): JSX.Element => {
     portalData && !isEmpty(portalData)
       ? portalData.length !== mineableCurrencies.length
       : true;
-  const addedCurrencies = portalData && !isEmpty(portalData) && portalData.map(item => item.currency) || [];
+  const addedCurrencies =
+    (portalData &&
+      !isEmpty(portalData) &&
+      portalData.map(item => item.currency)) ||
+    [];
 
   React.useEffect(() => {
     miningPortal.fetch();
@@ -45,7 +49,7 @@ const MiningPortal: React.FC = (): JSX.Element => {
   return (
     <Wrapper>
       <img src="static/mining/MiningPortal.svg" />
-      <Grid container spacing={3}>
+      <Grid container spacing={2}>
         {portalData &&
           portalData.map(
             (slotData: any): JSX.Element => (
@@ -61,7 +65,7 @@ const MiningPortal: React.FC = (): JSX.Element => {
           )}
         {addingAvailable && (
           <AdaptiveGrid item lg={4} xs={6}>
-            <MiningSlotAddCurrency addedCurrencies={addedCurrencies}/>
+            <MiningSlotAddCurrency addedCurrencies={addedCurrencies} />
           </AdaptiveGrid>
         )}
       </Grid>
