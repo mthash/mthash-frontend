@@ -26,30 +26,3 @@ const MiningSlotActions: React.FC<Props> = ({
 };
 
 export default MiningSlotActions;
-
-// const ActionButton = styled(Button)`
-//   text-transform: unset;
-//   font-size: 13px;
-//   padding: 7px 31px;
-//   border-radius: 10px;
-//   color: ${p => p.theme.palette.text.primary};
-
-//   &:hover {
-//     background: ${p => p.theme.palette.background.button};
-//   }
-
-//   &:not(last-of-type) {
-//     margin-right: 10px;
-//   }
-// `;
-
-// const MineButton = styled(ActionButton)`
-//   background-color: ${p => p.theme.palette.hightlight.blue};
-// `;
-
-// const StopButton = styled(ActionButton)`
-//   background: linear-gradient(
-//     ${p => p.theme.palette.background.default},
-//     ${p => p.theme.palette.background.button}
-//   );
-// `;

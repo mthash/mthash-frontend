@@ -46,6 +46,7 @@ const HashInput = styled(TextField)`
 
   input {
     padding: 12px 12px 10px;
+    text-align: right;
   }
 `;
 

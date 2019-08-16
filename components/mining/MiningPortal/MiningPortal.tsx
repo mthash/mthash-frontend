@@ -48,7 +48,9 @@ const MiningPortal: React.FC = (): JSX.Element => {
 
   return (
     <Wrapper>
-      <img src="static/mining/MiningPortal.svg" />
+      <ImageWrapper>
+        <img src="static/mining/ArcadeMining.svg" />
+      </ImageWrapper>
       <Grid container spacing={2}>
         {portalData &&
           portalData.map(
@@ -76,7 +78,12 @@ const MiningPortal: React.FC = (): JSX.Element => {
 export default MiningPortal;
 
 const Wrapper = styled.div`
+  margin-top: 20px;
   width: 100%;
+`;
+
+const ImageWrapper = styled.div`
+  margin-bottom: 25px;
 `;
 
 const AdaptiveGrid = styled(Grid)`

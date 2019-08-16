@@ -32,7 +32,7 @@ const MiningDashboard: React.FC = (): JSX.Element => {
       <Grid container spacing={5}>
         <Grid
           xs={12}
-          sm={7}
+          sm={6}
           direction="column"
           justify="flex-start"
           alignItems="flex-start"
@@ -43,7 +43,7 @@ const MiningDashboard: React.FC = (): JSX.Element => {
         </Grid>
         <Grid
           xs={12}
-          sm={5}
+          sm={6}
           direction="column"
           justify="flex-start"
           alignItems="flex-start"
@@ -54,6 +54,38 @@ const MiningDashboard: React.FC = (): JSX.Element => {
           {/* <img src="static/LogoGradient.svg" /> */}
         </Grid>
 
+        <Grid xs={12} sm={6} direction="column" container item>
+          <RewardsTable
+            picture="static/mining/MyRewards.svg"
+            columns={[
+              {
+                name: "Age",
+                dataKey: "age"
+              },
+              {
+                name: "Coin",
+                dataKey: "coin"
+              },
+              {
+                name: "% Block Reward",
+                dataKey: "percent_reward"
+              },
+              {
+                name: "Reward",
+                dataKey: "amount_reward"
+              },
+              {
+                name: "Fees",
+                dataKey: "fee"
+              },
+              {
+                name: "Earnings",
+                dataKey: "earnings"
+              }
+            ]}
+            data={myRewards.data}
+          />
+        </Grid>
         <Grid xs={12} sm={6} direction="column" container item>
           <RewardsTable
             picture="static/mining/BlockRewards.svg"
@@ -87,38 +119,6 @@ const MiningDashboard: React.FC = (): JSX.Element => {
               }
             ]}
             data={blockRewards.data}
-          />
-        </Grid>
-        <Grid xs={12} sm={6} direction="column" container item>
-          <RewardsTable
-            picture="static/mining/MyRewards.svg"
-            columns={[
-              {
-                name: "Age",
-                dataKey: "age"
-              },
-              {
-                name: "Coin",
-                dataKey: "coin"
-              },
-              {
-                name: "% Block Reward",
-                dataKey: "percent_reward"
-              },
-              {
-                name: "Reward",
-                dataKey: "amount_reward"
-              },
-              {
-                name: "Fees",
-                dataKey: "fee"
-              },
-              {
-                name: "Earnings",
-                dataKey: "earnings"
-              }
-            ]}
-            data={myRewards.data}
           />
         </Grid>
       </Grid>

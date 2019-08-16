@@ -116,6 +116,8 @@ const SlotChart = styled.div`
 `;
 
 const SlotActions = styled.div`
-  margin-top: 20px;
+  margin-top: 12px;
   text-align: center;
+  display: flex;
+  justify-content: center;
 `;

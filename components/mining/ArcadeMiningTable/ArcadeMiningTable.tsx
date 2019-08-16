@@ -33,7 +33,7 @@ const ArcadeMiningTable: React.FC = (): JSX.Element => {
 
   return (
     <Wrapper>
-      <img src="static/mining/ArcadeMining.svg" />
+      <img src="static/mining/MiningStats.svg" />
       {hasData && (
         <MiningTable>
           <TableHead>
@@ -68,7 +68,7 @@ export default ArcadeMiningTable;
 
 const Wrapper = styled.section`
   width: 100%;
-  margin-right: 20px;
+  margin-top: 30px;
 `;
 
 const MiningTable = styled(Table)`
