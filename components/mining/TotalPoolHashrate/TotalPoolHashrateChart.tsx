@@ -1,5 +1,6 @@
 import { ResponsiveLine, Line } from "@nivo/line";
 import styled from "styled-components";
+import numeral from "numeral";
 
 const height = 300;
 const width = 800;
@@ -278,17 +279,25 @@ const TotalPoolHashrateChart: React.FC<Props> = ({
     <ResponsiveLine
       data={data}
       curve="monotoneX"
-      margin={{ top: 50, right: 10, bottom: 70, left: 60 }}
+      margin={{ top: 50, right: 10, bottom: 70, left: 80 }}
       xScale={{
         type: "time",
         format: "%Y-%m-%d %I:%M:%S %p",
         precision
       }}
+      yScale={yScale}
       xFormat={xFormat}
       axisBottom={axisBottom}
-      yScale={yScale}
       axisTop={null}
       axisRight={null}
+      axisLeft={{
+        format: value => {
+          if (value > 1e6) {
+            return numeral(value).format("0.0 a");
+          }
+          return numeral(value).format("0,0.0");
+        }
+      }}
       theme={theme}
       lineWidth={3}
       colors={[
@@ -303,7 +312,7 @@ const TotalPoolHashrateChart: React.FC<Props> = ({
           anchor: "top-left",
           direction: "row",
           justify: false,
-          translateX: 0,
+          translateX: -80,
           translateY: -50,
           itemsSpacing: 0,
           itemDirection: "left-to-right",

@@ -69,10 +69,10 @@ export const theme = {
   breakpoints: {
     values: {
       xs: 0,
-      sm: 1024,
-      md: 1280,
-      lg: 1400,
-      xl: 1700
+      sm: 600,
+      md: 960,
+      lg: 1280,
+      xl: 1920
     }
   },
   rounding: {

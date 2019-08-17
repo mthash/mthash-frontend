@@ -55,7 +55,7 @@ const MiningPortal: React.FC = (): JSX.Element => {
         {portalData &&
           portalData.map(
             (slotData: any): JSX.Element => (
-              <AdaptiveGrid item lg={4} xs={6}>
+              <AdaptiveGrid item lg={4} md={4} sm={6}>
                 <MiningSlot
                   key={slotData.id}
                   {...slotData}
@@ -66,7 +66,7 @@ const MiningPortal: React.FC = (): JSX.Element => {
             )
           )}
         {addingAvailable && (
-          <AdaptiveGrid item lg={4} xs={6}>
+          <AdaptiveGrid item lg={4} md={4} sm={6}>
             <MiningSlotAddCurrency addedCurrencies={addedCurrencies} />
           </AdaptiveGrid>
         )}
@@ -84,6 +84,11 @@ const Wrapper = styled.div`
 
 const ImageWrapper = styled.div`
   margin-bottom: 25px;
+
+  img {
+    width: 100%;
+    max-width: 537px;
+  }
 `;
 
 const AdaptiveGrid = styled(Grid)`

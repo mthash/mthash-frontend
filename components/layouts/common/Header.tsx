@@ -58,4 +58,8 @@ const StyledLogo = styled(Logo)`
   height: 47px;
   width: 48px;
   margin: 15px 0;
+
+  @media screen and (max-width: ${p => p.theme.breakpoints.values.sm}px) {
+    width: 30px;
+  }
 `;

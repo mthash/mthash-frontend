@@ -13,6 +13,7 @@ interface Props {
 
 const ArcadeMiningHash: React.FC<Props> = ({ onClick }): JSX.Element => {
   const { hashBalance } = MiningContainer.useContainer();
+  const balanceData = hashBalance.data;
 
   React.useEffect(() => {
     hashBalance.fetch();
@@ -21,7 +22,13 @@ const ArcadeMiningHash: React.FC<Props> = ({ onClick }): JSX.Element => {
   return (
     <HashButton onClick={onClick}>
       <HashIcon />
-      {hashBalance.data && <ArcadeMinigValue {...hashBalance.data} />}
+      {balanceData && (
+        <ArcadeMinigValue
+          value={balanceData.balance}
+          shift={balanceData.shift}
+          unit={balanceData.unit}
+        />
+      )}
     </HashButton>
   );
 };

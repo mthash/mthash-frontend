@@ -102,7 +102,7 @@ const Wrapper = styled(Paper)`
 `;
 
 const SlotValue = styled.div`
-  font-size: 21px;
+  font-size: 16px;
   margin: 10px 0;
   display: flex;
   justify-content: center;

@@ -1,4 +1,5 @@
 import * as React from "react";
+import styled from "styled-components";
 import Grid from "@material-ui/core/Grid";
 
 import MiningContainer from "~/containers/MiningContainer";
@@ -20,7 +21,7 @@ const MiningDashboard: React.FC = (): JSX.Element => {
   }, []);
 
   return (
-    <>
+    <Wrapper>
       <Grid container spacing={0}>
         <Grid item xs={12}>
           <OverviewStatistic />
@@ -32,7 +33,7 @@ const MiningDashboard: React.FC = (): JSX.Element => {
       <Grid container spacing={5}>
         <Grid
           xs={12}
-          sm={6}
+          lg={6}
           direction="column"
           justify="flex-start"
           alignItems="flex-start"
@@ -43,7 +44,7 @@ const MiningDashboard: React.FC = (): JSX.Element => {
         </Grid>
         <Grid
           xs={12}
-          sm={6}
+          lg={6}
           direction="column"
           justify="flex-start"
           alignItems="flex-start"
@@ -54,7 +55,7 @@ const MiningDashboard: React.FC = (): JSX.Element => {
           {/* <img src="static/LogoGradient.svg" /> */}
         </Grid>
 
-        <Grid xs={12} sm={6} direction="column" container item>
+        <Grid xs={12} md={6} direction="column" container item>
           <RewardsTable
             picture="static/mining/MyRewards.svg"
             columns={[
@@ -86,7 +87,7 @@ const MiningDashboard: React.FC = (): JSX.Element => {
             data={myRewards.data}
           />
         </Grid>
-        <Grid xs={12} sm={6} direction="column" container item>
+        <Grid xs={12} md={6} direction="column" container item>
           <RewardsTable
             picture="static/mining/BlockRewards.svg"
             columns={[
@@ -122,8 +123,21 @@ const MiningDashboard: React.FC = (): JSX.Element => {
           />
         </Grid>
       </Grid>
-    </>
+    </Wrapper>
   );
 };
 
 export default MiningDashboard;
+
+const Wrapper = styled.div`
+  margin: 0 20px 20px;
+
+  @media screen and (max-width: ${p => p.theme.breakpoints.values.md}px) {
+    margin: 0 5px;
+  }
+
+  @media screen and (max-width: ${p => p.theme.breakpoints.values.sm}px) {
+    margin: 0px;
+  }
+`;
+Wrapper;

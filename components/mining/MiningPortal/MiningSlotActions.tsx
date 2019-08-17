@@ -2,8 +2,8 @@ import * as React from "react";
 import MiningActions from "./MiningActions";
 
 const ACTIONS = {
-  mine: "Mine",
-  stop: "Stop"
+  mine: "Input",
+  stop: "Output"
 };
 
 interface Props {

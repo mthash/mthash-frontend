@@ -45,7 +45,7 @@ const AddCurrencyButton = styled(Button)`
   height: 100%;
   font-size: 18px;
   border-radius: 10px;
-  min-height: 295px;
+  min-height: 270px;
   text-transform: unset;
   font-weight: 200;
   color: ${p => p.theme.palette.text.secondary};

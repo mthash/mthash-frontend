@@ -31,7 +31,8 @@ const StatisticItem: React.FC<StatisticItemProps> = ({
 export default StatisticItem;
 
 const Wrapper = styled.div`
-  display: block;
+  display: flex;
+  flex-direction: column;
   flex: 1;
   margin: 0 10px;
 
@@ -51,6 +52,7 @@ const Wrapper = styled.div`
 const StatisticListItem = styled(ListItem)`
   padding: 40px;
   display: flex;
+  flex-grow: 1;
   flex-direction: column;
   border-radius: 10px;
   border: 1px solid ${p => p.theme.palette.background.divider};
@@ -78,7 +80,7 @@ const StatisticListItem = styled(ListItem)`
   }
 
   @media screen and (max-width: 670px) {
-    padding: 15px;
+    padding: 2px;
     font-size: 10px;
   }
 `;

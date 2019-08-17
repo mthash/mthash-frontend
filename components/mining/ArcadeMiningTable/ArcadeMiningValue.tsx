@@ -1,26 +1,32 @@
 import * as React from "react";
-import styled, { StyledFunction } from "styled-components";
+import styled from "styled-components";
 
 import MiningDynamic from "~/components/mining/common/MiningDynamic";
 import MiningValueUnit from "~/components/mining/common/MiningValueUnit";
 
 interface Props {
-  balance: number;
+  value: string | number;
   unit: string;
   shift: number;
 }
 
 const ArcadeMiningValue: React.FC<Props> = ({
-  balance,
+  value,
   unit,
   shift
 }): JSX.Element => (
   <div>
-    <div>
-      <MiningValueUnit value={balance} unit={unit} />
-    </div>
+    <ValueUnitWrapper>
+      <MiningValueUnit value={value} unit={unit} />
+    </ValueUnitWrapper>
     <MiningDynamic shift={shift} />
   </div>
 );
 
 export default ArcadeMiningValue;
+
+const ValueUnitWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
