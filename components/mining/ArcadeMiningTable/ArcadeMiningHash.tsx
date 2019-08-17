@@ -8,13 +8,10 @@ import Hash from "../../../static/currencies/HashMono.svg";
 import MiningContainer from "~/containers/MiningContainer";
 
 interface Props {
-  value: number | string;
-  unit: string;
-  shift: number;
   onClick: () => void;
 }
 
-const ArcadeMiningHash: React.FC<Props> = (props): JSX.Element => {
+const ArcadeMiningHash: React.FC<Props> = ({ onClick }): JSX.Element => {
   const { hashBalance } = MiningContainer.useContainer();
 
   React.useEffect(() => {
@@ -22,9 +19,9 @@ const ArcadeMiningHash: React.FC<Props> = (props): JSX.Element => {
   }, []);
 
   return (
-    <HashButton onClick={props.onClick}>
+    <HashButton onClick={onClick}>
       <HashIcon />
-      <ArcadeMinigValue {...props} value={hashBalance.data} />
+      {hashBalance.data && <ArcadeMinigValue {...hashBalance.data} />}
     </HashButton>
   );
 };

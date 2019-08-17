@@ -58,7 +58,7 @@ const ArcadeMiningTable: React.FC = (): JSX.Element => {
         </MiningTable>
       )}
       <HashWrapper>
-        <ArcadeMiningHash {...hashStat} onClick={handleHashButtonClick} />
+        <ArcadeMiningHash onClick={handleHashButtonClick} />
       </HashWrapper>
     </Wrapper>
   );
