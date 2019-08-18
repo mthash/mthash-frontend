@@ -1,7 +1,6 @@
 import * as React from "react";
 import Grid from "@material-ui/core/Grid";
 
-import { withAuthSync } from "~/utils/auth";
 import { DashboardLayout } from "~/components/layouts";
 import Balance from "~/components/dashboard/Balance";
 import DashboardContainer from "~/containers/DashboardContainer";
@@ -46,4 +45,4 @@ const Dashboard: React.FC = (): JSX.Element => {
   );
 };
 
-export default withAuthSync(Dashboard);
+export default Dashboard;

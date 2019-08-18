@@ -4,6 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import { isEmpty } from "ramda";
 
 import MiningSlotModel from "~/models/MiningSlot";
+import ArcadeMining from "../../../static/mining/ArcadeMining.svg";
 
 import AppContext from "~/containers/AppContext";
 import MiningContainer from "~/containers/MiningContainer";
@@ -49,7 +50,9 @@ const MiningPortal: React.FC = (): JSX.Element => {
   return (
     <Wrapper>
       <ImageWrapper>
-        <img src="static/mining/ArcadeMining.svg" />
+        {/* <ArcadeMining /> */}
+
+        <img src="/static/mining/ArcadeMining.svg" />
       </ImageWrapper>
       <Grid container spacing={2}>
         {portalData &&

@@ -1,8 +1,11 @@
 const ENDPOINTS = {
   auth: {
     login: "user/login",
-    signup: "user",
-    demo: "demo/user/login"
+    signup: "user"
+  },
+  demo: {
+    login: "demo/user/login/{identifier}",
+    users: "demo/user"
   },
   wallets: "user/wallet",
   asset: {

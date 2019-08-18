@@ -66,7 +66,9 @@ interface MinedProps {
 
 function useMining(): MinedProps {
   let [statistic, setStatistic] = React.useState(null);
-  let [totalHashrateChart, setTotalHashrateChart] = React.useState({ chart: [] });
+  let [totalHashrateChart, setTotalHashrateChart] = React.useState({
+    chart: []
+  });
   let [depositedAsset, setDeposited] = React.useState(null);
   let [withdrawnAsset, setWithdrawn] = React.useState(null);
   let [arcadeMining, setArcadeMining] = React.useState([]);
@@ -79,9 +81,6 @@ function useMining(): MinedProps {
     OVERVIEW_CATEGORIES.pools.name
   );
   let [selectedPeriod, setSelectedPeriod] = React.useState(PERIODS_SHORT.d7);
-  // const [emulationIntervals, setEmulationIntervals] = React.useState(null);
-  let [emulationOn, setEmulationOn] = React.useState(false);
-  const emulationIntervals = [];
 
   const appContainer = AppContainer.useContainer();
 
@@ -289,20 +288,19 @@ function useMining(): MinedProps {
     try {
       const result = await AsyncService.post(mineEndpoint);
       const data = result.data.body;
-      
+
       fetchMiningPortal();
       fetchArcadeMining();
       fetchOverviewStatistic();
       fetchTotalPoolHashrate();
-
     } catch ({ message }) {
       appContainer.notifications.addNotification({
         message,
-        type: NOTIFICATION_TYPES.error,
+        type: NOTIFICATION_TYPES.error
       });
       return Error(message);
     }
-  }
+  };
 
   const unbindAssetRequest = async (asset): Promise<any> => {
     const mineEndpoint = format(ENDPOINTS.mining.bindAsset, { asset });
@@ -310,20 +308,19 @@ function useMining(): MinedProps {
     try {
       const result = await AsyncService.delete(mineEndpoint);
       const data = result.data.body;
-      
+
       fetchMiningPortal();
       fetchArcadeMining();
       fetchOverviewStatistic();
       fetchTotalPoolHashrate();
-      
     } catch ({ message }) {
       appContainer.notifications.addNotification({
         message,
-        type: NOTIFICATION_TYPES.error,
+        type: NOTIFICATION_TYPES.error
       });
       return Error(message);
     }
-  }
+  };
 
   const fetchBlockRewards = async (): Promise<any> => {
     try {

@@ -3,20 +3,26 @@ import styled from "styled-components";
 import { withFormik, InjectedFormikProps } from "formik";
 import * as Yup from "yup";
 import Button from "@material-ui/core/Button";
-import { isEmpty } from "ramda";
 
 import { RESPONSE_ERROR_NAME } from "~/constants/request";
 import ENDPOINTS from "~/constants/endpoints";
+import ROUTES from "~/constants/routes";
 import TextField from "~/components/common/TextField";
 import PasswordField from "~/components/common/PasswordField";
 import { login } from "~/utils/auth";
 import { AsyncService } from "~/services";
 
 import FormErrors from "../FormErrors";
-import RedirectButtons from "./RedirectButtons";
+import RedirectButtons from "../common/RedirectButtons";
 
 const CAPTION: string = "LOG IN";
 const SUBMIT_TEXT: string = "Log in";
+const REDIRECT_LINKS = [
+  {
+    link: ROUTES.auth.signup,
+    caption: "Don't have an account?"
+  }
+];
 
 export interface Props {
   children?: React.ReactNode;
@@ -66,7 +72,7 @@ const LoginForm: React.FC<InjectedFormikProps<FormProps, FormValues>> = (
     >
       {SUBMIT_TEXT}
     </SubmitButton>
-    <RedirectButtons />
+    <RedirectButtons customLinks={REDIRECT_LINKS} />
   </WrapperForm>
 );
 

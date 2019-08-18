@@ -57,7 +57,7 @@ const MiningDashboard: React.FC = (): JSX.Element => {
 
         <Grid xs={12} md={6} direction="column" container item>
           <RewardsTable
-            picture="static/mining/MyRewards.svg"
+            picture="/static/mining/MyRewards.svg"
             columns={[
               {
                 name: "Age",
@@ -89,7 +89,7 @@ const MiningDashboard: React.FC = (): JSX.Element => {
         </Grid>
         <Grid xs={12} md={6} direction="column" container item>
           <RewardsTable
-            picture="static/mining/BlockRewards.svg"
+            picture="/static/mining/BlockRewards.svg"
             columns={[
               {
                 name: "Age",

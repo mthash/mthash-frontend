@@ -49,7 +49,9 @@ const MiningDynamic: React.FC<MiningDynamicProps> = ({
     <>
       {isWithChart && !isNil && (
         <img
-          src={`static/mining/${SHIFT_IMG_BY_GROW[isPositiveShift.toString()]}`}
+          src={`/static/mining/${
+            SHIFT_IMG_BY_GROW[isPositiveShift.toString()]
+          }`}
         />
       )}
       <Shift shift={shift}>

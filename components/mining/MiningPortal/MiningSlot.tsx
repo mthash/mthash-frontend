@@ -5,14 +5,19 @@ import Button from "@material-ui/core/Button";
 import MiningSlotModel from "~/models/MiningSlot";
 import Currency from "~/models/types/Currency";
 import Paper from "~/components/common/Paper";
+import Confirm from "~/components/common/Confirm";
 import MiningDynamic from "~/components/mining/common/MiningDynamic";
 import MiningValueUnit from "~/components/mining/common/MiningValueUnit";
 import MiningSlotHeader from "./MiningSlotHeader";
 import MiningSlotChart from "./MiningSlotChart";
 import MiningHashInput from "./MiningHashInput";
 import MiningSlotActions from "./MiningSlotActions";
-import TotalWithdrawConfirm from "./TotalWithdrawConfirm";
 import MiningContainer from "~/containers/MiningContainer";
+
+const TOTAL_WITHDRAW = {
+  title: "Close position",
+  text: "Stop all mining of this coin?"
+};
 
 interface OperationArgs {
   currency: Currency;
@@ -85,10 +90,12 @@ const MiningSlot: React.FC<Props> = ({
           onWithdraw={handleWithdraw}
         />
       </SlotActions>
-      <TotalWithdrawConfirm
+      <Confirm
         open={confirmShown}
         onClose={handleWithdrawClose}
         onConfirm={handleWithdrawConfirm}
+        title={TOTAL_WITHDRAW.title}
+        text={TOTAL_WITHDRAW.text}
       />
     </Wrapper>
   );

@@ -33,7 +33,7 @@ const ArcadeMiningTable: React.FC = (): JSX.Element => {
 
   return (
     <Wrapper>
-      <img src="static/mining/MiningStats.svg" />
+      <img src="/static/mining/MiningStats.svg" />
       {hasData && (
         <MiningTable>
           <TableHead>

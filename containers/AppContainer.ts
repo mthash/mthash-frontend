@@ -5,8 +5,10 @@ import jwtDecode from "jwt-decode";
 
 import User from "~/models/User";
 import NOTIFICATION_TYPES from "~/constants/notificationTypes";
+import AsyncService from "~/services/AsyncService";
 import NotificationType from "~/models/types/NotificationType";
 import { getToken } from "~/utils/auth";
+import ENDPOINTS from "~/constants/endpoints";
 
 interface AddNotificationArgs {
   message: string;
@@ -19,6 +21,10 @@ interface AppProps {
   user: {
     data: User;
     refresh: () => void;
+  };
+  demoUsers: {
+    data: any[];
+    fetch: () => void;
   };
   notifications: {
     notification: any;
@@ -34,6 +40,7 @@ function readUser() {
 function useApp(): AppProps {
   let [user, setUser] = React.useState(readUser());
   let [notification, setNotification] = React.useState({});
+  let [demoUsers, setDemoUsers] = React.useState([]);
 
   const addNotification = (notificationProps: AddNotificationArgs): void => {
     setNotification(notificationProps);
@@ -44,6 +51,22 @@ function useApp(): AppProps {
       data: user,
       refresh: () => {
         setUser(readUser());
+      }
+    },
+    demoUsers: {
+      data: demoUsers,
+      fetch: async () => {
+        try {
+          const result = await AsyncService.get(ENDPOINTS.demo.users);
+          const data = result.data.body;
+          setDemoUsers(data);
+        } catch ({ message }) {
+          addNotification({
+            message,
+            type: NOTIFICATION_TYPES.error as NotificationType
+          });
+          return Error(message);
+        }
       }
     },
     notifications: {

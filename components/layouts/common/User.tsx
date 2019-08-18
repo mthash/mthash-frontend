@@ -7,13 +7,26 @@ import MenuItem from "@material-ui/core/MenuItem";
 
 import { logout } from "~/utils/auth";
 import IUser from "~/models/User";
+import Confirm from "~/components/common/Confirm";
+
+const WIPE_DATA = {
+  title: "Wipe user data",
+  text: "Reset all user's data?"
+};
+
+const USER_ACTIONS = {
+  logout: "Logout",
+  wipe: "Wipe data"
+};
 
 interface Props {
   user?: IUser;
+  isDemo?: boolean;
 }
 
-const User: React.FC<Props> = ({ user }): JSX.Element => {
+const User: React.FC<Props> = ({ user, isDemo }): JSX.Element => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [wipeConfirmShow, setWipeConfirmShown] = React.useState<boolean>(false);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -22,10 +35,15 @@ const User: React.FC<Props> = ({ user }): JSX.Element => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   const handleLogout = () => {
     handleClose();
     logout();
   };
+
+  const handleShowWipeConfirm = () => setWipeConfirmShown(true);
+  const handleCloseConfirm = () => setWipeConfirmShown(false);
+  const handleWipeData = () => {};
 
   return (
     <>
@@ -47,10 +65,23 @@ const User: React.FC<Props> = ({ user }): JSX.Element => {
           vertical: "top",
           horizontal: "right"
         }}
-        elevation={0}
+        keepMounted
       >
-        <MenuItem onClick={handleLogout}>Logout</MenuItem>
+        <MenuItem onClick={handleLogout}>{USER_ACTIONS.logout}</MenuItem>
+        {/* TODO: uncomment when will implemented on the backend {isDemo && (
+          <MenuItem onClick={handleShowWipeConfirm}>
+            {USER_ACTIONS.wipe}
+          </MenuItem>
+        )} */}
       </UserMenu>
+
+      <Confirm
+        onConfirm={handleWipeData}
+        onClose={handleCloseConfirm}
+        open={wipeConfirmShow}
+        title={WIPE_DATA.title}
+        text={WIPE_DATA.text}
+      />
     </>
   );
 };
@@ -71,7 +102,8 @@ const UserName = styled.span`
 
 const UserMenu = styled(Menu)`
   .MuiMenu-list {
-    padding: 20px;
+    display: flex;
+    flex-direction: column;
     min-width: 160px;
   }
 `;
