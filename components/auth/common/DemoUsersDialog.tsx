@@ -24,7 +24,7 @@ interface Props {
 }
 
 function redirectToDemoUser(identifier: string) {
-  Router.push(`/demo/${identifier}`);
+  Router.push(`/demo/${identifier}/mining`);
 }
 
 const DemoUsersDialog: React.FC<Props> = ({

@@ -1,7 +1,8 @@
 import * as React from "react";
 import styled from "styled-components";
-import Paper from "~/components/common/Paper";
+import numeral from "numeral";
 
+import Paper from "~/components/common/Paper";
 import { PERIODS_SHORT } from "~/constants/periods";
 import OVERVIEW_CATEGORIES from "~/constants/overviewCategories";
 import TotalPoolHeader from "./TotalPoolHeader";
@@ -62,14 +63,35 @@ const CHART_PRECISION_BY_PERIOD = {
   }
 };
 
+const Y_AXIS_FORMAT = {
+  hashrate: {
+    format: value =>
+      numeral(value)
+        .format("0.0 a")
+        .toUpperCase() + "H/s"
+  },
+  common: {
+    format: value => numeral(value).format("0,0.0")
+  }
+};
+
 const TotalPoolHashrate: React.FC = (): JSX.Element => {
   const {
     selectedOverviewPeriod,
     selectedOverviewCategory,
     totalPoolHashrate
   } = MiningContainer.useContainer();
-  const selectedCategoryTitle =
-    OVERVIEW_CATEGORIES[selectedOverviewCategory.category].title;
+  const selectedCategory = selectedOverviewCategory.category;
+  const poolsCategory = OVERVIEW_CATEGORIES.pools.name;
+  const algorithmsCategory = OVERVIEW_CATEGORIES.algorithms.name;
+  const selectedCategoryTitle = OVERVIEW_CATEGORIES[selectedCategory].title;
+  const isHashrateCategorySelected = [
+    poolsCategory,
+    algorithmsCategory
+  ].includes(selectedCategory);
+  const yAxis = isHashrateCategorySelected
+    ? Y_AXIS_FORMAT.hashrate
+    : Y_AXIS_FORMAT.common;
 
   React.useEffect(() => {
     totalPoolHashrate.fetch();
@@ -82,7 +104,7 @@ const TotalPoolHashrate: React.FC = (): JSX.Element => {
     stacked: false,
     min,
     max
-  }
+  };
 
   return (
     <Wrapper>
@@ -91,6 +113,7 @@ const TotalPoolHashrate: React.FC = (): JSX.Element => {
         data={chart}
         {...CHART_PRECISION_BY_PERIOD[selectedOverviewPeriod.period]}
         yScale={yScale}
+        axisLeft={yAxis}
       />
     </Wrapper>
   );

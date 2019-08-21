@@ -16,7 +16,7 @@ export const getToken = () => {
 
 export const login = ({ token }) => {
   setToken(token);
-  Router.push(ROUTES.dashboard);
+  Router.push(ROUTES.mining);
 };
 
 export const logout = () => {

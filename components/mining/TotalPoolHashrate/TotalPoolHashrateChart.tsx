@@ -1,6 +1,5 @@
 import { ResponsiveLine, Line } from "@nivo/line";
 import styled from "styled-components";
-import numeral from "numeral";
 
 const height = 300;
 const width = 800;
@@ -127,6 +126,7 @@ interface Props {
     format: string;
   };
   yScale?: any;
+  axisLeft?: any;
 }
 
 const TotalPoolHashrateChart: React.FC<Props> = ({
@@ -137,7 +137,8 @@ const TotalPoolHashrateChart: React.FC<Props> = ({
     tickValues: "every 1 hour",
     format: "%I:%M %p"
   },
-  yScale = { type: "linear", stacked: false, min: 0, max: "auto" }
+  yScale = { type: "linear", stacked: false, min: 0, max: "auto" },
+  axisLeft = {}
 }): JSX.Element => (
   <>
     <SvgDefs style={{ visibility: "hidden" }}>
@@ -290,14 +291,7 @@ const TotalPoolHashrateChart: React.FC<Props> = ({
       axisBottom={axisBottom}
       axisTop={null}
       axisRight={null}
-      axisLeft={{
-        format: value => {
-          if (value > 1e6) {
-            return numeral(value).format("0.0 a");
-          }
-          return numeral(value).format("0,0.0");
-        }
-      }}
+      axisLeft={axisLeft}
       theme={theme}
       lineWidth={3}
       colors={[
