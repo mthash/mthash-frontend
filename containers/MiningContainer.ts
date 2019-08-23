@@ -10,7 +10,7 @@ import AsyncService from "~/services/AsyncService";
 import AppContainer from "~/containers/AppContainer";
 import ErrorViewer from "~/components/common/ErrorViewer";
 import { PERIODS_SHORT } from "~/constants/periods";
-import { useInterval } from "~/utils/useTimeout";
+import { useInterval } from "~/utils/useInterval";
 import { ChartPoint } from "~/models/ChartData";
 
 interface MinedProps {

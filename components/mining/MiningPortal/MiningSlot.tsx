@@ -11,13 +11,20 @@ import MiningValueUnit from "~/components/mining/common/MiningValueUnit";
 import MiningSlotHeader from "./MiningSlotHeader";
 import MiningSlotChart from "./MiningSlotChart";
 import MiningHashInput from "./MiningHashInput";
-import MiningSlotActions from "./MiningSlotActions";
 import MiningContainer from "~/containers/MiningContainer";
+import MiningSlotDirectionSelect from "./MiningSlotDirectionSelect";
 
 const TOTAL_WITHDRAW = {
   title: "Close position",
   text: "Stop all mining of this coin?"
 };
+
+const DIRECTIONS = {
+  mine: "Mine",
+  stop: "Stop"
+};
+
+const SUBMIT_CAPTION = "Submit";
 
 interface OperationArgs {
   currency: Currency;
@@ -42,6 +49,9 @@ const MiningSlot: React.FC<Props> = ({
 }): JSX.Element => {
   const [amount, setAmount] = React.useState(null);
   const [confirmShown, setConfirmShown] = React.useState(false);
+  const [selectedDirection, setSelectedDirection] = React.useState(
+    DIRECTIONS.mine
+  );
   const { minedAsset } = MiningContainer.useContainer();
   const chartDataToDisplay = chart_data;
 
@@ -59,6 +69,10 @@ const MiningSlot: React.FC<Props> = ({
 
   const handleClosePosition = () => {
     setConfirmShown(true);
+  };
+
+  const handleChangeDirection = (direction: string) => {
+    setSelectedDirection(direction);
   };
 
   const handleWithdrawClose = () => setConfirmShown(false);
@@ -83,13 +97,12 @@ const MiningSlot: React.FC<Props> = ({
       <SlotChart>
         <MiningSlotChart chartData={chartDataToDisplay as any} />
       </SlotChart>
+      <MiningSlotDirectionSelect
+        selected={selectedDirection}
+        directions={DIRECTIONS}
+        onChange={handleChangeDirection}
+      />
       <MiningHashInput amount={amount} onChange={handleAmountChange} />
-      <SlotActions>
-        <MiningSlotActions
-          onDeposit={handleDeposit}
-          onWithdraw={handleWithdraw}
-        />
-      </SlotActions>
       <Confirm
         open={confirmShown}
         onClose={handleWithdrawClose}
@@ -97,6 +110,9 @@ const MiningSlot: React.FC<Props> = ({
         title={TOTAL_WITHDRAW.title}
         text={TOTAL_WITHDRAW.text}
       />
+      <SubmitWrapper>
+        <SubmitButton variant="contained">{SUBMIT_CAPTION}</SubmitButton>
+      </SubmitWrapper>
     </Wrapper>
   );
 };
@@ -122,9 +138,20 @@ const SlotChart = styled.div`
   margin: 20px 0;
 `;
 
-const SlotActions = styled.div`
+const SubmitWrapper = styled.div`
   margin-top: 12px;
-  text-align: center;
   display: flex;
   justify-content: center;
+`;
+
+const SubmitButton = styled(Button)`
+  text-transform: uppercase;
+  font-size: 13px;
+  padding: 7px 25px;
+  color: ${p => p.theme.palette.text.primary};
+  background: ${p => `linear-gradient(
+      ${p.theme.palette.background.default},
+      ${p.theme.palette.background.button}
+    `}
+  );
 `;

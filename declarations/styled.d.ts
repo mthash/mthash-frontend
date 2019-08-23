@@ -18,6 +18,7 @@ declare module "styled-components" {
       hightlight: {
         dark: string;
         blue: string;
+        red: string;
       };
       background: {
         paper: string;

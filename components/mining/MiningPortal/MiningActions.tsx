@@ -38,7 +38,7 @@ const ActionButton = styled(Button)`
   text-transform: unset;
   font-size: 13px;
   padding: 7px 31px;
-  border-radius: 10px;
+  border-radius: 5px;
   color: ${p => p.theme.palette.text.primary};
   flex-grow: 1;
 

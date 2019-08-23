@@ -8,7 +8,8 @@ export const theme = {
     },
     hightlight: {
       dark: "#181D30",
-      blue: "#14BAE3"
+      blue: "#14BAE3",
+      red: "#F6511D"
     },
     background: {
       paper: "#131828",
