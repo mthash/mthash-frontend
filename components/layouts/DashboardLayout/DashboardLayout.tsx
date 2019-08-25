@@ -26,7 +26,6 @@ const DashboardLayout: React.FC<Props> = ({
       <Header
         activatedSection={APP_SECTION_IDS.dashboard}
         namespace={namespace}
-        isDemo={isDemo}
       />
       <Sidebar />
       <Content>{children}</Content>

@@ -12,11 +12,14 @@ import CloseIcon from "@material-ui/icons/Close";
 import Paper from "~/components/common/Paper";
 import DialogContent from "@material-ui/core/DialogContent";
 
+type MaxWidth = "xs" | "sm" | "md" | "lg" | "xl" | false;
+
 interface Props {
   open: boolean;
   title: React.ReactNode;
   children: React.ReactNode;
   className?: string;
+  maxWidth?: MaxWidth;
   onClose: () => void;
 }
 
@@ -42,13 +45,19 @@ const DialogTitle: React.FC<DialogTitleProps> = ({ onClose, children }) => {
 
 const Dialog: React.FC<Props> = ({
   open,
+  maxWidth,
   title,
   children,
   className,
   onClose
 }): JSX.Element => {
   return (
-    <MuiDialog open={open} onClose={onClose} className={className}>
+    <MuiDialog
+      open={open}
+      onClose={onClose}
+      className={className}
+      maxWidth={maxWidth}
+    >
       <DialogTitle onClose={onClose}>{title}</DialogTitle>
       <MuiDialogContent>{children}</MuiDialogContent>
     </MuiDialog>

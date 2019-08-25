@@ -24,7 +24,6 @@ const ExchangeLayout: React.FC<Props> = ({
       <Header
         activatedSection={APP_SECTION_IDS.exchange}
         namespace={namespace}
-        isDemo={isDemo}
       />
       <Content>{children}</Content>
     </Wrapper>

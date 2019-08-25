@@ -18,8 +18,7 @@ interface Props {
 
 const Header: React.FC<Props> = ({
   activatedSection,
-  namespace,
-  isDemo = false
+  namespace
 }): JSX.Element => {
   const { user } = AppContainer.useContainer();
 
@@ -35,7 +34,7 @@ const Header: React.FC<Props> = ({
           activatedSection={activatedSection}
           namespace={namespace}
         />
-        <User user={user.data} isDemo={isDemo} />
+        <User user={user.data} />
       </StyledToolbar>
     </StyledAppBar>
   );

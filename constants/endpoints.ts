@@ -7,6 +7,10 @@ const ENDPOINTS = {
     login: "demo/user/login/{identifier}",
     users: "demo/user"
   },
+  admin: {
+    data: "/admin/overview",
+    wipe: "/oops/restart"
+  },
   wallets: "user/wallet",
   asset: {
     all: "asset",
