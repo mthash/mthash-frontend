@@ -5,6 +5,7 @@ import TableRow from "@material-ui/core/TableRow";
 
 import CurrencyIcon from "~/components/common/CurrencyIcon";
 import ArcadeMiningValue from "./ArcadeMiningValue";
+import ArcadeMiningHashrateValue from "./ArcadeMiningHashrateValue";
 
 interface Props {
   id: any;
@@ -32,16 +33,16 @@ const ArcadeMiningTableRow: React.FC<Props> = ({
       <CurrencyIcon currency={currency} monochrome />
     </CurrencyIconCell>
     <MiningCell align="center">
-      <ArcadeMiningValue {...revenue} />
+      <ArcadeMiningValue {...revenue} currency={currency} />
     </MiningCell>
     <MiningCell align="center">
-      <ArcadeMiningValue {...hashrate} />
+      <ArcadeMiningHashrateValue {...hashrate} />
     </MiningCell>
     <MiningCell align="center">
-      <ArcadeMiningValue {...mining} />
+      <ArcadeMiningValue {...mining} currency={currency} />
     </MiningCell>
     <MiningCell align="center">
-      <ArcadeMiningValue {...balance} />
+      <ArcadeMiningValue {...balance} currency={currency} />
     </MiningCell>
   </MiningRow>
 );

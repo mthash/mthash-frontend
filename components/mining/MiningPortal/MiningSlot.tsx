@@ -1,7 +1,12 @@
 import * as React from "react";
 import styled from "styled-components";
 import Button from "@material-ui/core/Button";
+import format from "string-template";
+import { isEmpty } from "ramda";
 
+import NOTIFICATION_TYPES from "~/constants/notificationTypes";
+import ENDPOINTS from "~/constants/endpoints";
+import { AsyncService } from "~/services";
 import MiningSlotModel from "~/models/MiningSlot";
 import Currency from "~/models/types/Currency";
 import Paper from "~/components/common/Paper";
@@ -13,6 +18,7 @@ import MiningSlotChart from "./MiningSlotChart";
 import MiningHashInput from "./MiningHashInput";
 import MiningContainer from "~/containers/MiningContainer";
 import MiningSlotDirectionSelect from "./MiningSlotDirectionSelect";
+import AppContainer from "~/containers/AppContainer";
 
 const TOTAL_WITHDRAW = {
   title: "Close position",
@@ -36,6 +42,15 @@ interface Props extends MiningSlotModel {
   onWithdraw: (OperationArgs) => {};
 }
 
+interface Maxes {
+  withdraw?: number;
+  deposit?: number;
+}
+
+function getMaxByDirection(direction: string, maxes: Maxes): number {
+  return direction === DIRECTIONS.mine ? maxes.deposit : maxes.withdraw;
+}
+
 const MiningSlot: React.FC<Props> = ({
   id,
   currency,
@@ -52,6 +67,10 @@ const MiningSlot: React.FC<Props> = ({
   const [selectedDirection, setSelectedDirection] = React.useState(
     DIRECTIONS.mine
   );
+  const [maxesLoading, setMaxesLoading] = React.useState(false);
+  const [maxes, setMaxes] = React.useState<Maxes>({});
+  const { notifications } = AppContainer.useContainer();
+
   const { minedAsset } = MiningContainer.useContainer();
   const chartDataToDisplay = chart_data;
 
@@ -72,6 +91,8 @@ const MiningSlot: React.FC<Props> = ({
   };
 
   const handleChangeDirection = (direction: string) => {
+    if (!isEmpty(maxes)) setAmount(getMaxByDirection(direction, maxes));
+
     setSelectedDirection(direction);
   };
 
@@ -80,6 +101,33 @@ const MiningSlot: React.FC<Props> = ({
   const handleWithdrawConfirm = () => {
     minedAsset.unbind(currency);
     setConfirmShown(false);
+  };
+
+  const handleMaxesRequest = async () => {
+    setMaxesLoading(true);
+    const mineMaxesUrl = format(ENDPOINTS.mining.mineMaxes, {
+      asset: currency
+    });
+    // const minePredictUrl = format(ENDPOINTS.mining.minePredict, {
+    //   asset: currency
+    // });
+
+    try {
+      const result = await AsyncService.get(mineMaxesUrl);
+      const maxes = result.data.body;
+      // const params = { amount: 10 };
+      // const minePredict = await AsyncService.get(minePredictUrl, { amount });
+
+      setMaxes(maxes);
+      setAmount(getMaxByDirection(selectedDirection, maxes));
+    } catch ({ message }) {
+      notifications.addNotification({
+        type: NOTIFICATION_TYPES.error,
+        message
+      });
+    }
+
+    setMaxesLoading(false);
   };
 
   return (
@@ -102,7 +150,12 @@ const MiningSlot: React.FC<Props> = ({
         directions={DIRECTIONS}
         onChange={handleChangeDirection}
       />
-      <MiningHashInput amount={amount} onChange={handleAmountChange} />
+      <MiningHashInput
+        amount={amount}
+        amountLoading={maxesLoading}
+        onChange={handleAmountChange}
+        onMaxRequest={handleMaxesRequest}
+      />
       <Confirm
         open={confirmShown}
         onClose={handleWithdrawClose}

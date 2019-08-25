@@ -23,7 +23,9 @@ const ENDPOINTS = {
     withdraw: "mining/{asset}/withdraw",
     blockRewards: "mining/rewards",
     myRewards: "mining/my/rewards",
-    hashBalance: "mining/arcade/hash"
+    hashBalance: "mining/arcade/hash",
+    mineMaxes: "mining/{asset}/maxes",
+    minePredict: "mining/{asset}/predict"
   }
 };
 

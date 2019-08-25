@@ -3,30 +3,27 @@ import styled from "styled-components";
 
 import MiningDynamic from "~/components/mining/common/MiningDynamic";
 import MiningValueUnit from "~/components/mining/common/MiningValueUnit";
-import AppContext from "~/containers/AppContext";
-import Currency from "~/models/types/Currency";
 
 interface Props {
   value: string | number;
   unit: string;
-  currency?: Currency;
+  shift: number;
 }
 
-const ArcadeMiningValue: React.FC<Props> = ({
+const ArcadeMiningHashrateValue: React.FC<Props> = ({
   value,
   unit,
-  currency
-}): JSX.Element => {
-  return (
-    <div>
-      <ValueUnitWrapper>
-        <MiningValueUnit value={value} unit={unit} />
-      </ValueUnitWrapper>
-    </div>
-  );
-};
+  shift
+}): JSX.Element => (
+  <div>
+    <ValueUnitWrapper>
+      <MiningValueUnit value={value} unit={unit} />
+    </ValueUnitWrapper>
+    <MiningDynamic shift={shift} />
+  </div>
+);
 
-export default ArcadeMiningValue;
+export default ArcadeMiningHashrateValue;
 
 const ValueUnitWrapper = styled.div`
   display: flex;
