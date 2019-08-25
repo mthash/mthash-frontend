@@ -33,16 +33,16 @@ const ArcadeMiningTableRow: React.FC<Props> = ({
       <CurrencyIcon currency={currency} monochrome />
     </CurrencyIconCell>
     <MiningCell align="center">
-      <ArcadeMiningValue {...revenue} currency={currency} />
+      <ArcadeMiningValue {...revenue} />
     </MiningCell>
     <MiningCell align="center">
       <ArcadeMiningHashrateValue {...hashrate} />
     </MiningCell>
     <MiningCell align="center">
-      <ArcadeMiningValue {...mining} currency={currency} />
+      <ArcadeMiningValue {...mining} />
     </MiningCell>
     <MiningCell align="center">
-      <ArcadeMiningValue {...balance} currency={currency} />
+      <ArcadeMiningValue {...balance} />
     </MiningCell>
   </MiningRow>
 );
@@ -63,6 +63,7 @@ const MiningRow = styled(TableRow)<MiningRowProps>`
         background-color: ${p.theme.palette.hightlight.blue} !important;
 
         span,
+        div,
         svg {
           color: ${p.theme.palette.text.primary} !important;
         }

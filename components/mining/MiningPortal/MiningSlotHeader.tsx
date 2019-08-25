@@ -37,6 +37,7 @@ const Header = styled.header`
 `;
 
 const Item = styled.span`
+  font-size: 12px;
   display: inline-block;
   color: ${p => p.theme.palette.text.secondary};
   font-weight: bold;

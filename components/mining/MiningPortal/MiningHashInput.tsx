@@ -9,11 +9,12 @@ import useDebounce from "~/utils/useDebounce";
 import Hash from "../../../static/currencies/HashMono.svg";
 
 const MAX_CAPTION = "MAX";
-const DEFAULT_PREDICTION = "0 Mh/s";
 
 interface Props {
   amount: string;
   amountLoading?: boolean;
+  prediction: string;
+  predictionLoading?: boolean;
   onChange: (any) => void;
   onMaxRequest: () => void;
 }
@@ -21,21 +22,11 @@ interface Props {
 const MiningHashInput: React.FC<Props> = ({
   amount,
   amountLoading,
+  prediction,
+  predictionLoading,
   onChange,
   onMaxRequest
 }): JSX.Element => {
-  const [predictionLoading, setPredictionLoading] = React.useState(false);
-  const [prediction, setPrediction] = React.useState(DEFAULT_PREDICTION);
-
-  const handleChange = event => {
-    setPredictionLoading(true);
-    onChange(event);
-
-    // useDebounce(() => {
-    //   setPredictionLoading(false);
-    // }, 2000);
-  };
-
   return (
     <>
       <InputWrapper>
@@ -46,7 +37,7 @@ const MiningHashInput: React.FC<Props> = ({
         )}
         <HashInput
           value={amount}
-          onChange={handleChange}
+          onChange={onChange}
           variant="filled"
           type="number"
           placeholder="Amount"
@@ -69,7 +60,7 @@ const MiningHashInput: React.FC<Props> = ({
             <CircularProgress size={15} />
           </LoaderWrapper>
         )}
-        <span>{prediction}</span>
+        <span>{predictionLoading ? "loading" : prediction}</span>
       </Prediction>
     </>
   );

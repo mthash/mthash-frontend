@@ -25,7 +25,8 @@ const Header = styled.header`
 `;
 
 const Caption = styled.span`
-  font-size: 20px;
+  margin-left: 10px;
+  font-size: 18px;
   color: ${p => p.theme.palette.background.control};
 
   @media screen and (max-width: ${p => p.theme.breakpoints.values.sm}px) {

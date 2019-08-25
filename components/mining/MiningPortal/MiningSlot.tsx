@@ -24,13 +24,16 @@ const TOTAL_WITHDRAW = {
   title: "Close position",
   text: "Stop all mining of this coin?"
 };
-
 const DIRECTIONS = {
   mine: "Mine",
   stop: "Stop"
 };
-
 const SUBMIT_CAPTION = "Submit";
+const DEFAULT_PREDICTION = "0 Mh/s";
+const DEFAULT_PREDICTIONS = {
+  deposit: { formatted: DEFAULT_PREDICTION },
+  withdraw: { formatted: DEFAULT_PREDICTION }
+};
 
 interface OperationArgs {
   currency: Currency;
@@ -47,8 +50,29 @@ interface Maxes {
   deposit?: number;
 }
 
+interface Prediction {
+  formatted: string;
+  raw?: number;
+  unit?: string;
+  value?: number;
+}
+
+interface Predictions {
+  deposit: Prediction;
+  withdraw: Prediction;
+}
+
 function getMaxByDirection(direction: string, maxes: Maxes): number {
   return direction === DIRECTIONS.mine ? maxes.deposit : maxes.withdraw;
+}
+
+function getPredictionByDirection(
+  direction: string,
+  predictions: Predictions
+): string {
+  const prediction =
+    direction === DIRECTIONS.mine ? predictions.deposit : predictions.withdraw;
+  return prediction.formatted;
 }
 
 const MiningSlot: React.FC<Props> = ({
@@ -69,21 +93,71 @@ const MiningSlot: React.FC<Props> = ({
   );
   const [maxesLoading, setMaxesLoading] = React.useState(false);
   const [maxes, setMaxes] = React.useState<Maxes>({});
+  const [predictionLoading, setPredictionLoading] = React.useState(false);
+  const [predictions, setPredictions] = React.useState<Predictions>(
+    DEFAULT_PREDICTIONS
+  );
+  const [selectedPrediction, setSelectedPrediction] = React.useState(
+    DEFAULT_PREDICTION
+  );
   const { notifications } = AppContainer.useContainer();
 
   const { minedAsset } = MiningContainer.useContainer();
   const chartDataToDisplay = chart_data;
 
-  const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAmount(event.currentTarget.value);
+  React.useEffect(() => {
+    if (amount === null) return;
+
+    if (amount === "") {
+      setPredictions(DEFAULT_PREDICTIONS);
+    } else {
+      requestPrediction(amount);
+    }
+  }, [amount]);
+
+  React.useEffect(() => {
+    setSelectedPrediction(
+      getPredictionByDirection(selectedDirection, predictions)
+    );
+  }, [selectedDirection, predictions]);
+
+  React.useEffect(() => {
+    if (!isEmpty(maxes)) setAmount(getMaxByDirection(selectedDirection, maxes));
+  }, [maxes]);
+
+  React.useEffect(() => {
+    if (!isEmpty(maxes)) setAmount(getMaxByDirection(selectedDirection, maxes));
+  }, [selectedDirection]);
+
+  const requestPrediction = async (amount: string) => {
+    setPredictionLoading(true);
+    const minePredictUrl = format(ENDPOINTS.mining.minePredict, {
+      asset: currency
+    });
+
+    try {
+      const result = await AsyncService.get(minePredictUrl, { amount });
+      const minePredictions = result.data.body;
+
+      setPredictions(minePredictions);
+      setSelectedPrediction(
+        getPredictionByDirection(selectedDirection, minePredictions)
+      );
+    } catch ({ message }) {
+      notifications.addNotification({
+        type: NOTIFICATION_TYPES.error,
+        message
+      });
+    }
+    setPredictionLoading(false);
   };
 
-  const handleWithdraw = () => {
-    onWithdraw && onWithdraw({ currency, amount });
-  };
-
-  const handleDeposit = () => {
-    onDeposit && onDeposit({ currency, amount });
+  const handleAmountChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const amount = event.currentTarget.value;
+    setAmount(amount);
+    setMaxes({});
   };
 
   const handleClosePosition = () => {
@@ -91,8 +165,6 @@ const MiningSlot: React.FC<Props> = ({
   };
 
   const handleChangeDirection = (direction: string) => {
-    if (!isEmpty(maxes)) setAmount(getMaxByDirection(direction, maxes));
-
     setSelectedDirection(direction);
   };
 
@@ -108,18 +180,12 @@ const MiningSlot: React.FC<Props> = ({
     const mineMaxesUrl = format(ENDPOINTS.mining.mineMaxes, {
       asset: currency
     });
-    // const minePredictUrl = format(ENDPOINTS.mining.minePredict, {
-    //   asset: currency
-    // });
 
     try {
       const result = await AsyncService.get(mineMaxesUrl);
       const maxes = result.data.body;
-      // const params = { amount: 10 };
-      // const minePredict = await AsyncService.get(minePredictUrl, { amount });
 
       setMaxes(maxes);
-      setAmount(getMaxByDirection(selectedDirection, maxes));
     } catch ({ message }) {
       notifications.addNotification({
         type: NOTIFICATION_TYPES.error,
@@ -128,6 +194,16 @@ const MiningSlot: React.FC<Props> = ({
     }
 
     setMaxesLoading(false);
+  };
+
+  const handleSubmit = () => {
+    if (selectedDirection === DIRECTIONS.mine) {
+      onDeposit && onDeposit({ currency, amount });
+    } else {
+      onWithdraw && onWithdraw({ currency, amount });
+    }
+
+    setMaxes({});
   };
 
   return (
@@ -153,6 +229,8 @@ const MiningSlot: React.FC<Props> = ({
       <MiningHashInput
         amount={amount}
         amountLoading={maxesLoading}
+        prediction={selectedPrediction}
+        predictionLoading={predictionLoading}
         onChange={handleAmountChange}
         onMaxRequest={handleMaxesRequest}
       />
@@ -164,7 +242,9 @@ const MiningSlot: React.FC<Props> = ({
         text={TOTAL_WITHDRAW.text}
       />
       <SubmitWrapper>
-        <SubmitButton variant="contained">{SUBMIT_CAPTION}</SubmitButton>
+        <SubmitButton variant="contained" onClick={handleSubmit}>
+          {SUBMIT_CAPTION}
+        </SubmitButton>
       </SubmitWrapper>
     </Wrapper>
   );
@@ -187,8 +267,8 @@ const SlotValue = styled.div`
 
 const SlotChart = styled.div`
   width: 100%;
-  height: 55px;
-  margin: 20px 0;
+  height: 45px;
+  margin: 10px 0;
 `;
 
 const SubmitWrapper = styled.div`

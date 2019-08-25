@@ -90,7 +90,7 @@ export const theme = {
   layouts: {
     dashboard: {
       headerHeight: 75,
-      contentMaxWidth: 1560,
+      contentMaxWidth: 1480,
       sidebar: {
         minWidth: 90
       }

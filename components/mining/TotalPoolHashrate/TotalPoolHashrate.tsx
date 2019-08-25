@@ -8,7 +8,6 @@ import OVERVIEW_CATEGORIES from "~/constants/overviewCategories";
 import TotalPoolHeader from "./TotalPoolHeader";
 import MiningContainer from "~/containers/MiningContainer";
 import TotalPoolHashrateChart from "./TotalPoolHashrateChart";
-import { median, mean, isEmpty } from "ramda";
 
 const CHART_PRECISION_BY_PERIOD = {
   [PERIODS_SHORT.h1]: {
@@ -66,9 +65,21 @@ const CHART_PRECISION_BY_PERIOD = {
 const Y_AXIS_FORMAT = {
   hashrate: {
     format: value =>
-      numeral(value)
+      `${numeral(value)
         .format("0.0 a")
-        .toUpperCase() + "H/s"
+        .toUpperCase()}H/s`
+  },
+  money: {
+    format: value =>
+      `$ ${numeral(value)
+        .format("0.0 a")
+        .toUpperCase()}`
+  },
+  power: {
+    format: value =>
+      `${numeral(value)
+        .format("0.0 a")
+        .toUpperCase()}W`
   },
   common: {
     format: value => numeral(value).format("0,0.0")
@@ -84,14 +95,26 @@ const TotalPoolHashrate: React.FC = (): JSX.Element => {
   const selectedCategory = selectedOverviewCategory.category;
   const poolsCategory = OVERVIEW_CATEGORIES.pools.name;
   const algorithmsCategory = OVERVIEW_CATEGORIES.algorithms.name;
+  const revenueCategory = OVERVIEW_CATEGORIES.daily_revenue.name;
+  const powerCategory = OVERVIEW_CATEGORIES.power.name;
   const selectedCategoryTitle = OVERVIEW_CATEGORIES[selectedCategory].title;
-  const isHashrateCategorySelected = [
-    poolsCategory,
-    algorithmsCategory
-  ].includes(selectedCategory);
-  const yAxis = isHashrateCategorySelected
-    ? Y_AXIS_FORMAT.hashrate
-    : Y_AXIS_FORMAT.common;
+
+  const yAxis = (() => {
+    const isHashrateCategorySelected = [
+      poolsCategory,
+      algorithmsCategory
+    ].includes(selectedCategory);
+
+    if (isHashrateCategorySelected) {
+      return Y_AXIS_FORMAT.hashrate;
+    } else if (selectedCategory === revenueCategory) {
+      return Y_AXIS_FORMAT.money;
+    } else if (selectedCategory === powerCategory) {
+      return Y_AXIS_FORMAT.power;
+    } else {
+      return Y_AXIS_FORMAT.common;
+    }
+  })();
 
   React.useEffect(() => {
     totalPoolHashrate.fetch();
@@ -126,5 +149,5 @@ const Wrapper = styled(Paper)`
   height: 55vh;
   background-color: ${p => p.theme.palette.background.paperDarkest};
   padding: 20px;
-  margin: 30px 0;
+  margin: 25px 0 30px;
 `;

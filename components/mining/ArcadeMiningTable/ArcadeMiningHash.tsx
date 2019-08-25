@@ -23,7 +23,11 @@ const ArcadeMiningHash: React.FC<Props> = ({ onClick }): JSX.Element => {
     <HashButton onClick={onClick}>
       <HashIcon />
       {balanceData && (
-        <ArcadeMinigValue value={balanceData.balance} unit={balanceData.unit} />
+        <ArcadeMinigValue
+          value={balanceData.balance}
+          unit={balanceData.unit}
+          usd={balanceData.usd}
+        />
       )}
     </HashButton>
   );

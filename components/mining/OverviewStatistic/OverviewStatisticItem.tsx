@@ -50,7 +50,7 @@ const Wrapper = styled.div`
 `;
 
 const StatisticListItem = styled(ListItem)`
-  padding: 40px;
+  padding: 30px;
   display: flex;
   flex-grow: 1;
   flex-direction: column;
@@ -86,7 +86,7 @@ const StatisticListItem = styled(ListItem)`
 `;
 
 const StatisticValue = styled.p`
-  font-size: 40px;
+  font-size: 36px;
 
   @media screen and (max-width: 1100px) {
     font-size: 25px;
@@ -107,7 +107,7 @@ const StatisticCaption = styled.p`
 `;
 
 const SelectedIndicator = styled.div`
-  padding-top: 10px;
+  padding-top: 25px;
   height: 44px;
   text-align: center;
 `;

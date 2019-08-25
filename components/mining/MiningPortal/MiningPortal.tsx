@@ -90,7 +90,7 @@ const ImageWrapper = styled.div`
 
   img {
     width: 100%;
-    max-width: 537px;
+    max-width: 480px;
   }
 `;
 
