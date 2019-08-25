@@ -1,23 +1,30 @@
 import * as React from "react";
-
-import { MiningLayout } from "~/components/layouts";
+import { useRouter } from "next/router";
+import format from "string-template";
 
 import ENDPOINTS from "~/constants/endpoints";
 import NOTIFICATION_TYPES from "~/constants/notificationTypes";
+import { setToken } from "~/utils/auth";
+import { MiningLayout } from "~/components/layouts";
+
 import MiningContainer from "~/containers/MiningContainer";
 import { MiningDashboard } from "~/components/mining";
-import { AsyncService } from "~/services";
-import { setToken } from "~/utils/auth";
 import AppContainer from "~/containers/AppContainer";
+import AsyncService from "~/services/AsyncService";
 
-const MiningDemo: React.FC = (): JSX.Element => {
+const Mining: React.FC = (): JSX.Element => {
+  const router = useRouter();
+  const { demoUser } = router.query;
   const { user, notifications } = AppContainer.useContainer();
   const [authorized, setAuthorized] = React.useState(false);
 
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await AsyncService.post(ENDPOINTS.auth.demo);
+        const authEndpoint = format(ENDPOINTS.demo.login, {
+          identifier: demoUser
+        });
+        const result = await AsyncService.post(authEndpoint);
         const token = result.data.body;
         setToken(token);
         user.refresh();
@@ -34,7 +41,7 @@ const MiningDemo: React.FC = (): JSX.Element => {
   }, []);
 
   return (
-    <MiningLayout hasNavigation={false}>
+    <MiningLayout namespace={`/demo/${demoUser}`} isDemo>
       {authorized && (
         <MiningContainer.Provider>
           <MiningDashboard />
@@ -44,4 +51,4 @@ const MiningDemo: React.FC = (): JSX.Element => {
   );
 };
 
-export default MiningDemo;
+export default Mining;

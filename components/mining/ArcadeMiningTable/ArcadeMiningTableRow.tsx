@@ -1,10 +1,11 @@
 import * as React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 
 import CurrencyIcon from "~/components/common/CurrencyIcon";
 import ArcadeMiningValue from "./ArcadeMiningValue";
+import ArcadeMiningHashrateValue from "./ArcadeMiningHashrateValue";
 
 interface Props {
   id: any;
@@ -35,7 +36,7 @@ const ArcadeMiningTableRow: React.FC<Props> = ({
       <ArcadeMiningValue {...revenue} />
     </MiningCell>
     <MiningCell align="center">
-      <ArcadeMiningValue {...hashrate} />
+      <ArcadeMiningHashrateValue {...hashrate} />
     </MiningCell>
     <MiningCell align="center">
       <ArcadeMiningValue {...mining} />
@@ -56,9 +57,17 @@ interface MiningRowProps {
 const MiningRow = styled(TableRow)<MiningRowProps>`
   > td,
   > th {
-    background-color: ${p =>
-      p.selected && p.theme.palette.hightlight.blue} !important;
-  }
+    ${p =>
+      p.selected &&
+      css`
+        background-color: ${p.theme.palette.hightlight.blue} !important;
+
+        span,
+        div,
+        svg {
+          color: ${p.theme.palette.text.primary} !important;
+        }
+      `}
 
   &:hover {
     > td,
@@ -83,6 +92,10 @@ const MiningCell = styled(TableCell)`
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
     border-right: solid 1px ${p => p.theme.palette.background.darkBlue};
+  }
+
+  @media screen and (max-width: ${p => p.theme.breakpoints.values.sm}px) {
+    padding: 5px;
   }
 `;
 

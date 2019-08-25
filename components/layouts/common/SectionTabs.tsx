@@ -4,17 +4,23 @@ import Button from "@material-ui/core/Button";
 import Router from "next/router";
 
 import APP_SECTIONS from "~/constants/appSections";
+import { useRouter } from "next/router";
 
 // const sectionIds = Object.values(APP_SECTION_IDS);
 // type sectionID = typeof sectionIds;
 
 interface Props {
   activatedSection: number;
+  namespace?: string;
 }
 
-const SectionTabs: React.FC<Props> = ({ activatedSection }): JSX.Element => {
+const SectionTabs: React.FC<Props> = ({
+  activatedSection,
+  namespace
+}): JSX.Element => {
   const handleClick = (route: string) => () => {
-    Router.push(route);
+    const link = namespace ? `${namespace}${route}` : route;
+    Router.push(link);
   };
 
   return (

@@ -2,19 +2,29 @@ import * as React from "react";
 import styled from "styled-components";
 import CssBaseline from "@material-ui/core/CssBaseline";
 
-import Header from "~/components/layouts/common/Header";
-
 import { APP_SECTION_IDS } from "~/constants/appSections";
+import Header from "~/components/layouts/common/Header";
+import UnderDevelopment from "~/components/common/UnderDevelopment";
 
 interface Props {
   children: React.ReactNode;
+  namespace?: string;
+  isDemo?: boolean;
 }
 
-const ExchangeLayout: React.FC<Props> = ({ children }): JSX.Element => {
+const ExchangeLayout: React.FC<Props> = ({
+  children,
+  namespace,
+  isDemo = false
+}): JSX.Element => {
   return (
     <Wrapper>
       <CssBaseline />
-      <Header activatedSection={APP_SECTION_IDS.exchange} />
+      <UnderDevelopment namespace={namespace} />
+      <Header
+        activatedSection={APP_SECTION_IDS.exchange}
+        namespace={namespace}
+      />
       <Content>{children}</Content>
     </Wrapper>
   );

@@ -4,6 +4,8 @@ import Grid from "@material-ui/core/Grid";
 import { isEmpty } from "ramda";
 
 import MiningSlotModel from "~/models/MiningSlot";
+import ArcadeMining from "../../../static/mining/ArcadeMining.svg";
+
 import AppContext from "~/containers/AppContext";
 import MiningContainer from "~/containers/MiningContainer";
 
@@ -21,6 +23,11 @@ const MiningPortal: React.FC = (): JSX.Element => {
     portalData && !isEmpty(portalData)
       ? portalData.length !== mineableCurrencies.length
       : true;
+  const addedCurrencies =
+    (portalData &&
+      !isEmpty(portalData) &&
+      portalData.map(item => item.currency)) ||
+    [];
 
   React.useEffect(() => {
     miningPortal.fetch();
@@ -42,12 +49,16 @@ const MiningPortal: React.FC = (): JSX.Element => {
 
   return (
     <Wrapper>
-      <img src="static/mining/MiningPortal.svg" />
-      <Grid container spacing={3}>
+      <ImageWrapper>
+        {/* <ArcadeMining /> */}
+
+        <img src="/static/mining/ArcadeMining.svg" />
+      </ImageWrapper>
+      <Grid container spacing={2}>
         {portalData &&
           portalData.map(
             (slotData: any): JSX.Element => (
-              <AdaptiveGrid item lg={4} xs={6}>
+              <AdaptiveGrid item lg={4} md={4} sm={6}>
                 <MiningSlot
                   key={slotData.id}
                   {...slotData}
@@ -58,8 +69,8 @@ const MiningPortal: React.FC = (): JSX.Element => {
             )
           )}
         {addingAvailable && (
-          <AdaptiveGrid item lg={4} xs={6}>
-            <MiningSlotAddCurrency />
+          <AdaptiveGrid item lg={4} md={4} sm={6}>
+            <MiningSlotAddCurrency addedCurrencies={addedCurrencies} />
           </AdaptiveGrid>
         )}
       </Grid>
@@ -70,7 +81,17 @@ const MiningPortal: React.FC = (): JSX.Element => {
 export default MiningPortal;
 
 const Wrapper = styled.div`
+  margin-top: 20px;
   width: 100%;
+`;
+
+const ImageWrapper = styled.div`
+  margin-bottom: 25px;
+
+  img {
+    width: 100%;
+    max-width: 480px;
+  }
 `;
 
 const AdaptiveGrid = styled(Grid)`

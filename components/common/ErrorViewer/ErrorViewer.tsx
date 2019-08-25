@@ -13,7 +13,7 @@ interface Props {
 const ErrorViewer: React.FC<Props> = ({ message, details }): JSX.Element => {
   return (
     <div>
-      <h3>{message}</h3>
+      {details ? <h3>{message}</h3> : <span>{message}</span>}
       {details &&
         Object.entries(details).map(
           (detailPair): JSX.Element => {

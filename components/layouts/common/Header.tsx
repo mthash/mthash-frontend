@@ -12,12 +12,13 @@ import AppContainer from "~/containers/AppContainer";
 
 interface Props {
   activatedSection: number;
-  hasNavigation?: boolean;
+  namespace?: string;
+  isDemo?: boolean;
 }
 
 const Header: React.FC<Props> = ({
   activatedSection,
-  hasNavigation = true
+  namespace
 }): JSX.Element => {
   const { user } = AppContainer.useContainer();
 
@@ -29,7 +30,10 @@ const Header: React.FC<Props> = ({
     <StyledAppBar position="fixed">
       <StyledToolbar>
         <StyledLogo />
-        {hasNavigation && <SectionTabs activatedSection={activatedSection} />}
+        <SectionTabs
+          activatedSection={activatedSection}
+          namespace={namespace}
+        />
         <User user={user.data} />
       </StyledToolbar>
     </StyledAppBar>
@@ -58,4 +62,8 @@ const StyledLogo = styled(Logo)`
   height: 47px;
   width: 48px;
   margin: 15px 0;
+
+  @media screen and (max-width: ${p => p.theme.breakpoints.values.sm}px) {
+    width: 30px;
+  }
 `;

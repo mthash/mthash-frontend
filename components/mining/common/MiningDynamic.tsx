@@ -49,11 +49,13 @@ const MiningDynamic: React.FC<MiningDynamicProps> = ({
     <>
       {isWithChart && !isNil && (
         <img
-          src={`static/mining/${SHIFT_IMG_BY_GROW[isPositiveShift.toString()]}`}
+          src={`/static/mining/${
+            SHIFT_IMG_BY_GROW[isPositiveShift.toString()]
+          }`}
         />
       )}
-      <ShiftDirectionArrow shift={shift} />
       <Shift shift={shift}>
+        <ShiftDirectionArrow shift={shift} />
         {shiftSign}
         {shift}%
       </Shift>
@@ -75,8 +77,13 @@ interface ShiftProps {
   theme: any;
 }
 
+// const Shift = styled.span<ShiftProps>`
+//   display: inline-block;
+// `;
+
 const Shift = styled.span<ShiftProps>`
   display: inline-block;
+  white-space: nowrap;
   font-size: 12px;
   color: ${({ shift, theme }: ShiftProps) => {
     if (shift === 0) return theme.palette.text.secondary;

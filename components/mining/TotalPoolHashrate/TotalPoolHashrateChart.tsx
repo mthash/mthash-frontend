@@ -126,6 +126,7 @@ interface Props {
     format: string;
   };
   yScale?: any;
+  axisLeft?: any;
 }
 
 const TotalPoolHashrateChart: React.FC<Props> = ({
@@ -136,7 +137,8 @@ const TotalPoolHashrateChart: React.FC<Props> = ({
     tickValues: "every 1 hour",
     format: "%I:%M %p"
   },
-  yScale = { type: "linear", stacked: false, min: 0, max: "auto" }
+  yScale = { type: "linear", stacked: false, min: 0, max: "auto" },
+  axisLeft = {}
 }): JSX.Element => (
   <>
     <SvgDefs style={{ visibility: "hidden" }}>
@@ -278,17 +280,18 @@ const TotalPoolHashrateChart: React.FC<Props> = ({
     <ResponsiveLine
       data={data}
       curve="monotoneX"
-      margin={{ top: 50, right: 10, bottom: 70, left: 60 }}
+      margin={{ top: 50, right: 10, bottom: 70, left: 80 }}
       xScale={{
         type: "time",
         format: "%Y-%m-%d %I:%M:%S %p",
         precision
       }}
+      yScale={yScale}
       xFormat={xFormat}
       axisBottom={axisBottom}
-      yScale={yScale}
       axisTop={null}
       axisRight={null}
+      axisLeft={axisLeft}
       theme={theme}
       lineWidth={3}
       colors={[
@@ -303,7 +306,7 @@ const TotalPoolHashrateChart: React.FC<Props> = ({
           anchor: "top-left",
           direction: "row",
           justify: false,
-          translateX: 0,
+          translateX: -80,
           translateY: -50,
           itemsSpacing: 0,
           itemDirection: "left-to-right",

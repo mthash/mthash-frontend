@@ -1,12 +1,13 @@
 import * as React from "react";
 import styled from "styled-components";
-import Paper from "~/components/common/Paper";
+import numeral from "numeral";
 
+import Paper from "~/components/common/Paper";
+import { PERIODS_SHORT } from "~/constants/periods";
+import OVERVIEW_CATEGORIES from "~/constants/overviewCategories";
 import TotalPoolHeader from "./TotalPoolHeader";
 import MiningContainer from "~/containers/MiningContainer";
 import TotalPoolHashrateChart from "./TotalPoolHashrateChart";
-import { PERIODS_SHORT } from "~/constants/periods";
-import { median, mean, isEmpty } from "ramda";
 
 const CHART_PRECISION_BY_PERIOD = {
   [PERIODS_SHORT.h1]: {
@@ -61,56 +62,81 @@ const CHART_PRECISION_BY_PERIOD = {
   }
 };
 
+const Y_AXIS_FORMAT = {
+  hashrate: {
+    format: value =>
+      `${numeral(value)
+        .format("0.0 a")
+        .toUpperCase()}H/s`
+  },
+  money: {
+    format: value =>
+      `$ ${numeral(value)
+        .format("0.0 a")
+        .toUpperCase()}`
+  },
+  power: {
+    format: value =>
+      `${numeral(value)
+        .format("0.0 a")
+        .toUpperCase()}W`
+  },
+  common: {
+    format: value => numeral(value).format("0,0.0")
+  }
+};
+
 const TotalPoolHashrate: React.FC = (): JSX.Element => {
   const {
     selectedOverviewPeriod,
+    selectedOverviewCategory,
     totalPoolHashrate
   } = MiningContainer.useContainer();
+  const selectedCategory = selectedOverviewCategory.category;
+  const poolsCategory = OVERVIEW_CATEGORIES.pools.name;
+  const algorithmsCategory = OVERVIEW_CATEGORIES.algorithms.name;
+  const revenueCategory = OVERVIEW_CATEGORIES.daily_revenue.name;
+  const powerCategory = OVERVIEW_CATEGORIES.power.name;
+  const selectedCategoryTitle = OVERVIEW_CATEGORIES[selectedCategory].title;
+
+  const yAxis = (() => {
+    const isHashrateCategorySelected = [
+      poolsCategory,
+      algorithmsCategory
+    ].includes(selectedCategory);
+
+    if (isHashrateCategorySelected) {
+      return Y_AXIS_FORMAT.hashrate;
+    } else if (selectedCategory === revenueCategory) {
+      return Y_AXIS_FORMAT.money;
+    } else if (selectedCategory === powerCategory) {
+      return Y_AXIS_FORMAT.power;
+    } else {
+      return Y_AXIS_FORMAT.common;
+    }
+  })();
 
   React.useEffect(() => {
     totalPoolHashrate.fetch();
   }, []);
 
-  // TODO: Temporary function than implement a calculation of boundaries (will be implemented on the backend (I hope)).
-  let redefinedYScale = null;
-  if (!isEmpty(totalPoolHashrate.chart)) {
-    const medians = [];
-    const maxs = [];
+  const { chart, min, max } = totalPoolHashrate.data;
 
-    const medianIsMax = totalPoolHashrate.chart.every(chart => {
-      if (!isEmpty(chart.data)) {
-        const yValues = chart.data.map(point => Number.parseInt(point.y));
-        const yMax = Math.max(...yValues);
-        const yMedian = mean(yValues);
-
-        medians.push(yMedian);
-        maxs.push(yMax);
-
-        return yMedian === yMax;
-      }
-      return false;
-    });
-
-    if (medianIsMax) {
-      const dataMedian = median(medians);
-      const dataMax = Math.max(...maxs);
-
-      redefinedYScale = {
-        type: "linear",
-        stacked: false,
-        min: 0,
-        max: dataMax * 2
-      };
-    }
-  }
+  const yScale = {
+    type: "linear",
+    stacked: false,
+    min,
+    max
+  };
 
   return (
     <Wrapper>
-      <TotalPoolHeader />
+      <TotalPoolHeader title={selectedCategoryTitle} />
       <TotalPoolHashrateChart
-        data={totalPoolHashrate.chart}
+        data={chart}
         {...CHART_PRECISION_BY_PERIOD[selectedOverviewPeriod.period]}
-        {...(redefinedYScale && { yScale: redefinedYScale })}
+        yScale={yScale}
+        axisLeft={yAxis}
       />
     </Wrapper>
   );
@@ -123,5 +149,5 @@ const Wrapper = styled(Paper)`
   height: 55vh;
   background-color: ${p => p.theme.palette.background.paperDarkest};
   padding: 20px;
-  margin: 30px 0;
+  margin: 25px 0 30px;
 `;

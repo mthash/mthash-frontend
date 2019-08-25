@@ -1,42 +1,76 @@
 import * as React from "react";
 import styled from "styled-components";
-// import Input from "@material-ui/core/Input";
+import Link from "@material-ui/core/Link";
+import { CircularProgress } from "@material-ui/core";
 
 import TextField from "~/components/common/TextField";
+import useDebounce from "~/utils/useDebounce";
 
 import Hash from "../../../static/currencies/HashMono.svg";
 
+const MAX_CAPTION = "MAX";
+
 interface Props {
   amount: string;
+  amountLoading?: boolean;
+  prediction: string;
+  predictionLoading?: boolean;
   onChange: (any) => void;
+  onMaxRequest: () => void;
 }
 
 const MiningHashInput: React.FC<Props> = ({
   amount,
-  onChange
+  amountLoading,
+  prediction,
+  predictionLoading,
+  onChange,
+  onMaxRequest
 }): JSX.Element => {
   return (
-    <Wrapper>
-      <HashInput
-        value={amount}
-        onChange={onChange}
-        variant="filled"
-        type="number"
-        inputProps={{
-          step: 0.0001,
-          min: 0
-        }}
-        fullWidth
-      />
-      <HashIcon />
-    </Wrapper>
+    <>
+      <InputWrapper>
+        {amountLoading && (
+          <LoaderWrapper>
+            <CircularProgress />
+          </LoaderWrapper>
+        )}
+        <HashInput
+          value={amount}
+          onChange={onChange}
+          variant="filled"
+          type="number"
+          placeholder="Amount"
+          inputProps={{
+            step: 0.0001,
+            min: 0
+          }}
+          InputProps={{
+            startAdornment: (
+              <MaxButton onClick={onMaxRequest}>{MAX_CAPTION}</MaxButton>
+            )
+          }}
+          fullWidth
+        />
+        <HashIcon />
+      </InputWrapper>
+      <Prediction>
+        {predictionLoading && (
+          <LoaderWrapper>
+            <CircularProgress size={15} />
+          </LoaderWrapper>
+        )}
+        <span>{predictionLoading ? "loading" : prediction}</span>
+      </Prediction>
+    </>
   );
 };
 
 export default MiningHashInput;
 
-const Wrapper = styled.div`
+const InputWrapper = styled.div`
   display: flex;
+  position: relative;
 `;
 
 const HashInput = styled(TextField)`
@@ -45,6 +79,7 @@ const HashInput = styled(TextField)`
 
   input {
     padding: 12px 12px 10px;
+    text-align: right;
   }
 `;
 
@@ -52,4 +87,26 @@ const HashIcon = styled(Hash)`
   width: 27px;
   margin-left: 10px;
   color: ${p => p.theme.palette.text.secondary};
+`;
+
+const MaxButton = styled(Link)`
+  font-size: 9px;
+  cursor: pointer;
+  color: ${p => p.theme.palette.text.primary};
+`;
+
+const LoaderWrapper = styled.div`
+  background-color: ${p => p.theme.palette.background.paper};
+  opacity: 0.8;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  z-index: 2;
+`;
+
+const Prediction = styled.div`
+  position: relative;
+  font-size: 11px;
+  padding-top: 8px;
+  text-align: right;
 `;

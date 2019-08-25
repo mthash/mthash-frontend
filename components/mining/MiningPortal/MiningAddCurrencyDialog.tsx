@@ -5,6 +5,7 @@ import Dialog from "~/components/common/Dialog";
 import CurrenciesSelector from "~/components/common/CurrenciesSelector";
 import AppContext from "~/containers/AppContext";
 import Currency from "~/models/Currency";
+import { default as CurrencyType } from "~/models/types/Currency";
 import MiningHashInput from "./MiningHashInput";
 import TextField from "~/components/common/TextField";
 import { DialogActions, Button, Divider } from "@material-ui/core";
@@ -15,6 +16,7 @@ import MiningContainer from "~/containers/MiningContainer";
 interface Props {
   open: boolean;
   onClose: () => void;
+  currenciesToExclude: CurrencyType[];
 }
 
 const ADD_CURRENCY_DIALOG = "Add currency";
@@ -23,22 +25,41 @@ const ACTIONS = {
   cancel: "Cancel"
 };
 
+function filterCurrencies(currencies, exclude) {
+  return currencies.filter(({ symbol }) => !exclude.includes(symbol));
+}
+
 const MiningAddCurrencyDialog: React.FC<Props> = ({
   open,
-  onClose
+  onClose,
+  currenciesToExclude
 }): JSX.Element => {
   const {
     currencies: { mineable: mineableCurrencies }
   } = React.useContext(AppContext);
   const { minedAsset } = MiningContainer.useContainer();
-  const [selectedCurrency, setSelectedCurrency] = React.useState(
-    mineableCurrencies && mineableCurrencies[0]
+  const filteredCurrencies = filterCurrencies(
+    mineableCurrencies,
+    currenciesToExclude
   );
-  const [amount, setAmount] = React.useState("0");
+  const [availableCurrencies, setAvailableCurrencies] = React.useState(
+    filteredCurrencies
+  );
+  const [selectedCurrency, setSelectedCurrency] = React.useState(
+    filteredCurrencies && filteredCurrencies[0]
+  );
 
-  const handleAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAmount(event.currentTarget.value);
-  };
+  React.useEffect(() => {
+    const newAvailableCurrencies = filterCurrencies(
+      mineableCurrencies,
+      currenciesToExclude
+    );
+
+    setAvailableCurrencies(newAvailableCurrencies);
+    if (!newAvailableCurrencies.includes(selectedCurrency)) {
+      setSelectedCurrency(newAvailableCurrencies[0]);
+    }
+  }, [currenciesToExclude]);
 
   const handleChangeCurrency = (
     event: React.ChangeEvent<{ value: Currency }>
@@ -47,10 +68,7 @@ const MiningAddCurrencyDialog: React.FC<Props> = ({
   };
 
   const handleAddCurrency = async () => {
-    const result: any = await minedAsset.deposit({
-      asset: selectedCurrency.symbol,
-      amount
-    });
+    const result: any = await minedAsset.bind(selectedCurrency.symbol);
 
     if (result instanceof Error) return;
 
@@ -63,18 +81,7 @@ const MiningAddCurrencyDialog: React.FC<Props> = ({
         <CurrenciesSelector
           onChange={handleChangeCurrency}
           selected={selectedCurrency}
-          currencies={mineableCurrencies}
-        />
-        <TextField
-          value={amount}
-          onChange={handleAmountChange}
-          variant="filled"
-          type="number"
-          inputProps={{
-            step: 0.0001,
-            min: 0
-          }}
-          fullWidth
+          currencies={availableCurrencies}
         />
       </ContentWrapper>
       <ActionsWrapper>
@@ -94,7 +101,6 @@ export default MiningAddCurrencyDialog;
 
 const ContentWrapper = styled.div`
   max-width: 300px;
-  min-height: 125px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

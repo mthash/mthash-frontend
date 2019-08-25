@@ -21,7 +21,7 @@ const OverviewStatistic: React.FC = (): JSX.Element => {
 
   return (
     <Wrapper>
-      <MiningStatistic />
+      <StatisticLogo />
       <OverviewStatisticList
         onSelect={handleSelect}
         selected={selectedOverviewCategory.category}
@@ -39,4 +39,8 @@ const Wrapper = styled.div`
   @media screen and (max-width: 1210px) {
     margin: 0px;
   }
+`;
+
+const StatisticLogo = styled(MiningStatistic)`
+  margin: 20px 0;
 `;

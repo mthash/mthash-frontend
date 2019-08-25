@@ -3,12 +3,14 @@ import styled from "styled-components";
 
 import TotalPoolHeaderFilter from "./TotalPoolHeaderFilter";
 
-const CAPTION = "Total pool hash rate";
+interface Props {
+  title: string;
+}
 
-const TotalPoolHeader: React.FC = () => {
+const TotalPoolHeader: React.FC<Props> = ({ title }) => {
   return (
     <Header>
-      <Caption>{CAPTION}</Caption>
+      <Caption>{title}</Caption>
       <TotalPoolHeaderFilter />
     </Header>
   );
@@ -19,9 +21,15 @@ export default TotalPoolHeader;
 const Header = styled.header`
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 
 const Caption = styled.span`
-  font-size: 20px;
+  margin-left: 10px;
+  font-size: 18px;
   color: ${p => p.theme.palette.background.control};
+
+  @media screen and (max-width: ${p => p.theme.breakpoints.values.sm}px) {
+    font-size: 13px;
+  }
 `;

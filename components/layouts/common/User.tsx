@@ -7,6 +7,12 @@ import MenuItem from "@material-ui/core/MenuItem";
 
 import { logout } from "~/utils/auth";
 import IUser from "~/models/User";
+import AdminDialog from "./AdminDialog";
+
+const USER_ACTIONS = {
+  logout: "Logout",
+  admin: "Admin"
+};
 
 interface Props {
   user?: IUser;
@@ -14,6 +20,9 @@ interface Props {
 
 const User: React.FC<Props> = ({ user }): JSX.Element => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [adminDialogShown, setAdminDialogShown] = React.useState<boolean>(
+    false
+  );
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -22,9 +31,18 @@ const User: React.FC<Props> = ({ user }): JSX.Element => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
   const handleLogout = () => {
     handleClose();
     logout();
+  };
+
+  const handleShowDialogAdmin = () => {
+    setAdminDialogShown(true);
+  };
+
+  const handleAdmingDialogClose = () => {
+    setAdminDialogShown(false);
   };
 
   return (
@@ -33,7 +51,6 @@ const User: React.FC<Props> = ({ user }): JSX.Element => {
         <UserName>{user.name}</UserName>
         <AccountCircle />
       </UserButton>
-
       <UserMenu
         anchorEl={anchorEl}
         getContentAnchorEl={null}
@@ -47,10 +64,21 @@ const User: React.FC<Props> = ({ user }): JSX.Element => {
           vertical: "top",
           horizontal: "right"
         }}
-        elevation={0}
+        keepMounted
       >
-        <MenuItem onClick={handleLogout}>Logout</MenuItem>
+        <MenuItem onClick={handleLogout}>{USER_ACTIONS.logout}</MenuItem>
+        {user.is_admin && (
+          <MenuItem onClick={handleShowDialogAdmin}>
+            {USER_ACTIONS.admin}
+          </MenuItem>
+        )}
       </UserMenu>
+      {adminDialogShown && (
+        <AdminDialog
+          open={adminDialogShown}
+          onClose={handleAdmingDialogClose}
+        />
+      )}
     </>
   );
 };
@@ -71,7 +99,8 @@ const UserName = styled.span`
 
 const UserMenu = styled(Menu)`
   .MuiMenu-list {
-    padding: 20px;
+    display: flex;
+    flex-direction: column;
     min-width: 160px;
   }
 `;

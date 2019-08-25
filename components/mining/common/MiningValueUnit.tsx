@@ -9,7 +9,7 @@ interface Props {
 const MiningValueUnit: React.FC<Props> = ({ value, unit }) => {
   return (
     <>
-      {value}
+      <Value title={value && value.toString()}>{value}</Value>
       <Unit>{unit}</Unit>
     </>
   );
@@ -22,4 +22,10 @@ const Unit = styled.span`
   margin-left: 5px;
   font-size: 12px;
   color: ${p => p.theme.palette.text.secondary};
+`;
+
+const Value = styled.span`
+  display: inline-block;
+  text-overflow: ellipsis;
+  overflow: hidden;
 `;

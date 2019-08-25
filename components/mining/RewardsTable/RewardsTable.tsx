@@ -31,11 +31,15 @@ interface Props {
 interface RewardCellProps {
   value: string | number;
   options?: Options;
+  align: "right" | "left" | "center" | "justify" | "inherit";
 }
+
+const VIEW_ALL_TITLE = "View all";
 
 const RewardCell: React.FC<RewardCellProps> = ({
   value,
-  options = {}
+  options = {},
+  align = "right"
 }): JSX.Element => {
   const { withTooltip } = options;
   const content = (() => {
@@ -50,7 +54,7 @@ const RewardCell: React.FC<RewardCellProps> = ({
     }
   })();
 
-  return <RewardsTableCell align="right">{content}</RewardsTableCell>;
+  return <RewardsTableCell align={align}>{content}</RewardsTableCell>;
 };
 
 const RewardsTable: React.FC<Props> = ({
@@ -63,16 +67,16 @@ const RewardsTable: React.FC<Props> = ({
     <Wrapper>
       <Header>
         <img src={picture} />
-        <ShowAllLink onClick={onShowAll}>Show all</ShowAllLink>
+        <ShowAllLink onClick={onShowAll}>{VIEW_ALL_TITLE}</ShowAllLink>
       </Header>
-      <RewardTable>
+      <RewardTable padding="none">
         <TableHead>
           <TableRow>
             {columns.map(
               ({ name }): JSX.Element => (
-                <RewardsTableCell key={name} align="right">
+                <TableHeaderCell key={name} align="center">
                   {name}
-                </RewardsTableCell>
+                </TableHeaderCell>
               )
             )}
           </TableRow>
@@ -88,6 +92,7 @@ const RewardsTable: React.FC<Props> = ({
                         key={dataKey}
                         value={row[dataKey]}
                         options={options}
+                        align="center"
                       />
                     )
                   )}
@@ -142,9 +147,9 @@ const RewardsTableCell = styled(TableCell)`
   border-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
+  padding: 12px 6px;
   @media screen and (max-width: ${p => p.theme.breakpoints.values.md}px) {
     font-size: 12px;
-    padding: 12px 6px;
   }
   @media screen and (max-width: ${p => p.theme.breakpoints.values.sm}px) {
     font-size: 10px;
@@ -154,6 +159,10 @@ const RewardsTableCell = styled(TableCell)`
     font-size: 10px;
     padding: 12px 2px;
   }
+`;
+
+const TableHeaderCell = styled(RewardsTableCell)`
+  white-space: nowrap;
 `;
 
 const Header = styled.head`

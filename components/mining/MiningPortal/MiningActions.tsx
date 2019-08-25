@@ -38,8 +38,9 @@ const ActionButton = styled(Button)`
   text-transform: unset;
   font-size: 13px;
   padding: 7px 31px;
-  border-radius: 10px;
+  border-radius: 5px;
   color: ${p => p.theme.palette.text.primary};
+  flex-grow: 1;
 
   &:hover {
     background: ${p => p.theme.palette.background.button};
@@ -51,12 +52,13 @@ const ActionButton = styled(Button)`
 `;
 
 const MineButton = styled(ActionButton)`
-  background-color: ${p => p.theme.palette.hightlight.blue};
-`;
-
-const StopButton = styled(ActionButton)`
   background: linear-gradient(
     ${p => p.theme.palette.background.default},
     ${p => p.theme.palette.background.button}
   );
+`;
+
+const StopButton = styled(ActionButton)`
+  background-color: ${p => p.theme.palette.background.paper};
+  color: ${p => p.theme.palette.text.secondary};
 `;

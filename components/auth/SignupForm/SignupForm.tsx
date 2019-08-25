@@ -11,19 +11,26 @@ import { isEmpty } from "ramda";
 
 import { RESPONSE_ERROR_NAME } from "~/constants/request";
 import ENDPOINTS from "~/constants/endpoints";
+import ROUTES from "~/constants/routes";
 import TextField from "~/components/common/TextField";
 import PasswordField from "~/components/common/PasswordField";
 import { AsyncService } from "~/services";
 import { login } from "~/utils/auth";
 
 import FormErrors from "../FormErrors";
-import RedirectButtons from "./RedirectButtons";
+import RedirectButtons from "../common/RedirectButtons";
 
 const CAPTION = "SIGN UP";
 const SUBMIT_TEXT = "Sign up";
 const DONE_STATUS = "done";
 const REGISTRATION_SUCCESSFUL = "Registration successful";
 const SNACKBAR_AUTOCLOSE_DURATION = 2000;
+const REDIRECT_LINKS = [
+  {
+    link: ROUTES.auth.login,
+    caption: "Already has an account?"
+  }
+];
 
 interface FormValues {
   login: string;
@@ -109,7 +116,7 @@ const RegistrationForm: React.SFC<
           </IconButton>
         ]}
       />
-      <RedirectButtons />
+      <RedirectButtons customLinks={REDIRECT_LINKS} />
     </WrapperForm>
   );
 };

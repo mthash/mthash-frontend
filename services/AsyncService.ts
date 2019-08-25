@@ -6,7 +6,7 @@ import EnviromentService from "./EnviromentService";
 
 const { API } = EnviromentService;
 
-type RequestMethod = "get" | "post" | "put";
+type RequestMethod = "get" | "post" | "put" | "delete";
 
 function Catch(target, key, descriptor) {
   const originalMethod = descriptor.value;
@@ -49,6 +49,11 @@ class AsyncService {
   @Catch
   async post(endpoint: string, data?: any): Promise<any> {
     return await this.axiosRequst(endpoint, "post", data);
+  }
+
+  @Catch
+  async delete(endpoint: string, data?: any): Promise<any> {
+    return await this.axiosRequst(endpoint, "delete", data);
   }
 
   axiosRequst = (

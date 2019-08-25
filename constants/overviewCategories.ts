@@ -1,7 +1,22 @@
 export default {
-  pools: "pools",
-  algorithms: "algorithms",
-  tokens: "tokens",
-  power: "power",
-  daily_revenue: "daily_revenue"
+  pools: {
+    name: "pools",
+    title: "Total Pool Hashrate"
+  },
+  algorithms: {
+    name: "algorithms",
+    title: "Token Hashrate"
+  },
+  tokens: {
+    name: "tokens",
+    title: "Token Allocation"
+  },
+  power: {
+    name: "power",
+    title: "Algorithm Power Usage"
+  },
+  daily_revenue: {
+    name: "daily_revenue",
+    title: "Mining Revenue"
+  }
 };

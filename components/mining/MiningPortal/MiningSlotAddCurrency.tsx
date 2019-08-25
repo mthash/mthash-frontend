@@ -3,10 +3,17 @@ import styled from "styled-components";
 import Button from "@material-ui/core/Button";
 
 import MiningAddCurrencyDialog from "./MiningAddCurrencyDialog";
+import Currency from "~/models/types/Currency";
 
 const ADD_CURRENCY = "+ Add currency";
 
-const MiningSlotAddCurrency: React.FC = (): JSX.Element => {
+interface Props {
+  addedCurrencies: Currency[];
+}
+
+const MiningSlotAddCurrency: React.FC<Props> = ({
+  addedCurrencies
+}): JSX.Element => {
   const [modalOpened, setModalOpened] = React.useState(false);
 
   const handleOpenModal = () => {
@@ -22,7 +29,11 @@ const MiningSlotAddCurrency: React.FC = (): JSX.Element => {
       <AddCurrencyButton variant="outlined" onClick={handleOpenModal}>
         {ADD_CURRENCY}
       </AddCurrencyButton>
-      <MiningAddCurrencyDialog open={modalOpened} onClose={handleCloseModal} />
+      <MiningAddCurrencyDialog
+        open={modalOpened}
+        onClose={handleCloseModal}
+        currenciesToExclude={addedCurrencies}
+      />
     </>
   );
 };
@@ -34,13 +45,10 @@ const AddCurrencyButton = styled(Button)`
   height: 100%;
   font-size: 18px;
   border-radius: 10px;
-  min-height: 302px;
+  min-height: 270px;
   text-transform: unset;
-  color: ${p => p.theme.palette.text.third};
-  border: 1px dashed ${p => p.theme.palette.text.third};
-
-  &:hover {
-    color: ${p => p.theme.palette.text.secondary};
-    border-color: ${p => p.theme.palette.text.secondary};
-  }
+  font-weight: 200;
+  color: ${p => p.theme.palette.text.secondary};
+  border: 1px dashed ${p => p.theme.palette.text.secondary};
+  opacity: 0.5;
 `;

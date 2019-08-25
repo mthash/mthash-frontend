@@ -51,7 +51,7 @@ const FreeDepositDialog: React.FC<Props> = ({ open, onClose }): JSX.Element => {
       const data = result.data.body;
 
       notifications.addNotification({
-        message: "Free deposit is made",
+        message: "Free deposit made",
         type: NOTIFICATION_TYPES.success
       });
       // return data;

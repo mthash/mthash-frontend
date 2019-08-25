@@ -5,8 +5,7 @@ const ROUTES = {
   },
   dashboard: "/",
   mining: "/mining",
-  exchange: "/exchange",
-  demo: "/demo"
+  exchange: "/exchange"
 };
 
 export default ROUTES;

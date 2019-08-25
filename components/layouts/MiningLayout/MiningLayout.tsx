@@ -8,20 +8,19 @@ import { APP_SECTION_IDS } from "~/constants/appSections";
 
 interface Props {
   children: React.ReactNode;
-  hasNavigation?: boolean;
+  namespace?: string;
+  isDemo?: boolean;
 }
 
 const MiningLayout: React.FC<Props> = ({
   children,
-  hasNavigation
+  namespace,
+  isDemo = false
 }): JSX.Element => {
   return (
     <Wrapper>
       <CssBaseline />
-      <Header
-        activatedSection={APP_SECTION_IDS.mining}
-        hasNavigation={hasNavigation}
-      />
+      <Header activatedSection={APP_SECTION_IDS.mining} namespace={namespace} />
       <Content>{children}</Content>
     </Wrapper>
   );
