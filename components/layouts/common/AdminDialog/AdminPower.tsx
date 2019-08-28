@@ -24,7 +24,7 @@ const AdminPower: React.FC<Props> = ({ data, onSubmit }): JSX.Element => {
       return accum;
     }, {});
 
-    onSubmit(dataForSend);
+    onSubmit({ power: dataForSend });
   };
 
   return (
