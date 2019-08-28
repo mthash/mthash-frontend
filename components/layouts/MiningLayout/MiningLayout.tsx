@@ -9,13 +9,11 @@ import { APP_SECTION_IDS } from "~/constants/appSections";
 interface Props {
   children: React.ReactNode;
   namespace?: string;
-  isDemo?: boolean;
 }
 
 const MiningLayout: React.FC<Props> = ({
   children,
-  namespace,
-  isDemo = false
+  namespace
 }): JSX.Element => {
   return (
     <Wrapper>

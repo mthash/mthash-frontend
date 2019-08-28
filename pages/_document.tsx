@@ -27,7 +27,7 @@ export default class MyDocument extends Document {
           <>
             {sheets.getStyleElement()}
             {sheet.getStyleElement()}
-            {/* {flush() || null} */}
+            {flush() || null}
           </>
         )
       };
