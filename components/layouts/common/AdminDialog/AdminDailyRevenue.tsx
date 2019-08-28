@@ -26,7 +26,7 @@ const AdminDailyRevenue: React.FC<Props> = ({
       return accum;
     }, {});
 
-    onSubmit(dataForSend);
+    onSubmit({ daily_revenue: dataForSend });
   };
 
   return (

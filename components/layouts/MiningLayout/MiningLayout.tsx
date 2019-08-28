@@ -20,7 +20,11 @@ const MiningLayout: React.FC<Props> = ({
   return (
     <Wrapper>
       <CssBaseline />
-      <Header activatedSection={APP_SECTION_IDS.mining} namespace={namespace} />
+      <Header
+        activatedSection={APP_SECTION_IDS.mining}
+        namespace={namespace}
+        centered
+      />
       <Content>{children}</Content>
     </Wrapper>
   );

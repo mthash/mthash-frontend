@@ -85,7 +85,12 @@ const AdminDialog: React.FC<Props> = ({ open, onClose }): JSX.Element => {
   };
 
   return (
-    <Dialog open={open} onClose={onClose} title={ADMIN_CAPTION} maxWidth="md">
+    <StyledDialog
+      open={open}
+      onClose={onClose}
+      title={ADMIN_CAPTION}
+      maxWidth="md"
+    >
       <Tabs value={selected} onChange={handleChange}>
         <Tab label={revenueTab} value={revenueTab} />
         <Tab label={powerTab} value={powerTab} />
@@ -103,15 +108,31 @@ const AdminDialog: React.FC<Props> = ({ open, onClose }): JSX.Element => {
         )}
         {selected === resetTab && <AdminReset />}
       </Content>
-    </Dialog>
+    </StyledDialog>
   );
 };
 
 export default AdminDialog;
 
+const StyledDialog = styled(Dialog)`
+  flex: 1;
+`;
+
 const Content = styled.div`
   height: 70vh;
-  width: 50vw;
-  padding: 20px
+  width: 670px;
+  padding: 20px;
   overflow: auto;
+
+  @media screen and (max-width: 817px) {
+    width: 550px;
+  }
+
+  @media screen and (max-width: 700px) {
+    width: 450px;
+  }
+
+  @media screen and (max-width: 600px) {
+    width: 350px;
+  }
 `;

@@ -12,6 +12,7 @@ import Cardano from "../../../static/currencies/Cardano.svg";
 import Tron from "../../../static/currencies/Tron.svg";
 import Dash from "../../../static/currencies/Dash.svg";
 import EthereumClassic from "../../../static/currencies/EthereumClassic.svg";
+import ZCash from "../../../static/currencies/ZCash.svg";
 
 import HashMono from "../../../static/currencies/HashMono.svg";
 import BitcoinMono from "../../../static/currencies/BitcoinMono.svg";
@@ -23,6 +24,7 @@ import CardanoMono from "../../../static/currencies/CardanoMono.svg";
 import TronMono from "../../../static/currencies/TronMono.svg";
 import DashMono from "../../../static/currencies/DashMono.svg";
 import EthereumClassicMono from "../../../static/currencies/EthereumClassicMono.svg";
+import ZCashMono from "../../../static/currencies/ZCashMono.svg";
 
 interface IconProps {
   className?: string;
@@ -38,7 +40,8 @@ const CURRENCY_ICONS: { [name: string]: React.FC<IconProps> } = {
   ADA: Cardano,
   TRX: Tron,
   DASH: Dash,
-  ETC: EthereumClassic
+  ETC: EthereumClassic,
+  ZEC: ZCash
 };
 
 const CURRENCY_ICONS_MONO: { [name: string]: React.FC<IconProps> } = {
@@ -51,7 +54,7 @@ const CURRENCY_ICONS_MONO: { [name: string]: React.FC<IconProps> } = {
   ADA: CardanoMono,
   TRX: TronMono,
   DASH: DashMono,
-  ETC: EthereumClassicMono
+  ZEC: ZCashMono
 };
 
 interface Props {

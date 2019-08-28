@@ -1,5 +1,5 @@
 import * as React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 
@@ -9,16 +9,18 @@ import User from "./User";
 import SectionTabs from "./SectionTabs";
 
 import AppContainer from "~/containers/AppContainer";
+import { boolean } from "yup";
 
 interface Props {
   activatedSection: number;
   namespace?: string;
-  isDemo?: boolean;
+  centered?: boolean;
 }
 
 const Header: React.FC<Props> = ({
   activatedSection,
-  namespace
+  namespace,
+  centered = false
 }): JSX.Element => {
   const { user } = AppContainer.useContainer();
 
@@ -27,8 +29,8 @@ const Header: React.FC<Props> = ({
   }, []);
 
   return (
-    <StyledAppBar position="fixed">
-      <StyledToolbar>
+    <StyledAppBar position="fixed" centered={centered}>
+      <StyledToolbar centered={centered}>
         <StyledLogo />
         <SectionTabs
           activatedSection={activatedSection}
@@ -42,16 +44,40 @@ const Header: React.FC<Props> = ({
 
 export default Header;
 
-const StyledAppBar = styled(AppBar)`
+interface AppBarProps {
+  theme: any;
+  centered: boolean;
+}
+
+const StyledAppBar = styled(AppBar)<AppBarProps>`
   z-index: 1201;
   background-color: ${p => p.theme.palette.background.paper};
   box-shadow: none;
   color: ${p => p.theme.palette.text.secondary};
   height: ${p => p.theme.layouts.dashboard.headerHeight}px;
+
+  ${p =>
+    p.centered &&
+    css`
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+    `}
 `;
 
-const StyledToolbar = styled(Toolbar)`
-  display: fixed;
+interface ToolbarProps {
+  theme: any;
+  centered: boolean;
+}
+
+const StyledToolbar = styled(Toolbar)<ToolbarProps>`
+  ${p =>
+    p.centered &&
+    css`
+      max-width: ${p => p.theme.layouts.dashboard.contentMaxWidth}px;
+      width: 100%;
+      padding: 0 40px;
+    `}
   justify-content: space-between;
   align-items: center;
 `;
