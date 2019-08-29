@@ -9,7 +9,7 @@ const ENDPOINTS = {
   },
   admin: {
     data: "/admin/overview",
-    wipe: "/oops/restart"
+    wipe: "/admin/restart"
   },
   wallets: "user/wallet",
   asset: {

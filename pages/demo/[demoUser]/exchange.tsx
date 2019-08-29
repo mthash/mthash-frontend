@@ -10,9 +10,7 @@ const Exchange: React.FC = (): JSX.Element => {
   const { demoUser } = router.query;
 
   return (
-    <ExchangeLayout namespace={`/demo/${demoUser}`} isDemo>
-      exchange
-    </ExchangeLayout>
+    <ExchangeLayout namespace={`/demo/${demoUser}`}>exchange</ExchangeLayout>
   );
 };
 

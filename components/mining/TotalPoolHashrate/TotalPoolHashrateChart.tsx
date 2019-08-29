@@ -127,10 +127,14 @@ interface Props {
   };
   yScale?: any;
   axisLeft?: any;
+  yTooltipFormat?: any;
+  onLegendClick?: (legendData: any) => void;
 }
 
 const TotalPoolHashrateChart: React.FC<Props> = ({
   data,
+  yTooltipFormat,
+  onLegendClick,
   precision = "hour",
   xFormat = "time:%I %M",
   axisBottom = {
@@ -310,13 +314,14 @@ const TotalPoolHashrateChart: React.FC<Props> = ({
           translateY: -50,
           itemsSpacing: 0,
           itemDirection: "left-to-right",
-          itemWidth: 80,
+          itemWidth: 100,
           itemHeight: 20,
           itemOpacity: 0.75,
           symbolSize: 12,
           symbolShape: "circle",
           symbolBorderColor: "#3f4069",
           itemTextColor: "#ffffff",
+          onClick: onLegendClick,
           effects: [
             {
               on: "hover",
@@ -328,6 +333,39 @@ const TotalPoolHashrateChart: React.FC<Props> = ({
           ]
         }
       ]}
+      tooltip={({ point }) => {
+        const {
+          color,
+          data: { x, y },
+          serieId
+        } = point;
+        const xValue = new Date(x).toLocaleTimeString();
+        const yValue = yTooltipFormat ? yTooltipFormat(y) : y;
+
+        return (
+          <>
+            <TooltipWrapper>
+              <div>{serieId}</div>
+              <TooltipData>
+                {yValue} <TooltipTimeValue>{xValue}</TooltipTimeValue>
+              </TooltipData>
+            </TooltipWrapper>
+            <TooltipRignWrapper>
+              <svg width="20" height="20">
+                <circle
+                  stroke={color}
+                  stroke-width="3"
+                  fill={"#0f1221"}
+                  r="7"
+                  cx="10"
+                  cy="10"
+                ></circle>
+              </svg>
+            </TooltipRignWrapper>
+          </>
+        );
+      }}
+      crosshairType="cross"
       enablePoints={false}
       useMesh={true}
       animate={true}
@@ -339,4 +377,27 @@ export default TotalPoolHashrateChart;
 
 const SvgDefs = styled.svg`
   height: 0;
+`;
+
+const TooltipRignWrapper = styled.div`
+  position: absolute;
+  margin: 3px 0 0 -10px;
+`;
+
+const TooltipWrapper = styled.div`
+  position: absolute;
+  border-radius: 5px;
+  margin: -55px 0 0 5px;
+  padding: 10px;
+  background-color: ${p => p.theme.palette.background.paper};
+`;
+
+const TooltipData = styled.div`
+  white-space: nowrap;
+  font-size: 12px;
+`;
+
+const TooltipTimeValue = styled.span`
+  color: ${p => p.theme.palette.text.secondary};
+  margin-left: 10px;
 `;
