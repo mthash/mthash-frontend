@@ -35,7 +35,7 @@ const DialogTitle: React.FC<DialogTitleProps> = ({ onClose, children }) => {
         {children}
         {onClose ? (
           <IconButton aria-label="close" onClick={onClose}>
-            <CloseIcon />
+            <CloseDialogIcon />
           </IconButton>
         ) : null}
       </TitleWrapper>
@@ -69,4 +69,8 @@ export default Dialog;
 const TitleWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+`;
+
+const CloseDialogIcon = styled(CloseIcon)`
+  color: ${p => p.theme.palette.common.white};
 `;

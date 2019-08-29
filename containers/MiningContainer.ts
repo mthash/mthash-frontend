@@ -12,6 +12,8 @@ import ErrorViewer from "~/components/common/ErrorViewer";
 import { PERIODS_SHORT } from "~/constants/periods";
 import { useInterval } from "~/utils/useInterval";
 import { ChartPoint } from "~/models/ChartData";
+import AppContext from "./AppContext";
+import { CURRENCIES } from "~/constants/currencies";
 
 interface MinedProps {
   selectedCurrency: {
@@ -64,7 +66,28 @@ interface MinedProps {
   };
 }
 
+function crutchSelectCurrencyForPools({
+  currencies,
+  selectedOverviewCategory,
+  currencyHasSet
+}) {
+  const btcCurrency =
+    currencies &&
+    currencies.find(currency => currency.symbol === CURRENCIES.BTC.currency);
+
+  if (
+    !currencyHasSet &&
+    selectedOverviewCategory === OVERVIEW_CATEGORIES.pools.name
+  ) {
+    return btcCurrency && btcCurrency.id;
+  }
+}
+
 function useMining(): MinedProps {
+  const { currencies: currenciesData } = React.useContext(AppContext);
+  const currencies = currenciesData.all;
+  const appContainer = AppContainer.useContainer();
+
   let [statistic, setStatistic] = React.useState(null);
   let [totalHashrateChart, setTotalHashrateChart] = React.useState({
     chart: []
@@ -81,8 +104,7 @@ function useMining(): MinedProps {
     OVERVIEW_CATEGORIES.pools.name
   );
   let [selectedPeriod, setSelectedPeriod] = React.useState(PERIODS_SHORT.d7);
-
-  const appContainer = AppContainer.useContainer();
+  let [currencyHasSet, setCurrencyHasSet] = React.useState(false);
 
   React.useEffect(() => {
     fetchBlockRewards();
@@ -137,10 +159,22 @@ function useMining(): MinedProps {
 
   const fetchTotalPoolHashrate = async (): Promise<any> => {
     try {
+      // A Crutch for selecting only BTC currency for pools category, when no one currency weren't
+      //  selected explicitly.
+      const currencyIdForPools = crutchSelectCurrencyForPools({
+        currencies,
+        selectedOverviewCategory,
+        currencyHasSet
+      });
+
+      const filterAssetId = currencyIdForPools || selectedCurrencyId;
+
       const filter = {
         filter: {
           period: selectedPeriod,
-          ...(selectedCurrencyId && { asset_id: selectedCurrencyId })
+          ...(filterAssetId && {
+            asset_id: filterAssetId
+          })
         }
       };
       const url = format(ENDPOINTS.mining.chart, {
@@ -385,7 +419,10 @@ function useMining(): MinedProps {
   return {
     selectedCurrency: {
       id: selectedCurrencyId,
-      set: id => setSelectedCurrencyId(id)
+      set: id => {
+        setSelectedCurrencyId(id);
+        setCurrencyHasSet(true);
+      }
     },
     selectedOverviewCategory: {
       category: selectedOverviewCategory,

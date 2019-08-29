@@ -9,13 +9,11 @@ import UnderDevelopment from "~/components/common/UnderDevelopment";
 interface Props {
   children: React.ReactNode;
   namespace?: string;
-  isDemo?: boolean;
 }
 
 const ExchangeLayout: React.FC<Props> = ({
   children,
-  namespace,
-  isDemo = false
+  namespace
 }): JSX.Element => {
   return (
     <Wrapper>

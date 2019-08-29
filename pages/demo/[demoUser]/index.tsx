@@ -48,7 +48,7 @@ const DemoDashboard: React.FC = (): JSX.Element => {
   }, []);
 
   return (
-    <DashboardLayout namespace={`/demo/${demoUser}`} isDemo>
+    <DashboardLayout namespace={`/demo/${demoUser}`}>
       {authorized && (
         <DashboardContainer.Provider>
           <Grid container spacing={2}>

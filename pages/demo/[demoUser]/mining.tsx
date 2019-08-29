@@ -41,7 +41,7 @@ const Mining: React.FC = (): JSX.Element => {
   }, []);
 
   return (
-    <MiningLayout namespace={`/demo/${demoUser}`} isDemo>
+    <MiningLayout namespace={`/demo/${demoUser}`}>
       {authorized && (
         <MiningContainer.Provider>
           <MiningDashboard />

@@ -23,7 +23,7 @@ const MiningSlotHeader: React.FC<Props> = ({
       <ExchangeIcon />
       <Item>{algorithm}</Item>
       <CloseButton aria-label="close" onClick={onClose}>
-        <CloseIcon />
+        <CloseDialogIcon />
       </CloseButton>
     </Header>
   );
@@ -51,4 +51,8 @@ const ExchangeIcon = styled(ExchangeArrows)`
 
 const CloseButton = styled(IconButton)`
   margin-left: auto;
+`;
+
+const CloseDialogIcon = styled(CloseIcon)`
+  color: ${p => p.theme.palette.common.white};
 `;
