@@ -66,7 +66,7 @@ const CHART_PRECISION_BY_PERIOD = {
 };
 
 const Y_FORMATERS = {
-  poolsHashrate: value => {
+  petaHashrate: value => {
     const petaValue = (+value / 1e15).toFixed(2);
     return `${petaValue} PH/s`;
   },
@@ -103,7 +103,6 @@ const TotalPoolHashrate: React.FC = (): JSX.Element => {
   const yFormatter = (() => {
     switch (selectedCategory) {
       case poolsCategory:
-        return Y_FORMATERS.poolsHashrate;
       case algorithmsCategory:
         return Y_FORMATERS.hashrate;
       case revenueCategory:
