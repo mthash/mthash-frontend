@@ -4,7 +4,8 @@
     "next:dev": "next",
     "dev": "cross-env PORT=3001 node --max-old-space-size=16384 server/server.js",
     "start": "cross-env NODE_ENV=production PORT=80 node --max-old-space-size=1024 server/server.js",
-    "build": "next build"
+    "build": "next build",
+    "server": "nodemon server.js"
   },
   "dependencies": {
     "@babel/plugin-proposal-decorators": "^7.4.4",
@@ -40,7 +41,9 @@
     "js-cookie": "^2.2.0",
     "jss": "^9.8.7",
     "jwt-decode": "^2.2.0",
-    "next": "^9.0.1",
+    "mongodb": "^3.5.4",
+    "mongoose": "^5.9.3",
+    "next": "^9.2.1",
     "next-cookies": "^1.1.2",
     "numeral": "^2.0.6",
     "qs": "^6.7.0",

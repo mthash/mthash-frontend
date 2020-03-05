@@ -6,7 +6,7 @@ import Sidebar from "./Sidebar";
 import Header from "~/components/layouts/common/Header";
 
 import { APP_SECTION_IDS } from "~/constants/appSections";
-import UnderDevelopment from "~/components/common/UnderDevelopment";
+// import UnderDevelopment from "~/components/common/UnderDevelopment";
 
 interface Props {
   children: React.ReactNode;
@@ -19,7 +19,7 @@ const DashboardLayout: React.FC<Props> = ({
 }): JSX.Element => {
   return (
     <Wrapper>
-      <UnderDevelopment namespace={namespace} />
+      {/* <UnderDevelopment namespace={namespace} /> */}
       <CssBaseline />
       <Header
         activatedSection={APP_SECTION_IDS.dashboard}
